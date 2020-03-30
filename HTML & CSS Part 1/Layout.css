@@ -9,8 +9,11 @@ html, body {
 }
 
 .nav-content-container {
-  position: relative;
-  height: calc(100% - 72px);
+  position: absolute;
+  top: 72px;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .navigation-panel {
