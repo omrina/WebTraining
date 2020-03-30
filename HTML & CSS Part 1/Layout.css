@@ -1,33 +1,42 @@
 html, body {
-	height: 100%;
-	margin: 0;
+  height: 100%;
+  margin: 0;
 }
 
-#toolbar {
+.toolbar {
   background-color: dodgerblue;
-  height: 20%;
-  position: sticky;
+  height: 72px;
 }
 
-#navigation-panel {
+.container {
+  position: absolute;
+  top: 72px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.navigation-panel {
   background-color: gray;
-  height: 80%;
-  width: 20%;
-  position: sticky;
-  float: left;
+  width: 20vw;
+  position: absolute;
+  top: 0;
+  bottom: 0;
 }
 
-#content {
+.content {
   background-color: white;
   overflow-y: scroll;
-  width: auto;
-  height: 80%;
+  position: absolute;
+  width: 80vw;
+  right: 0;
+  bottom: 0;
+  top: 0;
 }
 
 .box {
-  display: block;
   border: black 1.5px solid;
-  height: 10%;
+  height: 60px;
   width: 80%;
-  margin: 1vh auto;
+  margin: 12px auto;
 }
