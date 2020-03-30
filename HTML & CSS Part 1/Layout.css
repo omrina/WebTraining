@@ -1,0 +1,33 @@
+html, body {
+	height: 100%;
+	margin: 0;
+}
+
+#toolbar {
+  background-color: dodgerblue;
+  height: 20%;
+  position: sticky;
+}
+
+#navigation-panel {
+  background-color: gray;
+  height: 80%;
+  width: 20%;
+  position: sticky;
+  float: left;
+}
+
+#content {
+  background-color: white;
+  overflow-y: scroll;
+  width: auto;
+  height: 80%;
+}
+
+.box {
+  display: block;
+  border: black 1.5px solid;
+  height: 10%;
+  width: 80%;
+  margin: 1vh auto;
+}
