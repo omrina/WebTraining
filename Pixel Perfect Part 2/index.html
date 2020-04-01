@@ -3,24 +3,29 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <div id="toolbar">
-        <div>
-            <img id="logo" src="./assets/envelope.png" alt="Mail Box Logo"> <span id="title"> Mail</span>
+    <div class="toolbar">
+        <div class="toolbar-logo-title">
+            <img class="logo" src="./assets/envelope.png" alt="MailBox Logo">
+            <span class="title"> Mail</span>
         </div>
     </div>
-    <div id="navigation-panel">
-            <div href="#" id="inboxButton" class="navigation-button">
-                <span>Inbox</span>
+    <div class="nav-content-container">
+        <div class="navigation-panel">
+            <div class="inboxButton navigation-button active-navigation-button">
+                <!-- <span>Inbox</span> -->
+                Inbox
             </div>
-            <div href="#" id="outgoingMailButton" class="navigation-button">
-                <span>Outgoing Mail</span>
+            <div class="outgoingMailButton navigation-button">
+                <!-- <span>Outgoing Mail</span> -->
+                Outgoing Mail
             </div>
-    </div>
-    <div id="content">
-        <div class="box">
-            <div class="mail-header"></div>
         </div>
-        <div class="box"></div>
+        <div class="content">
+            <div class="box">
+                <!-- <div class="mail-header"></div> -->
+            </div>
+            <div class="box"></div>
+        </div>
     </div>
 </body>
 </html>
