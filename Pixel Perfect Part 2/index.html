@@ -1,31 +1,58 @@
 <!DOCTYPE html>
 <head>
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="./node_modules/mdi/css/materialdesignicons.css">
 </head>
 <body>
     <div class="toolbar">
         <div class="toolbar-logo-title">
             <img class="logo" src="./assets/envelope.png" alt="MailBox Logo">
-            <span class="title"> Mail</span>
+            <strong class="title"> Mail</strong>
         </div>
     </div>
     <div class="nav-content-container">
         <div class="navigation-panel">
             <div class="inboxButton navigation-button active-navigation-button">
-                <!-- <span>Inbox</span> -->
                 Inbox
             </div>
             <div class="outgoingMailButton navigation-button">
-                <!-- <span>Outgoing Mail</span> -->
                 Outgoing Mail
             </div>
         </div>
         <div class="content">
-            <div class="box">
-                <!-- <div class="mail-header"></div> -->
-            </div>
-            <div class="box"></div>
+            <ul>
+                <li>
+                    <div class="message-box">
+                        <div class="message-header">
+                            <div class="message-subject">Lorem Ipsum</div>
+                            <span class="message-sender">
+                                <strong>From: </strong>Omri Nathanson
+                            </span>
+                        </div>
+                        <span class="message-body">
+                            Lorem ipsum dolor sit amet, graeci habemus imperdiet vel cu...
+                        </span>
+                        <i class="importance-icon mdi mdi-alert"></i>
+                    </div>
+                </li>
+                    <div class="message-box">
+                        <div class="message-header">
+                            <div class="message-subject">Lorem Ipsum</div>
+                            <span class="message-sender">
+                                <strong>From: </strong>Omri Nathanson
+                            </span>
+                        </div>
+                        <span class="message-body">
+                            Lorem ipsum dolor sit amet, graeci habemus imperdiet vel cu...
+                        </span>
+                        <i class="importance-icon mdi mdi-alert"></i>
+                    </div>
+                <li>
+                </li>
+            </ul>
         </div>
+        <i class="new-mail-button mdi mdi-pencil-circle mdi-format-color-fill mdi-invert-colors"></i>
+        <div class="new-mail-background"></div>
     </div>
 </body>
 </html>
