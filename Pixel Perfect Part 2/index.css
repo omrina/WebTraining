@@ -124,7 +124,6 @@ html, body {
 
 .message-body {
   display: inline-block;
-  height: 100%;
   width: 510px;
   vertical-align: top;
   padding-left: 6px;
