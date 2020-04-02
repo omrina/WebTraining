@@ -10,9 +10,6 @@ html, body {
 }
 
 .toolbar-logo-title {
-  vertical-align: middle;
-  display: table-cell;
-  height: inherit;
   position: relative;
   left: 28px;
 }
@@ -20,11 +17,19 @@ html, body {
 .logo {
   width: 60px;
   height: 42px;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .title {
+  position: relative;
+  top: 9px;
   font-size: 30px;
   color: white;
+  font-weight: bold;
+  line-height: 85px;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .nav-content-container {
@@ -41,15 +46,14 @@ html, body {
   right: 10px;
   color: #ff9100;
   font-size: 48px;
-  z-index: 2;
 }
 
 .new-mail-background {
   position: absolute;
-  bottom: 22px;
+  bottom: 24px;
   right: 22px;
   background-color: white;
-  height: 30px;
+  height: 28px;
   width: 24px;
 }
 
@@ -65,13 +69,10 @@ html, body {
 .navigation-button {
   color: white;
   background-color: #757575;
-  height: 42px;
   line-height: 42px;
   padding-left: 12px;
   margin-right: 5px;
   margin-bottom: 5px;
-  border-radius: 2%;
-  font-size: 16px;
 }
 
 .active-navigation-button {
@@ -87,7 +88,7 @@ html, body {
   background-color: #424242;
 }
 
-ul {
+.messages-list {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -95,23 +96,22 @@ ul {
 
 .message-box {
   background-color: white;
-  height: 72px;
-  width: 1350px;
-  border-radius: 1%;
-  margin: 8px auto;
+  height: 68px;
+  width: 80%;
+  margin: 10px auto;
   padding: 5px;
   position: relative;
+  min-width: 1300px;
 }
 
 .message-header {
   position: relative;
   display: inline-block;
   height: 100%;
-  border-right: black 1px solid;
+  border-right: #808080 1px solid;
   padding-right: 10px;
-  padding-top: 12px;
+  padding-top: 4px;
   box-sizing: border-box;
-  line-height: 24px;
 }
 
 .message-subject {
@@ -119,14 +119,19 @@ ul {
 }
 
 .message-sender {
-  position: absolute;
-  bottom: 0;
+  line-height: 30px;
 }
 
 .message-body {
-  position: absolute;
-  padding-left: 15px;
-  padding-top: 5px;
+  display: inline-block;
+  height: 100%;
+  width: 510px;
+  vertical-align: top;
+  padding-left: 6px;
+  padding-top: 4px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .importance-icon {
