@@ -1,0 +1,169 @@
+html, body {
+  height: 100vh;
+  margin: 0;
+  font-family: Verdana, sans-serif;
+}
+
+.toolbar {
+  background-color: #03a9f4;
+  height: 85px;
+}
+
+.toolbar-logo-title {
+  position: relative;
+  left: 28px;
+}
+
+.logo {
+  width: 60px;
+  height: 42px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.title {
+  position: relative;
+  top: 9px;
+  font-size: 30px;
+  color: white;
+  font-weight: bold;
+  line-height: 85px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.nav-content-container {
+  position: absolute;
+  top: 85px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.new-mail-button {
+  position: absolute;
+  bottom: 16px;
+  right: 18px;
+  color: #ff9100;
+  font-size: 48px;
+  transition: transform 1s;
+}
+
+.new-mail-button:hover {
+  transform: rotate(360deg);
+}
+
+.new-mail-background {
+  position: absolute;
+  bottom: 31px;
+  right: 27px;
+  background-color: white;
+  height: 31px;
+  width: 31px;
+  border-radius: 50%;
+}
+
+.navigation-panel {
+  background-color: #212121;
+  width: 300px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  padding-top: 16px;
+}
+
+.navigation-button {
+  color: white;
+  background-color: #757575;
+  line-height: 42px;
+  margin-bottom: 5px;
+  padding-left: 12px;
+  transition: padding-left 1s, width 1s;
+  position: relative;
+  z-index: 1;
+  width: 94%;
+}
+
+.navigation-button:hover {
+  width: 100%;
+  padding-left: 40%;
+}
+
+.active-navigation-button {
+  background-color: #ff9100;
+}
+
+.content {
+  position: absolute;
+  overflow-y: auto;
+  height: 100%;
+  right: 0;
+  left: 300px;
+  background-color: #424242;
+}
+
+.messages-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.message-box {
+  background-color: white;
+  height: 68px;
+  width: 80%;
+  margin: 10px auto;
+  padding: 5px;
+  position: relative;
+  min-width: 1300px;
+  transition: transform .5s;
+}
+
+.messages-list li:nth-child(odd) .message-box {
+  background-color: gainsboro;
+}
+
+.message-box:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.message-box:hover .importance-icon {
+  color: gray;
+}
+
+.message-header {
+  position: relative;
+  display: inline-block;
+  height: 100%;
+  border-right: #808080 1px solid;
+  padding-right: 10px;
+  padding-top: 4px;
+  box-sizing: border-box;
+}
+
+.message-subject {
+  font-size: 28px;
+}
+
+.message-sender {
+  line-height: 30px;
+}
+
+.message-body {
+  display: inline-block;
+  width: 510px;
+  vertical-align: top;
+  padding-left: 6px;
+  padding-top: 4px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.importance-icon {
+  position: absolute;
+  bottom: 1px;
+  right: 7px;
+  color: #ff0000;
+  font-size: 28px;
+}
