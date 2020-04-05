@@ -6,35 +6,25 @@ html, body {
 
 .toolbar {
   background-color: #03a9f4;
-  height: 85px;
-}
-
-.toolbar-logo-title {
-  position: relative;
-  left: 28px;
+  height: 88px;
+  padding-left: 24px;
+  padding-top: 24px;
 }
 
 .logo {
   width: 60px;
   height: 42px;
-  display: inline-block;
-  vertical-align: middle;
 }
 
 .title {
-  position: relative;
-  top: 9px;
-  font-size: 30px;
   color: white;
   font-weight: bold;
-  line-height: 85px;
-  display: inline-block;
-  vertical-align: middle;
+  font-size: 30px;
 }
 
-.nav-content-container {
+.main-container {
   position: absolute;
-  top: 85px;
+  top: 88px;
   bottom: 0;
   left: 0;
   right: 0;
@@ -44,23 +34,20 @@ html, body {
   position: absolute;
   bottom: 16px;
   right: 18px;
-  color: #ff9100;
-  font-size: 48px;
-  transition: transform 1s;
+  height: 50px;
+  width: 50px;
+  background-color: #ff9100;
+  color: white;
+  font-size: 24px;
+  padding-top: 10px;
+  box-sizing: border-box;
+  text-align: center;
+  border-radius: 50%;
+  transition: transform 1.5s;
 }
 
 .new-mail-button:hover {
   transform: rotate(360deg);
-}
-
-.new-mail-background {
-  position: absolute;
-  bottom: 31px;
-  right: 27px;
-  background-color: white;
-  height: 31px;
-  width: 31px;
-  border-radius: 50%;
 }
 
 .navigation-panel {
@@ -70,6 +57,8 @@ html, body {
   top: 0;
   bottom: 0;
   padding-top: 16px;
+  padding-right: 5px;
+  box-sizing: border-box;
 }
 
 .navigation-button {
@@ -78,15 +67,15 @@ html, body {
   line-height: 42px;
   margin-bottom: 5px;
   padding-left: 12px;
-  transition: padding-left 1s, width 1s;
-  position: relative;
+  border-radius: 2px;
+  transition: transform 1s;
+  transform-origin: left;
+  position: relative; 
   z-index: 1;
-  width: 94%;
 }
 
 .navigation-button:hover {
-  width: 100%;
-  padding-left: 40%;
+  transform: scaleX(1.1);
 }
 
 .active-navigation-button {
@@ -102,24 +91,22 @@ html, body {
   background-color: #424242;
 }
 
-.messages-list {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
 .message-box {
   background-color: white;
   height: 68px;
   width: 80%;
   margin: 10px auto;
   padding: 5px;
+  border-radius: 2px;
+  box-shadow: 0px 3px 5px -1px white;
   position: relative;
-  min-width: 1300px;
-  transition: transform .5s;
+  transition: transform 1s;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
-.messages-list li:nth-child(odd) .message-box {
+.message-box:nth-child(odd) {
   background-color: gainsboro;
 }
 
@@ -141,28 +128,19 @@ html, body {
 }
 
 .message-subject {
-  font-size: 28px;
-}
-
-.message-sender {
-  line-height: 30px;
+  font-size: 32px;
+  padding-bottom: 4px;
 }
 
 .message-body {
   display: inline-block;
-  width: 510px;
   vertical-align: top;
-  padding-left: 6px;
-  padding-top: 4px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
 }
 
 .importance-icon {
   position: absolute;
   bottom: 1px;
-  right: 7px;
+  right: 8px;
   color: #ff0000;
   font-size: 28px;
 }
