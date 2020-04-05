@@ -132,7 +132,6 @@ html, body {
 }
 
 .message-header {
-  position: relative;
   display: inline-block;
   height: 100%;
   border-right: #808080 1px solid;
