@@ -66,8 +66,11 @@ html, body {
   background-color: #757575;
   line-height: 42px;
   margin-bottom: 5px;
-  padding-left: 12px;
+  padding-left: 40px;
   border-radius: 2px;
+  width: 110%;
+  box-sizing: border-box;
+  transform: translateX(-10%);
   transition: transform 1s;
   transform-origin: left;
   position: relative; 
@@ -75,7 +78,7 @@ html, body {
 }
 
 .navigation-button:hover {
-  transform: scaleX(1.1);
+  transform: translateX(0);
 }
 
 .active-navigation-button {
