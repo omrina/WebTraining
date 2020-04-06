@@ -121,7 +121,6 @@ html, body {
 .message-header {
   display: inline-block;
   height: 100%;
-  border-right: #808080 1px solid;
   padding-right: 10px;
   padding-top: 4px;
   box-sizing: border-box;
@@ -130,6 +129,13 @@ html, body {
 .message-subject {
   font-size: 32px;
   padding-bottom: 4px;
+}
+
+.vertical-separator {
+  display: inline-block;
+  height: 100%;
+  width: 1px;
+  background-color: #808080;
 }
 
 .message-body {
