@@ -13,7 +13,7 @@ html, body {
 .toolbar {
   display: flex;
   align-items: baseline;
-  flex-grow: 1;
+  height: 64px;
   background-color: #03a9f4;
   padding-left: 24px;
   padding-top: 24px;
@@ -32,8 +32,8 @@ html, body {
 }
 
 .main-container {
-  height: 90%;
   display: flex;
+  flex-grow: 1;
 }
 
 .new-mail-button {
@@ -61,6 +61,7 @@ html, body {
   width: 300px;
   padding-top: 16px;
   padding-right: 5px;
+  flex-shrink: 0;
 }
 
 .navigation-button {
@@ -89,7 +90,6 @@ html, body {
   flex-grow: 1;
   overflow-y: auto;
   background-color: #424242;
-  
 }
 
 .message-box {
