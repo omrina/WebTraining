@@ -11,9 +11,7 @@ html, body {
 }
 
 .toolbar {
-  display: flex;
-  align-items: baseline;
-  height: 64px;
+  flex: 1;
   background-color: #03a9f4;
   padding-left: 24px;
   padding-top: 24px;
@@ -33,32 +31,14 @@ html, body {
 
 .main-container {
   display: flex;
-  flex-grow: 1;
-}
-
-.new-mail-button {
-  position: absolute;
-  bottom: 16px;
-  right: 32px;
-  height: 50px;
-  width: 50px;
-  background-color: #ff9100;
-  color: white;
-  font-size: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: transform 1.5s;
-}
-
-.new-mail-button:hover {
-  transform: rotate(360deg);
+  flex: 12;
 }
 
 .navigation-panel {
   background-color: #212121;
-  flex: 0 0 300px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   padding-top: 16px;
   padding-right: 5px;
 }
@@ -71,7 +51,7 @@ html, body {
   align-items: center;
   width: 95%;
   margin-bottom: 5px;
-  padding-left: 40px;
+  padding-left: 12%;
   border-radius: 2px;
   transform: translateX(-10%);
   transition: transform 1s;
@@ -85,8 +65,12 @@ html, body {
   background-color: #ff9100;
 }
 
+.growing-flex-item {
+  flex: 1;
+}
+
 .content {
-  flex-grow: 1;
+  flex: 4;
   overflow-y: auto;
   background-color: #424242;
 }
@@ -120,6 +104,7 @@ html, body {
   padding-right: 10px;
   padding-top: 4px;
   box-sizing: border-box;
+  flex: 1;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -128,17 +113,20 @@ html, body {
 .message-subject {
   font-size: 32px;
   padding-bottom: 4px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .vertical-separator {
-  flex: 0 0 1px;
+  width: 1px;
   display: inline-block;
   height: 100%;
   background-color: #808080;
 }
 
 .message-body {
-  flex-grow: 1;
+  flex: 4;
   padding-left: 4px;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -149,4 +137,24 @@ html, body {
   align-self: flex-end;
   color: #ff0000;
   font-size: 24px;
+}
+
+.new-mail-button {
+  position: absolute;
+  bottom: 16px;
+  right: 32px;
+  height: 50px;
+  width: 50px;
+  background-color: #ff9100;
+  color: white;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: transform 1.5s;
+}
+
+.new-mail-button:hover {
+  transform: rotate(360deg);
 }
