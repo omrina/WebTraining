@@ -100,10 +100,8 @@ html, body {
 }
 
 .message-header {
-  height: 100%;
   padding-right: 10px;
   padding-top: 4px;
-  box-sizing: border-box;
   flex: 1;
   text-overflow: ellipsis;
   overflow: hidden;
