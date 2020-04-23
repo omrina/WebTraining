@@ -5,57 +5,43 @@ html, body {
 }
 
 .page-container {
-    height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 }
 
-.display {
-    display: flex;
-    justify-content: center;
+.elapsed-display {
     font-size: 112px;
 }
 
-.controls {
-    display: flex;
-    justify-content: center;
-}
-
-.button {
-    margin: 8px 16px;
+button {
+    margin: 8px 24px;
     border-radius: 50%;
     font-size: 36px;
     height: 120px;
     width: 120px;
     cursor: pointer;
     transition: transform 0.1s;
+    border: 8px solid;
 }
 
-.button:focus {
+button:focus {
     outline: none;
-}
-
-.button:active {
     transform: scale(1.1);
 }
 
-.button:disabled {
+button:disabled {
     cursor: default;
     color: white;
     filter: brightness(75%);
 }
 
 .start-button {
-    /* color: #49db69; */
     background-color: #3ff366;
-    border: 8px solid #49db69;
+    border-color: #49db69;
 }
 
 .stop-button {
-    /* color: #a14b4b; */
     background-color: #e03f33;
-    border: 8px solid #ca544c;
-
+    border-color: #ca544c;
 }
