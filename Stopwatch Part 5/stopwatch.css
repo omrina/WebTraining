@@ -1,47 +1,51 @@
 html, body {
-    height: 100vh;
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
+  height: 100vh;
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
 }
 
 .page-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 24px;
 }
 
 .elapsed-display {
-    font-size: 112px;
+  font-size: 112px;
+  border: 8px solid black;
+  border-radius: 16px;
+  box-shadow: 0px 10px 13px -7px black;
 }
 
-button {
-    margin: 8px 24px;
-    border-radius: 50%;
-    font-size: 36px;
-    height: 120px;
-    width: 120px;
-    cursor: pointer;
-    transition: transform 0.1s;
-    border: 8px solid;
+.stopwatch-button {
+  margin: 16px 24px;
+  border-radius: 50%;
+  font-size: 36px;
+  height: 120px;
+  width: 120px;
+  cursor: pointer;
+  transition: transform 0.1s;
+  border: 8px solid;
 }
 
-button:focus {
-    outline: none;
-    transform: scale(1.1);
+.stopwatch-button:focus {
+  outline: none;
+  transform: scale(1.1);
 }
 
-button:disabled {
-    cursor: default;
-    color: white;
-    filter: brightness(75%);
+.stopwatch-button:disabled {
+  cursor: default;
+  color: white;
+  filter: brightness(75%);
 }
 
 .start-button {
-    background-color: #3ff366;
-    border-color: #49db69;
+  background-color: #3ff366;
+  border-color: #49db69;
 }
 
 .stop-button {
-    background-color: #e03f33;
-    border-color: #ca544c;
+  background-color: #e03f33;
+  border-color: #ca544c;
 }
