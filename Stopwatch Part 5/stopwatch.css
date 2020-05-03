@@ -11,15 +11,31 @@ html, body {
   padding-top: 24px;
 }
 
+.clock-display {
+  background-image: url("./images/clock.png");
+  background-repeat: no-repeat;
+  height: 400px;
+  width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 8px solid #380101;
+  border-radius: 50%;
+  box-shadow: 3px 7px 10px 0px black;
+}
+
+@font-face {
+    font-family: digital;
+    src: url("./fonts/digital-7.mono.ttf");
+}
+
 .elapsed-display {
-  font-size: 112px;
-  border: 8px solid black;
-  border-radius: 16px;
-  box-shadow: 0px 10px 13px -7px black;
+  font-size: 64px;
+  font-family: digital;
 }
 
 .stopwatch-button {
-  margin: 16px 24px;
+  margin: 16px 32px;
   border-radius: 50%;
   font-size: 36px;
   height: 120px;
