@@ -14,8 +14,8 @@ html, body {
 .clock-display {
   background-image: url("./images/clock.png");
   background-repeat: no-repeat;
-  height: 400px;
-  width: 400px;
+  height: 460px;
+  width: 460px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,12 +30,12 @@ html, body {
 }
 
 .elapsed-display {
-  font-size: 64px;
+  font-size: 72px;
   font-family: digital;
 }
 
 .stopwatch-button {
-  margin: 16px 32px;
+  margin: 16px 40px;
   border-radius: 50%;
   font-size: 36px;
   height: 120px;
