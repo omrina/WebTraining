@@ -3,11 +3,8 @@ import heroesData from './ow.json';
 const getHeroes = () => {
   const { names, roles, hp } = heroesData;
 
-  return names.reduce((heroes, name, index) => {
-    heroes.push({ name, role: roles[index], hp: hp[index] });
-
-    return heroes;
-  }, []);
+  return names.reduce((heroes, name, index) =>
+    [...heroes, { name, role: roles[index], hp: hp[index] }], []);
 };
 
 const groupBy = (heroes, category = 'role') =>
