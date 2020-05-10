@@ -1,4 +1,4 @@
-<html lang="en">
+<!DOCTYPE html>
 <head>
     <title>Minesweeper</title>
     <link rel="stylesheet" href="./node_modules/mdi/css/materialdesignicons.css">
@@ -46,13 +46,13 @@
             <div class="game-container">
                 <div>
                     <div class="game-bar">
-                        <span class="marked-flags" title="How many bombs do I need to mark?">
+                        <span class="marked-flags" title="How many mines do I need to flag?">
                             2/9<i class="mdi mdi-flag-variant"></i>
                         </span>
                         <i class="mdi mdi-restart restart-button" title="Restart game"></i>
                         <span class="elapsed-time">00:00</span>
                     </div>
-                    <div>
+                    <div class="game-board">
                         <div class="row">
                             <div class="tile unrevealed-tile"></div>
                             <div class="tile unrevealed-tile"></div>
@@ -159,5 +159,6 @@
         </div>
     </div>
 </body>
-<script> </script>
+<script type="module" src="./minesweeper.js"></script>
+<script type="module" src="./gameSettings.js"></script>
 </html>

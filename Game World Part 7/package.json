@@ -2,8 +2,11 @@
   "name": "minesweeper",
   "version": "1.0.0",
   "description": "Minesweeper game by Omri Nathanson",
+  "type": "module",
   "scripts": {
-    "test": "eslint *.js"
+    "test": "eslint *.js",
+    "fix": "eslint *.js --fix",
+    "start": "node --experimental-modules minesweeper.js"
   },
   "dependencies": {
     "mdi": "^2.2.43"
