@@ -1,8 +1,10 @@
 <html lang="en">
 <head>
     <title>Minesweeper</title>
-    <link rel="stylesheet" href="./minesweeper.css">
     <link rel="stylesheet" href="./node_modules/mdi/css/materialdesignicons.css">
+    <link rel="stylesheet" href="./minesweeper.css">
+    <link rel="stylesheet" href="./gameDisplay/gameDisplay.css">
+    <link rel="stylesheet" href="./settingsSidebar/settingsSidebar.css">
 </head>
 <body>
     <div class="page-container">
@@ -13,117 +15,149 @@
             </span>
             <i class="mdi mdi-settings settings-button"></i>
         </div>
-        <div class="game-container">
-            <div class="game-board">
-                <div class="game-bar">
-                    <span class="marked-flags" title="How many bombs do I need to mark?">
-                        2/9<i class="mdi mdi-flag-variant"></i>
-                    </span>
-                    <i class="mdi mdi-restart restart-button" title="Restart game"></i>
-                    <span class="elapsed-time">00:00</span>
-                </div>
-                <div class="row">
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile revealed-tile number-one"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile revealed-tile number-two"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile questioned-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                </div>
-                <div class="row">
-                    <div class="tile revealed-tile number-eight"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile flagged-tile">
+        <div class="main-container">
+            <div class="settings-sidebar">
+                <div class="feature-settings">
+                    <span class="feature-settings-title">Mode</span>
+                    <div class="modes-container">
+                    <div class="mode-button easy active-mode">
+                        <span class="mode-size">9x9</span>
+                        <span class="easy-mode-label">Easy</span>
                     </div>
-                    <div class="tile revealed-tile number-three"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile revealed-tile number-four"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
+                    <div class="mode-button medium">
+                        <span class="mode-size">16x16</span>
+                        <span class="medium-mode-label">Medium</span>
+                    </div>
+                    <div class="mode-button hard">
+                        <span class="mode-size">30x16</span>
+                        <span class="hard-mode-label">Hard</span>
+                    </div>
+                    </div>
                 </div>
-                <div class="row">
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile revealed-tile bombed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
+                <div class="feature-settings">
+                    <span class="feature-settings-title">Question Mark</span>
+                    <label class="question-mark-switch">
+                        <input type="checkbox" class="question-mark-checkbox" checked>
+                        <div class="switch-background"></div>
+                        <div class="switch"></div>
+                    </label>
                 </div>
-                <div class="row">
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                </div>
-                <div class="row">
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                </div>
-                <div class="row">
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                </div>
-                <div class="row">
-                    <div class="tile revealed-tile number-five"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile revealed-tile number-six"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile revealed-tile number-seven"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                </div>
-                <div class="row">
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                </div>
-                <div class="row">
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
-                    <div class="tile unrevealed-tile"></div>
+            </div>
+            <div class="game-container">
+                <div>
+                    <div class="game-bar">
+                        <span class="marked-flags" title="How many bombs do I need to mark?">
+                            2/9<i class="mdi mdi-flag-variant"></i>
+                        </span>
+                        <i class="mdi mdi-restart restart-button" title="Restart game"></i>
+                        <span class="elapsed-time">00:00</span>
+                    </div>
+                    <div>
+                        <div class="row">
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile revealed-tile number-one"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile revealed-tile number-two"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile questioned-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                        </div>
+                        <div class="row">
+                            <div class="tile revealed-tile number-eight"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile flagged-tile">
+                            </div>
+                            <div class="tile revealed-tile number-three"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile revealed-tile number-four"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                        </div>
+                        <div class="row">
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile revealed-tile bombed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                        </div>
+                        <div class="row">
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                        </div>
+                        <div class="row">
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                        </div>
+                        <div class="row">
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                        </div>
+                        <div class="row">
+                            <div class="tile revealed-tile number-five"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile revealed-tile number-six"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile revealed-tile number-seven"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                        </div>
+                        <div class="row">
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                        </div>
+                        <div class="row">
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                            <div class="tile unrevealed-tile"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
+<script> </script>
 </html>

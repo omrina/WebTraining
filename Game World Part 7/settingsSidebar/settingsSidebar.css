@@ -1,0 +1,118 @@
+.settings-sidebar {
+  background-color: #363636;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  width: 320px;
+  padding: 24px 0;
+  border-radius: 8px 0 0 8px;
+  transform: translateX(100%);
+  transition: transform 0.3s;
+}
+
+.feature-settings {
+  margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+}
+
+.feature-settings-title {
+  color: #969796;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.modes-container {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.mode-button {
+  width: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.mode-button:hover {
+  cursor: pointer;
+}
+
+.active-mode {
+  background-color: #797979;
+  opacity: 0.95;
+  border-radius: 10px;
+}
+
+.mode-size {
+  font-size: 24px;
+  color: rgb(228, 252, 250);
+}
+
+.easy-mode-label {
+  color: lime;
+}
+
+.medium-mode-label {
+  color: orange;
+}
+
+.hard-mode-label {
+  color: red;
+}
+
+.question-mark-switch {
+  position: relative;
+  width: 52px;
+  height: 30px;
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.question-mark-switch:hover {
+  cursor: pointer;
+}
+
+.question-mark-checkbox {
+  display: none;
+}
+
+.question-mark-checkbox:checked ~ .switch {
+  right: 2px;
+  left: 22px;
+  transition: 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  transition-property: left, right;
+  transition-delay: 0.05s, 0s;
+}
+
+.question-mark-checkbox:checked ~ .switch-background {
+  background-color: #2196f3;
+}
+
+.switch {
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  bottom: 2px;
+  right: 22px;
+  background-color: #fff;
+  border-radius: 36px;
+  transition: 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  transition-property: left, right;
+  transition-delay: 0s, 0.05s;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.switch-background {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  transition: 0.35s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  background-color: #ddd;
+}

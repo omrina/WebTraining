@@ -1,171 +1,48 @@
 html, body {
-    height: 100vh;
-    margin: 0;
-    font-family: "Segoe UI", sans-serif;
+  height: 100vh;
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
 }
 
 .page-container {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(228, 252, 250);
 }
 
 .navbar {
-    display: flex;
-    background-color: #2ad3cd;
-    justify-content: space-between;
-    align-items: center;
-    height: 80px;
-    padding: 0 48px;
+  display: flex;
+  flex: 1;
+  background-color: #2ad3cd;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 48px;
 }
 
 .navbar-edge-box {
-    height: 52px;
-    width: 52px;
+  height: 52px;
+  width: 52px;
 }
 
 .game-title {
-    font-size: 52px;
-    color: #47797a;
-    font-weight: bold;
+  font-size: 52px;
+  color: #47797a;
+  font-weight: bold;
 }
 
 .settings-button {
-    font-size: 48px;
-    transition: transform 1s ease-in-out;
+  font-size: 48px;
+  transition: transform 1s ease-in-out;
 }
 
 .settings-button:hover {
-    cursor: pointer;
-    transform: rotate(360deg);
+  cursor: pointer;
+  transform: rotate(360deg);
 }
 
-.game-container {
-    flex: 1;
-    background-color: rgb(228, 252, 250);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 36px;
-}
-
-.game-board {
-    padding: 1px;
-    font-size: 30px;
-}
-
-.game-bar {
-    border: black solid 1.5px;   
-    border-radius: 8px;
-    box-shadow: 0px 1px 2px 1px #767676;
-    margin-bottom: 4px;
-    padding: 2px 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.restart-button:hover {
-    cursor: pointer;
-}
-
-.row {
-    display: flex;
-}
-
-.tile {
-    width: 40px;
-    height: 40px;
-    border: black solid 1px;
-    border-radius: 2px;
-    margin: 1px;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.unrevealed-tile {
-    background-color: #117fe6;
-    box-shadow: 0.6px 1.1px 0px #2b638f,
-                0px 0.6px 15px rgba(0,0,0,.4),
-                inset 0px 0px 3px 0px rgba(0,0,0,.5);
-    transition: transform .01s linear;
-}
-
-.unrevealed-tile:hover {
-    cursor: pointer;
-}
-
-.unrevealed-tile:active {
-    transform: scale(0.95);
-}
-
-.revealed-tile {
-    background-color: white;
-    box-shadow: inset 0px 0px 13px 2px #bab9b9;
-}
-
-@font-face {
-    font-family: mdi-icons;
-    src: url("./node_modules/mdi/fonts/materialdesignicons-webfont.ttf");
-}
-
-.flagged-tile:after {
-    font-family: mdi-icons;
-    content: '\f240';
-    color: rgb(202, 0, 0);
-}
-
-.bombed-tile:after {
-    font-family: mdi-icons;
-    content: '\f690';
-    color: #04010e;
-    background-color: #707070;
-    box-shadow: 0px 0px 6px 6px #707070;
-}
-
-.questioned-tile:after {
-    color: #eef2fb;
-    content: "?";
-}
-
-.number-one:after {
-    color: #009ee4;
-    content: "1";
-}
-
-.number-two:after {
-    color: #3f48cc;
-    content: "2";
-}
-
-.number-three:after {
-    color: #b83dba;
-    content: "3";
-}
-
-.number-four:after {
-    color: #bd2f53;
-    content: "4";
-}
-
-.number-five:after {
-    color: #e2a84a;
-    content: "5";
-}
-
-.number-six:after {
-    color: #c5c208;
-    content: "6";
-}
-
-.number-seven:after {
-    color: #06b100;
-    content: "7";
-}
-
-.number-eight:after {
-    color: #7f807f;
-    content: "8";
+.main-container {
+  flex: 10;
+  overflow-x: hidden;
+  position: relative;
 }
