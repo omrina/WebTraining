@@ -58,11 +58,43 @@ import { settings } from './gameSettings.js' ;
   }
 
   const revealTile = (tile, board) => {
+    let tilesToReveal = [tile];
+
+    while (tilesToReveal.length) {
+      const tileElement = tilesToReveal.shift();
+      const neighborsData = getNeighborsData([...getLocation(tileElement)], board);
+      const minesCount = neighborsData.filter(x => x.isMine).length;
+      revealIfNotMarked(tileElement, board, () => revealNumber(tileElement, board, minesCount))
+
+      if (!minesCount) {
+        tilesToReveal = [...new Set([...tilesToReveal, 
+                                     ...getNeighborsElements(neighborsData.filter(x => !x.isRevealed),
+                                                             board)])];
+      }
+    }
+  }
+
+  const revealNumber = (tile, board, minesCount) => {
     const numbersClasses = ['zero', 'number-one', 'number-two', 'number-three', 'number-four', 'number-five', 'number-six', 'number-seven', 'number-eight'];
-    const neighbors = getNeighborsData([...getLocation(tile)], board);
-    const minesCount = neighbors.filter(x => x.isMine).length;
-    tile.classList.add(numbersClasses[minesCount])
-    tile.classList.remove('unrevealed-tile')
+    const [row, col] = getLocation(tile);
+
+    tile.classList.add(numbersClasses[minesCount]);
+    tile.classList.remove('unrevealed-tile');
+    board[row][col].isRevealed = true;
+  }
+
+  const getNeighborsElements = (neighborsData, board) =>
+  neighborsData.reduce((neighborsElements, neighborData) => {
+    const rowIndex = board.findIndex(row => row.includes(neighborData));
+    const colIndex = board[rowIndex].indexOf(neighborData);
+
+    return [...neighborsElements, getTileElement(rowIndex, colIndex)];
+  }, []);
+
+  const getTileElement = (row, col) => {
+    const boardElement = document.getElementsByClassName('game-board')[0];
+
+    return boardElement.children[row].children[col];
   }
 
   const revealMinedTile = (tile, board) => {
@@ -72,19 +104,14 @@ import { settings } from './gameSettings.js' ;
 
   
 
-  const getNeighborsData = ([row, col], board) => {
-    // const [row, col] = getLocation(tile);
-    
-    return board.slice(row === 0 ? 0 : row-1, row+2).reduce((neighbors, currentRow) => 
-              [...neighbors, ...currentRow.slice(col === 0 ? 0 : col-1, col+2)], [])
-              .filter(x => x !== board[row][col]);
-  }
+  const getNeighborsData = ([row, col], board) =>
+    board.slice(row === 0 ? 0 : row-1, row+2).reduce((neighbors, currentRow) => 
+            [...neighbors, ...currentRow.slice(col === 0 ? 0 : col-1, col+2)], [])
+            .filter(x => x !== board[row][col]);
+  
 
   let board = initializeBoard();
-  let a = generateMinesLocations(settings.minesCount);
-  assignMinesOnBoard(board, a);
-
-  console.log(a);
+  assignMinesOnBoard(board, generateMinesLocations(settings.minesCount));
   // Add ('draw') the board (all tiles) in the html?
   // Bind click events!!!
 
@@ -107,5 +134,6 @@ import { settings } from './gameSettings.js' ;
   }).forEach(minedTile => minedTile.onclick = event => {
     revealIfNotMarked(event.target, board, () => revealMinedTile(event.target, board));
   });
+
   // Bind click events!!!
 }
