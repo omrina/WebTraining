@@ -6,6 +6,7 @@
   "scripts": {
     "test": "eslint *.js",
     "fix": "eslint *.js --fix",
+    "serv": "http-server -c-1 -p 9090 --silent",
     "start": "node --experimental-modules minesweeper.js"
   },
   "dependencies": {
