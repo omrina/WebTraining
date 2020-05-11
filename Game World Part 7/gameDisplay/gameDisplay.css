@@ -35,6 +35,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  background-color: white;
+  box-shadow: inset 0px 0px 13px 2px #bab9b9;
 }
 
 .unrevealed-tile {
@@ -50,11 +53,6 @@
 
 .unrevealed-tile:active {
   transform: scale(0.95);
-}
-
-.revealed-tile {
-  background-color: white;
-  box-shadow: inset 0px 0px 13px 2px #bab9b9;
 }
 
 @font-face {
