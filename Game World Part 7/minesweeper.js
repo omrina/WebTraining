@@ -64,13 +64,15 @@ import { settings } from './gameSettings.js' ;
       const tileElement = tilesToReveal.shift();
       const neighborsData = getNeighborsData([...getLocation(tileElement)], board);
       const minesCount = neighborsData.filter(x => x.isMine).length;
-      revealIfNotMarked(tileElement, board, () => revealNumber(tileElement, board, minesCount))
-
-      if (!minesCount) {
-        tilesToReveal = [...new Set([...tilesToReveal, 
-                                     ...getNeighborsElements(neighborsData.filter(x => !x.isRevealed),
-                                                             board)])];
-      }
+      revealIfNotMarked(tileElement, board, () => {
+        revealNumber(tileElement, board, minesCount);
+        
+        if (!minesCount) {
+          tilesToReveal = [...new Set([...tilesToReveal, 
+                                        ...getNeighborsElements(neighborsData.filter(x => !x.isRevealed),
+                                                                board)])];
+        }
+      });  
     }
   }
 
@@ -81,15 +83,46 @@ import { settings } from './gameSettings.js' ;
     tile.classList.add(numbersClasses[minesCount]);
     tile.classList.remove('unrevealed-tile');
     board[row][col].isRevealed = true;
+    rebindClicksAsRevealedTile(tile, board)
   }
 
-  const getNeighborsElements = (neighborsData, board) =>
-  neighborsData.reduce((neighborsElements, neighborData) => {
-    const rowIndex = board.findIndex(row => row.includes(neighborData));
-    const colIndex = board[rowIndex].indexOf(neighborData);
+  const rebindClicksAsRevealedTile = (tile, board) => {
+    tile.onclick = null;
+    tile.oncontextmenu = null;
+    tile.ondblclick = () => onDoubleClick(tile, board);
+  }
 
-    return [...neighborsElements, getTileElement(rowIndex, colIndex)];
-  }, []);
+  const onDoubleClick = (tile, board) => {
+    const neighborsData = getNeighborsData(getLocation(tile), board);
+
+    if (isNeighborFlagsAsMineCount(neighborsData)) {
+      const minedTileData = neighborsData.filter(x => x.isMine && !x.isMarked()).shift();
+
+      if (minedTileData) {
+        revealMinedTile(getTileElement(...getLocationByData(minedTileData, board))); 
+      }
+      else {
+        getNeighborsElements(neighborsData, board).forEach(x => revealTile(x, board));
+      }
+    }
+  }
+
+  const isNeighborFlagsAsMineCount = neighborsData => {
+    const minesCount = neighborsData.filter(x => x.isMine).length;
+
+    return neighborsData.filter(x => x.currentMarkState() === 'flagged-tile').length === minesCount;
+}
+
+  const getNeighborsElements = (neighborsData, board) =>
+  neighborsData.reduce((neighborsElements, neighborData) => 
+    [...neighborsElements, getTileElement(...getLocationByData(neighborData, board))], []);
+
+  const getLocationByData = (tileData, board) => {
+    const rowIndex = board.findIndex(row => row.includes(tileData));
+    const colIndex = board[rowIndex].indexOf(tileData);
+
+    return [rowIndex, colIndex];
+  }
 
   const getTileElement = (row, col) => {
     const boardElement = document.getElementsByClassName('game-board')[0];
@@ -101,13 +134,13 @@ import { settings } from './gameSettings.js' ;
       // lose scenario!!!
       alert('loser!')
   }
-
   
 
-  const getNeighborsData = ([row, col], board) =>
-    board.slice(row === 0 ? 0 : row-1, row+2).reduce((neighbors, currentRow) => 
+  const getNeighborsData = ([row, col], board) => {
+    return board.slice(row === 0 ? 0 : row-1, row+2).reduce((neighbors, currentRow) => 
             [...neighbors, ...currentRow.slice(col === 0 ? 0 : col-1, col+2)], [])
             .filter(x => x !== board[row][col]);
+  }
   
 
   let board = initializeBoard();
@@ -123,7 +156,7 @@ import { settings } from './gameSettings.js' ;
 
   // binding left click
   [...document.getElementsByClassName('tile')].forEach(tile => tile.onclick = event => {
-    revealIfNotMarked(event.target, board, () => revealTile(event.target, board));
+    revealTile(event.target, board);
   });
 
   // bind revealMine to the mined locations
