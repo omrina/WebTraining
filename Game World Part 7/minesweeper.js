@@ -68,9 +68,9 @@ import { settings } from './gameSettings.js' ;
         revealNumber(tileElement, board, minesCount);
         
         if (!minesCount) {
-          tilesToReveal = [...new Set([...tilesToReveal, 
-                                        ...getNeighborsElements(neighborsData.filter(x => !x.isRevealed),
-                                                                board)])];
+          tilesToReveal = [...tilesToReveal,
+                           ...getNeighborsElements(neighborsData.filter(x => !x.isRevealed), board)]
+          tilesToReveal = [...new Set(tilesToReveal)];
         }
       });  
     }
@@ -83,7 +83,30 @@ import { settings } from './gameSettings.js' ;
     tile.classList.add(numbersClasses[minesCount]);
     tile.classList.remove('unrevealed-tile');
     board[row][col].isRevealed = true;
-    rebindClicksAsRevealedTile(tile, board)
+    rebindClicksAsRevealedTile(tile, board);
+
+    if (isGameWon(board)) {
+      displayGameOverMessage('win-cover');
+    }
+  }
+
+  const isGameWon = board => {
+    const allTiles = board.flat();
+    const minesCount = allTiles.filter(x => x.isMine).length;
+    const revealedTilesCount = allTiles.filter(x => x.isRevealed).length;
+
+    return allTiles.length - revealedTilesCount === minesCount;
+  }
+
+  const displayGameOverMessage = messageElementClass => {
+    const coveringMessageElement = document.getElementsByClassName(messageElementClass)[0];
+    document.getElementsByClassName('game-board')[0].classList.add('disabled')
+    coveringMessageElement.style.display = 'block';
+    
+    setTimeout(() => {
+      coveringMessageElement.style.transform = 'scale(1.5)';
+      coveringMessageElement.style.opacity = '0.7';
+    }, 1000);
   }
 
   const rebindClicksAsRevealedTile = (tile, board) => {
@@ -96,14 +119,9 @@ import { settings } from './gameSettings.js' ;
     const neighborsData = getNeighborsData(getLocation(tile), board);
 
     if (isNeighborFlagsAsMineCount(neighborsData)) {
-      const minedTileData = neighborsData.filter(x => x.isMine && !x.isMarked()).shift();
-
-      if (minedTileData) {
-        onMineReveal(board); 
-      }
-      else {
-        getNeighborsElements(neighborsData, board).forEach(x => revealTile(x, board));
-      }
+      neighborsData.some(x => x.isMine && !x.isMarked()) 
+        ? onMineReveal(board) 
+        : getNeighborsElements(neighborsData, board).forEach(x => revealTile(x, board));
     }
   }
 
@@ -132,36 +150,25 @@ import { settings } from './gameSettings.js' ;
 
   const onMineReveal = board => {
       revealAllMines(board);
-      displayLoseMessage();
+      displayGameOverMessage('lose-cover');
   }
 
   const revealAllMines = board => {
     const mineClass = 'mined-tile';
     const minedTiles = board.flat().filter(x => x.isMine);
-    const mineElements = minedTiles.map(tile => getLocationByData(tile, board))
-                                   .map(location => getTileElement(...location));
+    const mineElements = minedTiles.map(tile => getTileElement(...getLocationByData(tile, board)));
+
     mineElements.forEach(x => {
       x.classList.add(mineClass);
       x.classList.remove('unrevealed-tile');
     })
-  }
+  } 
 
-  const displayLoseMessage = () => {
-    const loseCoverElement = document.getElementsByClassName('lose-cover')[0];
-    document.getElementsByClassName('game-board')[0].classList.add('disabled')
-    loseCoverElement.style.display = 'block';
-    
-    setTimeout(() => {
-      loseCoverElement.style.transform = 'scale(1.5)';
-      loseCoverElement.style.opacity = '0.7';
-    }, 1000);
-  }  
-
-  const getNeighborsData = ([row, col], board) => {
-    return board.slice(row === 0 ? 0 : row-1, row+2).reduce((neighbors, currentRow) => 
+  const getNeighborsData = ([row, col], board) => 
+    board.slice(row === 0 ? 0 : row-1, row+2).reduce((neighbors, currentRow) => 
             [...neighbors, ...currentRow.slice(col === 0 ? 0 : col-1, col+2)], [])
             .filter(x => x !== board[row][col]);
-  }
+  
 
   let board = initializeBoard();
   assignMinesOnBoard(board, generateMinesLocations(settings.minesCount));
