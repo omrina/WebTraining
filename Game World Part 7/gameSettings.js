@@ -1,9 +1,9 @@
 import { onRestart } from './gameBar/gameBar.js';
 
-const easyMode = { rowsCount: 9, columnsCount: 9, minesCount: 10 };
-const mediumMode = { rowsCount: 16, columnsCount: 16, minesCount: 40 };
-const hardMode = { rowsCount: 16, columnsCount: 30, minesCount: 99 };
-const availableMarkingClasses = ['unmarked', 'flagged-tile', 'questioned-tile'];
+const [easyMode, mediumMode, hardMode] = [{ rowsCount: 9, columnsCount: 9, minesCount: 10 },
+                                          { rowsCount: 16, columnsCount: 16, minesCount: 40 },
+                                          { rowsCount: 16, columnsCount: 30, minesCount: 99 }];
+let availableMarkingClasses = ['unmarked', 'flagged-tile', 'questioned-tile'];
 const [unmarkedClass, flaggedClass, questionMarkingClass] = [...availableMarkingClasses];
 export let settings = {...easyMode, availableMarkingClasses, flaggedClass, unmarkedClass};
 
@@ -45,16 +45,34 @@ const bindModeButtons = () => {
     hardButton.onclick = () => changeMode(hardButton, hardMode, modeButtons);
 }
 
-const changeMode = (modeButton, modeSettings, modeButtons) => {
+const changeMode = (modeButton, modeSettings, modesButtons) => {
     const activeModeClass = 'active-mode';
      
     if (!modeButton.classList.contains(activeModeClass)){
-        modeButtons.forEach(x => x.classList.remove(activeModeClass));
+        modesButtons.forEach(x => x.classList.remove(activeModeClass));
         modeButton.classList.add(activeModeClass);
         settings = {...settings, ...modeSettings};
         onRestart(settings);
     }
 }
 
+const bindQuestionMarkSwitch = () => {
+    document.getElementsByClassName('question-mark-checkbox')[0].onchange =
+        event => toggleQuestionMarking(event.target);
+}
+
+const toggleQuestionMarking = checkboxElement => {
+    if (checkboxElement.checked) {
+        availableMarkingClasses = [... availableMarkingClasses, questionMarkingClass];
+    }
+    else {
+        availableMarkingClasses.pop();
+    }
+
+    settings = {...settings, availableMarkingClasses};
+    onRestart(settings)
+}
+
 bindSidebarToggeling();
 bindModeButtons();
+bindQuestionMarkSwitch();
