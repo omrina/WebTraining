@@ -1,5 +1,5 @@
 import { startGame } from '../gameLogic.js';
-import { settings } from '../gameSettings.js' ;
+import { settings } from '../gameSettings.js';
 
 export const updateFlagsDisplay = board => {
     const minesCount = board.flat().filter(x => x.isMine).length;

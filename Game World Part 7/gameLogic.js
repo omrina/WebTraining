@@ -1,10 +1,11 @@
 import { settings } from './gameSettings.js' ;
 import { buildBoardRowsElements } from './boardHtmlBuilder.js';
 import { updateFlagsDisplay } from './gameBar/gameBar.js';
+import { startTime, stopTime } from './stopwatch.js';
 
 export const startGame = settings => {
   let board = initializeBoard(settings);
-
+  // assign mines after clicked once on a tile?
   assignMinesOnBoard(board, generateMinesLocations(settings.minesCount));
   buildBoardRowsElements(settings.rowsCount, settings.columnsCount)
     .forEach(row => document.getElementsByClassName('game-board')[0].appendChild(row));
@@ -18,11 +19,13 @@ export const startGame = settings => {
   });
   [...document.getElementsByClassName('tile')].filter(tile => {
     const [row, col] = getLocation(tile);
-
     return board[row][col].isMine;
   }).forEach(minedTile => minedTile.onclick = event => {
     revealIfNotMarked(event.target, board, () => onMineReveal(board));
   });
+  
+  stopTime();
+  startTime();
 }
 
 const initializeBoard = settings => {
@@ -136,6 +139,8 @@ const displayGameOverMessage = messageElementClass => {
     coveringMessageElement.style.transform = 'scale(1.5)';
     coveringMessageElement.style.opacity = '0.7';
   }, 1000);
+
+  stopTime();
 }
 
 const rebindClicksAsRevealedTile = (tile, board) => {
