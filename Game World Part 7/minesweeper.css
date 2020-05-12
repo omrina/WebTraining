@@ -46,3 +46,8 @@ html, body {
   overflow-x: hidden;
   position: relative;
 }
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}

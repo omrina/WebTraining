@@ -99,7 +99,7 @@ import { settings } from './gameSettings.js' ;
       const minedTileData = neighborsData.filter(x => x.isMine && !x.isMarked()).shift();
 
       if (minedTileData) {
-        revealMinedTile(getTileElement(...getLocationByData(minedTileData, board))); 
+        onMineReveal(board); 
       }
       else {
         getNeighborsElements(neighborsData, board).forEach(x => revealTile(x, board));
@@ -130,18 +130,38 @@ import { settings } from './gameSettings.js' ;
     return boardElement.children[row].children[col];
   }
 
-  const revealMinedTile = (tile, board) => {
-      // lose scenario!!!
-      alert('loser!')
+  const onMineReveal = board => {
+      revealAllMines(board);
+      displayLoseMessage();
   }
-  
+
+  const revealAllMines = board => {
+    const mineClass = 'mined-tile';
+    const minedTiles = board.flat().filter(x => x.isMine);
+    const mineElements = minedTiles.map(tile => getLocationByData(tile, board))
+                                   .map(location => getTileElement(...location));
+    mineElements.forEach(x => {
+      x.classList.add(mineClass);
+      x.classList.remove('unrevealed-tile');
+    })
+  }
+
+  const displayLoseMessage = () => {
+    const loseCoverElement = document.getElementsByClassName('lose-cover')[0];
+    document.getElementsByClassName('game-board')[0].classList.add('disabled')
+    loseCoverElement.style.display = 'block';
+    
+    setTimeout(() => {
+      loseCoverElement.style.transform = 'scale(1.5)';
+      loseCoverElement.style.opacity = '0.7';
+    }, 1000);
+  }  
 
   const getNeighborsData = ([row, col], board) => {
     return board.slice(row === 0 ? 0 : row-1, row+2).reduce((neighbors, currentRow) => 
             [...neighbors, ...currentRow.slice(col === 0 ? 0 : col-1, col+2)], [])
             .filter(x => x !== board[row][col]);
   }
-  
 
   let board = initializeBoard();
   assignMinesOnBoard(board, generateMinesLocations(settings.minesCount));
@@ -165,7 +185,7 @@ import { settings } from './gameSettings.js' ;
 
     return board[row][col].isMine;
   }).forEach(minedTile => minedTile.onclick = event => {
-    revealIfNotMarked(event.target, board, () => revealMinedTile(event.target, board));
+    revealIfNotMarked(event.target, board, () => onMineReveal(board));
   });
 
   // Bind click events!!!

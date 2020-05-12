@@ -21,6 +21,10 @@
   cursor: pointer;
 }
 
+.game-board {
+  position: relative;
+}
+
 .row {
   display: flex;
 }
@@ -66,7 +70,7 @@
   color: rgb(202, 0, 0);
 }
 
-.bombed-tile:after {
+.mined-tile:after {
   font-family: mdi-icons;
   content: "\f690";
   color: #04010e;
@@ -117,4 +121,17 @@
 .number-eight:after {
   color: #7f807f;
   content: "8";
+}
+
+.win-cover, .lose-cover {
+  position: absolute;
+  top: 25%;
+  width: 100%;
+  font-size: 48px;
+  font-weight: bold;
+  opacity: 0;
+  background-color: #e6a844;
+  transition: 1s linear;
+  text-align: center;
+  display: none;
 }
