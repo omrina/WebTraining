@@ -1,5 +1,6 @@
 import { settings } from './gameSettings.js' ;
 import { buildBoardRowsElements } from './boardHtmlBuilder.js';
+import { updateFlagsDisplay } from './gameBar/gameBar.js';
 
 export const startGame = settings => {
   let board = initializeBoard(settings);
@@ -71,9 +72,10 @@ const onRightClick = (tile, board) => {
   const [row, col] = getLocation(tile);
   const tileData = board[row][col];
 
-  tile.classList.remove(tileData.currentMarkState())
-  tileData.markingStates.push(tileData.markingStates.shift())
-  tile.classList.add(tileData.currentMarkState())
+  tile.classList.remove(tileData.currentMarkState());
+  tileData.markingStates.push(tileData.markingStates.shift());
+  tile.classList.add(tileData.currentMarkState());
+  updateFlagsDisplay(board);
 }
 
 const revealIfNotMarked = (tile, board, revealFunction) => {
