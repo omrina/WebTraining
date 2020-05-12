@@ -70,18 +70,18 @@
 
 @font-face {
   font-family: mdi-icons;
-  src: url("../node_modules/mdi/fonts/materialdesignicons-webfont.ttf");
+  src: url('../node_modules/mdi/fonts/materialdesignicons-webfont.ttf');
 }
 
 .flagged-tile:after {
   font-family: mdi-icons;
-  content: "\f240";
+  content: '\f240';
   color: rgb(202, 0, 0);
 }
 
 .questioned-tile:after {
   color: #eef2fb;
-  content: "?";
+  content: '?';
 }
 
 .mined-tile:after {
@@ -94,42 +94,42 @@
 
 .number-one:after {
   color: #009ee4;
-  content: "1";
+  content: '1';
 }
 
 .number-two:after {
   color: #3f48cc;
-  content: "2";
+  content: '2';
 }
 
 .number-three:after {
   color: #b83dba;
-  content: "3";
+  content: '3';
 }
 
 .number-four:after {
   color: #bd2f53;
-  content: "4";
+  content: '4';
 }
 
 .number-five:after {
   color: #e2a84a;
-  content: "5";
+  content: '5';
 }
 
 .number-six:after {
   color: #c5c208;
-  content: "6";
+  content: '6';
 }
 
 .number-seven:after {
   color: #06b100;
-  content: "7";
+  content: '7';
 }
 
 .number-eight:after {
   color: #7f807f;
-  content: "8";
+  content: '8';
 }
 
 .win-cover, .lose-cover {

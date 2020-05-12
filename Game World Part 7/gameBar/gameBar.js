@@ -4,7 +4,6 @@ import { settings } from '../gameSettings.js';
 export const updateFlagsDisplay = board => {
     const minesCount = board.flat().filter(x => x.isMine).length;
     const flaggedTilesCount = board.flat().filter(x => x.isFlagged()).length;
-
     setFlagsDisplay(minesCount, flaggedTilesCount);
 }
 
@@ -13,7 +12,7 @@ const setFlagsDisplay = (minesCount, flaggedTilesCount = 0) => {
         `${flaggedTilesCount}/${minesCount}`;
 }
 
-const onRestart = settings => {
+export const onRestart = settings => {
     resetBoardElement();
     hideGameOverMessage();
     setFlagsDisplay(settings.minesCount);
@@ -36,4 +35,3 @@ const hideGameOverMessage = () => {
 }
 
 document.getElementsByClassName('restart-button')[0].onclick = () => onRestart(settings);
-setFlagsDisplay(settings.minesCount);

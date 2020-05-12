@@ -2,7 +2,7 @@
 <head>
     <title>Minesweeper</title>
     <link rel="stylesheet" href="./node_modules/mdi/css/materialdesignicons.css">
-    <link rel="stylesheet" href="./minesweeper.css">
+    <link rel="stylesheet" href="./index.css">
     <link rel="stylesheet" href="./gameDisplay/gameDisplay.css">
     <link rel="stylesheet" href="./settingsSidebar/settingsSidebar.css">
     <link rel="stylesheet" href="./settingsSidebar/settingsSidebar.css">
@@ -14,22 +14,23 @@
             <span class="game-title">
                 Minesweeper
             </span>
-            <i class="mdi mdi-settings settings-button"></i>
+            <i class="mdi mdi-settings settings-button "></i>
         </div>
         <div class="main-container">
             <div class="settings-sidebar">
+                <span class="close-settings-button">X</span>
                 <div class="feature-settings">
                     <span class="feature-settings-title">Mode</span>
                     <div class="modes-container">
-                    <div class="mode-button easy active-mode">
+                    <div class="mode-button easy-button active-mode">
                         <span class="mode-size">9x9</span>
                         <span class="easy-mode-label">Easy</span>
                     </div>
-                    <div class="mode-button medium">
+                    <div class="mode-button medium-button">
                         <span class="mode-size">16x16</span>
                         <span class="medium-mode-label">Medium</span>
                     </div>
-                    <div class="mode-button hard">
+                    <div class="mode-button hard-button">
                         <span class="mode-size">30x16</span>
                         <span class="hard-mode-label">Hard</span>
                     </div>
@@ -48,7 +49,7 @@
                 <div>
                     <div class="game-bar">
                         <div class="flags-container" title="How many mines do I need to flag?">
-                            <span class="marked-flags">2/9</span>
+                            <span class="marked-flags">0/10</span>
                             <i class="mdi mdi-flag-variant flag-icon"></i>
                         </div>
                         <i class="mdi mdi-restart restart-button" title="Restart game"></i>
