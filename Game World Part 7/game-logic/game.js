@@ -10,10 +10,6 @@ import { getLocation } from './board-info.js';
 export const startGame = settings => {
   const board = initializeBoard(settings);
   displayBoard(settings.rowsCount, settings.columnsCount);
-  // [...document.getElementsByClassName('tile')].forEach(tile => {
-  // tile.addEventListener("click", () => assignMinesOnBoard(board, settings), {once: true});
-  // });
-
   bindTilesClicks(board, settings);
   stopTime();
   startTime();
@@ -29,14 +25,14 @@ const bindTilesClicks = (board, settings) => {
 const bindFirstOnceClick = (tilesElements, board, settings) => {
   document.getElementsByClassName('game-board')[0].addEventListener('click', event => {
     if (tilesElements.includes(event.target)){
-      assignMinesOnBoard(board, settings);
+      assignMinesOnBoard(getLocation(event.target), board, settings);
       bindMineClick(tilesElements, board);
     }
     else {
       bindFirstOnceClick(tilesElements, board, settings);
     }
   }, { once: true , capture: true});
-}
+};
 
 const bindRightClick = (tilesElements, board) => {
   tilesElements.forEach(tile => tile.oncontextmenu = event => {

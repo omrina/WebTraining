@@ -13,19 +13,19 @@ export const initializeBoard = settings => {
       })));
 };
 
-export const assignMinesOnBoard = (board, settings) =>
-  generateMinesLocations(settings).forEach(location => {
+export const assignMinesOnBoard = (firstClickedLocation, board, settings) =>
+  generateMinesLocations(firstClickedLocation, settings).forEach(location => {
     board[location[0]][location[1]].isMine = true;
   });
 
-const generateMinesLocations = ({ rowsCount, columnsCount, minesCount }) => {
+const generateMinesLocations = (firstClickedLocation, { rowsCount, columnsCount, minesCount }) => {
   const locations = [];
 
   while (locations.length < minesCount) {
     const newLocation = [Math.floor(Math.random() * rowsCount),
       Math.floor(Math.random() * columnsCount)];
 
-    if (!locations.some(location => location[0] === newLocation[0] &&
+    if (!(newLocation[0] === firstClickedLocation[0] && newLocation[1] === firstClickedLocation[1]) && !locations.some(location => location[0] === newLocation[0] &&
                                         location[1] === newLocation[1])) {
       locations.push(newLocation);
     }
