@@ -25,11 +25,14 @@ const generateMinesLocations = (firstClickedLocation, { rowsCount, columnsCount,
     const newLocation = [Math.floor(Math.random() * rowsCount),
       Math.floor(Math.random() * columnsCount)];
 
-    if (!(newLocation[0] === firstClickedLocation[0] && newLocation[1] === firstClickedLocation[1]) && !locations.some(location => location[0] === newLocation[0] &&
-                                        location[1] === newLocation[1])) {
+    if (!(areLocationsTheSame(newLocation, firstClickedLocation)) &&
+        !(locations.some(x => areLocationsTheSame(x, newLocation)))) {
       locations.push(newLocation);
     }
   }
 
   return locations;
 };
+
+const areLocationsTheSame = (firstLocation, secondLocation) =>
+  firstLocation[0] === secondLocation[0] && firstLocation[1] === secondLocation[1];
