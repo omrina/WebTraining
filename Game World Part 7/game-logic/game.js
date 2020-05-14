@@ -50,10 +50,8 @@ export const hideGameOverMessage = () =>
     coverElement.style.display = 'none';
     coverElement.style.transform = '';
     coverElement.style.opacity = '0';
-});
-
-const restartButton = document.getElementsByClassName('restart-button')[0];
+  });
 
 let board;
-restartButton.addEventListener('click', onRestart);
+document.getElementsByClassName('restart-button')[0].addEventListener('click', onRestart);
 startGame();

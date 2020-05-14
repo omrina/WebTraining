@@ -3,15 +3,15 @@ import { onRestart } from '../game-logic/game.js';
 let markingClasses = ['unmarked', 'flagged-tile', 'questioned-tile'];
 const [unmarkedClass, flaggedClass, questionMarkingClass] = [...markingClasses];
 const [easyMode, mediumMode, hardMode] = [{ rowsCount: 9, columnsCount: 9, minesCount: 10 },
-                                          { rowsCount: 16, columnsCount: 16, minesCount: 40 },
-                                          { rowsCount: 16, columnsCount: 30, minesCount: 99 }];
-export {flaggedClass, markingClasses, unmarkedClass};
+  { rowsCount: 16, columnsCount: 16, minesCount: 40 },
+  { rowsCount: 16, columnsCount: 30, minesCount: 99 }];
+export { flaggedClass, markingClasses, unmarkedClass };
 export let settings = { ...easyMode, markingClasses, flaggedClass, unmarkedClass };
 
 const bindSidebarToggeling = () => {
   const sidebar = document.getElementsByClassName('settings-sidebar')[0];
   const gameContainer = document.getElementsByClassName('game-container')[0];
-  
+
   document.getElementsByClassName('settings-button')[0].onclick =
         () => openSidebar(gameContainer, sidebar);
   document.getElementsByClassName('close-settings-button')[0].onclick =
