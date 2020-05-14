@@ -4,6 +4,7 @@
   align-items: center;
   padding-top: 36px;
   font-size: 32px;
+  user-select: none;
 }
 
 .game-bar {
@@ -15,7 +16,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  user-select: none;
 }
 
 .flags-container {
@@ -28,10 +28,6 @@
 
 .restart-button:hover {
   cursor: pointer;
-}
-
-.game-board {
-  position: relative;
 }
 
 .row {
@@ -48,7 +44,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
   background-color: white;
   box-shadow: inset 0px 0px 13px 2px #bab9b9;
 }
@@ -92,44 +87,36 @@
   box-shadow: 0px 0px 6px 6px #707070;
 }
 
-.number-one:after {
+.number-one {
   color: #009ee4;
-  content: '1';
 }
 
-.number-two:after {
+.number-two {
   color: #3f48cc;
-  content: '2';
 }
 
-.number-three:after {
+.number-three {
   color: #b83dba;
-  content: '3';
 }
 
-.number-four:after {
+.number-four {
   color: #bd2f53;
-  content: '4';
 }
 
-.number-five:after {
+.number-five {
   color: #e2a84a;
-  content: '5';
 }
 
-.number-six:after {
+.number-six {
   color: #c5c208;
-  content: '6';
 }
 
-.number-seven:after {
+.number-seven {
   color: #06b100;
-  content: '7';
 }
 
-.number-eight:after {
+.number-eight {
   color: #7f807f;
-  content: '8';
 }
 
 .win-cover, .lose-cover {

@@ -1,58 +1,59 @@
 import { settings } from '../game-settings/game-settings.js';
-import { initializeBoard, assignMinesOnBoard } from './board-initializer.js';
-import { displayBoard } from './board-displayer.js';
-import { onRightClick } from './right-click.js';
-import { revealTile } from './tile-reveal.js';
-import { onMineReveal } from './mine-reveal.js';
-import { startTime, stopTime } from '../game-bar/stopwatch.js';
-import { getLocation } from './board-info.js';
+import { startTime, stopTime } from './stopwatch.js';
+import { Board } from './board.js';
 
-export const startGame = settings => {
-  const board = initializeBoard(settings);
-  displayBoard(settings.rowsCount, settings.columnsCount);
-  bindTilesClicks(board, settings);
+export const startGame = () => {
+  board = new Board(settings.rowsCount, settings.columnsCount, settings.minesCount);
   stopTime();
   startTime();
 };
 
-const bindTilesClicks = (board, settings) => {
-  const tilesElements = [...document.getElementsByClassName('tile')];
-  bindFirstOnceClick(tilesElements, board, settings);
-  bindRightClick(tilesElements, board);
-  bindOneClick(tilesElements, board);
+export const updateFlagsDisplay = board => {
+  const flaggedTilesCount = board.flat().filter(({ isFlagged }) => isFlagged()).length;
+
+  setFlagsDisplay(flaggedTilesCount);
 };
 
-const bindFirstOnceClick = (tilesElements, board, settings) => {
-  document.getElementsByClassName('game-board')[0].addEventListener('click', event => {
-    if (tilesElements.includes(event.target)){
-      assignMinesOnBoard(getLocation(event.target), board, settings);
-      bindMineClick(tilesElements, board);
-    }
-    else {
-      bindFirstOnceClick(tilesElements, board, settings);
-    }
-  }, { once: true , capture: true});
+const setFlagsDisplay = (flaggedTilesCount = 0) => {
+  document.getElementsByClassName('marked-flags')[0].textContent =
+    `${flaggedTilesCount}/${settings.minesCount}`;
 };
 
-const bindRightClick = (tilesElements, board) => {
-  tilesElements.forEach(tile => tile.oncontextmenu = event => {
-    event.preventDefault();
-    onRightClick(tile, board);
-  });
+export const onRestart = () => {
+  resetBoardElement(board.element);
+  hideGameOverMessage();
+  setFlagsDisplay();
+  startGame(settings);
 };
 
-const bindOneClick = (tilesElements, board) => {
-  tilesElements.forEach(tile => tile.onclick = () => {
-    revealTile(tile, board);
-  });
+const resetBoardElement = boardElement => {
+  boardElement.classList.remove('disabled');
+  boardElement.textContent = '';
 };
 
-const bindMineClick = (tilesElements, board) => {
-  tilesElements.filter(tile => {
-    const [row, col] = getLocation(tile);
+export const displayGameOverMessage = (boardElement, messageElementClass) => {
+  const coveringMessageElement = document.getElementsByClassName(messageElementClass)[0];
 
-    return board[row][col].isMine;
-  }).forEach(minedTile => minedTile.onclick = () => onMineReveal(minedTile, board));
+  boardElement.classList.add('disabled');
+  coveringMessageElement.style.display = 'block';
+
+  setTimeout(() => {
+    coveringMessageElement.style.transform = 'scale(1.5)';
+    coveringMessageElement.style.opacity = '0.7';
+  }, 500);
+
+  stopTime();
 };
 
-startGame(settings);
+export const hideGameOverMessage = () =>
+  document.querySelectorAll('[class$=cover]').forEach(coverElement => {
+    coverElement.style.display = 'none';
+    coverElement.style.transform = '';
+    coverElement.style.opacity = '0';
+});
+
+const restartButton = document.getElementsByClassName('restart-button')[0];
+
+let board;
+restartButton.addEventListener('click', onRestart);
+startGame();
