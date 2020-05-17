@@ -8,9 +8,9 @@
 }
 
 .game-bar {
+  width: 370px;
   border: black solid 1.5px;
   border-radius: 8px;
-  box-shadow: 0px 1px 2px 1px #767676;
   margin-bottom: 4px;
   padding: 2px 8px;
   display: flex;
@@ -39,7 +39,7 @@
   height: 40px;
   border: black solid 1px;
   border-radius: 2px;
-  margin: 1px;
+  margin: .5px;
   font-weight: bold;
   display: flex;
   justify-content: center;
@@ -49,7 +49,7 @@
 }
 
 .unrevealed-tile {
-  background-color: #117fe6;
+  background-color: #0c74d6;
   box-shadow: 0.6px 1.1px 0px #2b638f, 0px 0.6px 15px rgba(0, 0, 0, 0.4),
     inset 0px 0px 3px 0px rgba(0, 0, 0, 0.5);
   transition: transform 0.01s linear;
@@ -130,12 +130,10 @@
   transition: 1s linear;
   text-align: center;
   display: none;
+  background-color: #7890f8;
 }
 
-.lose-cover {
-  background-color: #e6a844;
-}
-
-.win-cover {
-  background-color: #2cce3a;
+.win-cover.shown, .lose-cover.shown {
+  transform: scale(1.5);
+  opacity: 0.7;
 }

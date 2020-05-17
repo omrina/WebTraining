@@ -1,5 +1,5 @@
 import { markingClasses, flaggedClass, unmarkedClass } from '../game-settings/game-settings.js';
-import { updateFlagsDisplay, displayGameOverMessage } from './game.js';
+import { setFlagsDisplay, displayGameOverMessage } from './game.js';
 
 export class Tile {
     constructor (board, element) {
@@ -18,18 +18,25 @@ export class Tile {
     }
     onRightClick = event => {
         event.preventDefault();
+        this.setNextMarkingState();
+    }
+    setNextMarkingState = () => {
         const currentMarkingIndex = markingClasses.indexOf(this.currentMarking);
-        const previousMarking = this.currentMarking;
-        const nextMarking = markingClasses[(currentMarkingIndex + 1) % markingClasses.length];
+        const [previousMarking, nextMarking] = 
+            [this.currentMarking, markingClasses[(currentMarkingIndex + 1) % markingClasses.length]];
 
         this.currentMarking = nextMarking;
-
-        if (previousMarking === flaggedClass || nextMarking === flaggedClass) {
-            updateFlagsDisplay(this.board.data);
-        }
-
         this.element.classList.remove(previousMarking);
         this.element.classList.add(nextMarking);
+
+        if (previousMarking === flaggedClass) {
+            this.board.flaggedTilesCount -= 1;
+        }
+        else if (nextMarking === flaggedClass) {
+            this.board.flaggedTilesCount += 1;
+        }
+
+        setFlagsDisplay();
     }
     onOneClick = () => {
         if (!this.isMarked()) {
@@ -38,7 +45,7 @@ export class Tile {
     }
     loseGameScenario = () => {
         this.board.revealAllMines();
-        displayGameOverMessage(this.board.element, 'lose-cover');
+        displayGameOverMessage('lose-cover');
     }
     revealTile = () => {
         const neighborTiles = this.board.getNeighborTiles(this);
@@ -61,7 +68,7 @@ export class Tile {
         this.rebindClicksAsRevealedTile();
         
         if (this.board.isGameWon()) {
-            displayGameOverMessage(this.board.element, 'win-cover');
+            displayGameOverMessage('win-cover');
         }
     }
     rebindClicksAsRevealedTile = () => {

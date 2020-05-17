@@ -6,6 +6,7 @@ export class Board {
         this.rowsCount = rowsCount;
         this.colsCount = colsCount;
         this.minesCount = minesCount;
+        this.flaggedTilesCount = 0;
         this.element = document.getElementById('game-board');
         this.data = this.initializeBoard(rowsCount, colsCount);
         this.bindFirstTileClick();
@@ -59,6 +60,12 @@ export class Board {
             }
         }, { once: true , capture: true});
     }
+    getLocation = tile => {
+        const rowIndex = this.data.findIndex(row => row.includes(tile));
+        const colIndex = this.data[rowIndex].indexOf(tile);
+        
+        return new Location(rowIndex, colIndex);
+    }
     assignMinesToBoard = firstClickedLocation => {
         const minesLocations = this.generateMinesLocations(firstClickedLocation);
 
@@ -84,12 +91,6 @@ export class Board {
     areLocationsTheSame = ({ row: firstRow, col: firstCol }, { row: secondRow, col: secondCol }) => {
       return firstRow === secondRow && firstCol === secondCol;
     }
-    isGameWon = () => {
-        const allTiles = this.data.flat();
-        const revealedTilesCount = allTiles.filter(({isRevealed}) => isRevealed).length;
-        
-        return allTiles.length - revealedTilesCount === this.minesCount;
-    }
     getNeighborTiles = tile => {
         const {row, col} = this.getLocation(tile);
         const [rowStart, rowEnd] = [row === 0 ? 0 : row - 1, row + 2];
@@ -99,21 +100,20 @@ export class Board {
                          .reduce((neighbors, currentRow) => {
                              return [...neighbors, ...currentRow.slice(colStart, colEnd)];
                          }, [])
-                         .filter(x => x !== this.data[row][col]);
+                         .filter(x => x !== tile);
+    }
+    isGameWon = () => {
+        const allTiles = this.data.flat();
+        const revealedTilesCount = allTiles.filter(({ isRevealed }) => isRevealed).length;
+        
+        return allTiles.length - revealedTilesCount === this.minesCount;
     }
     isNeighborFlagsMatchTileNumber = tile => {
         const neighborsTiles = this.getNeighborTiles(tile);
         const minesCount = neighborsTiles.filter(({ isMine }) => isMine).length;
-        const flaggedNeighborsCount = 
-            neighborsTiles.filter(({ isFlagged }) => isFlagged()).length;
+        const flaggedNeighborsCount = neighborsTiles.filter(({ isFlagged }) => isFlagged()).length;
 
         return flaggedNeighborsCount === minesCount;
-    }
-    getLocation = tile => {
-        const rowIndex = this.data.findIndex(row => row.includes(tile));
-        const colIndex = this.data[rowIndex].indexOf(tile);
-        
-        return new Location(rowIndex, colIndex);
     }
     revealAllMines = () => {
         const mineElements = this.data.flat().filter(({ isMine }) => isMine)

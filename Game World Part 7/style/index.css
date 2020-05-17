@@ -11,23 +11,23 @@ html, body {
   background-color: rgb(228, 252, 250);
 }
 
-.navbar {
+.toolbar {
   display: flex;
   flex: 1;
-  background-color: #2ad3cd;
+  background-color: #106dc5;
   justify-content: space-between;
   align-items: center;
   padding: 0 48px;
 }
 
-.navbar-edge-box {
+.toolbar-edge-box {
   height: 52px;
   width: 52px;
 }
 
 .game-title {
   font-size: 52px;
-  color: #47797a;
+  color: #dcefff;
   font-weight: bold;
 }
 

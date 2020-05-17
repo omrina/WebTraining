@@ -8,8 +8,8 @@
 </head>
 <body>
     <div class="page-container">
-        <div class="navbar">
-            <div class="navbar-edge-box"></div>
+        <div class="toolbar">
+            <div class="toolbar-edge-box"></div>
             <span class="game-title">
                 Minesweeper
             </span>
@@ -21,7 +21,7 @@
                 <div class="feature-settings">
                     <span class="feature-settings-title">Mode</span>
                     <div class="modes-container">
-                    <div class="mode-button easy-button active-mode">
+                    <div class="mode-button easy-button selected-mode">
                         <span class="mode-size">9x9</span>
                         <span class="easy-mode-label">Easy</span>
                     </div>
@@ -45,17 +45,15 @@
                 </div>
             </div>
             <div class="game-container">
-                <div>
-                    <div class="game-bar">
-                        <div class="flags-container" title="How many mines do I need to flag?">
-                            <span class="marked-flags">0/10</span>
-                            <i class="mdi mdi-flag-variant flag-icon"></i>
-                        </div>
-                        <i class="mdi mdi-restart restart-button" title="Restart game"></i>
-                        <span class="elapsed-time">00:00</span>
+                <div class="game-bar">
+                    <div class="flags-container" title="How many mines do I need to flag?">
+                        <span class="marked-flags">0/10</span>
+                        <i class="mdi mdi-flag-variant flag-icon"></i>
                     </div>
-                    <div id="game-board">
-                    </div>
+                    <i class="mdi mdi-restart restart-button" title="Restart game"></i>
+                    <span class="elapsed-time">00:00</span>
+                </div>
+                <div id="game-board">
                 </div>
                 <div class="lose-cover">
                     <span>You lost... better luck next time!</span>
@@ -68,6 +66,4 @@
     </div>
 </body>
 <script type="module" src="./game-logic/game.js"></script>
-<script type="module" src="./game-settings/game-settings.js"></script>
-<script type="module" src="./game-bar/stopwatch.js"></script>
 </html>
