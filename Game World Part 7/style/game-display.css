@@ -1,4 +1,5 @@
 .game-container {
+  width: inherit;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,7 +9,7 @@
 }
 
 .game-bar {
-  width: 370px;
+  min-width: 370px;
   border: black solid 1.5px;
   border-radius: 8px;
   margin-bottom: 4px;

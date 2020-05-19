@@ -45,16 +45,16 @@
                 </div>
             </div>
             <div class="game-container">
-                <div class="game-bar">
-                    <div class="flags-container" title="How many mines do I need to flag?">
-                        <span class="marked-flags">0/10</span>
-                        <i class="mdi mdi-flag-variant flag-icon"></i>
+                    <div class="game-bar">
+                        <div class="flags-container" title="How many mines do I need to flag?">
+                            <span class="marked-flags">0/10</span>
+                            <i class="mdi mdi-flag-variant flag-icon"></i>
+                        </div>
+                        <i class="mdi mdi-restart restart-button" title="Restart game"></i>
+                        <span class="elapsed-time">00:00</span>
                     </div>
-                    <i class="mdi mdi-restart restart-button" title="Restart game"></i>
-                    <span class="elapsed-time">00:00</span>
-                </div>
-                <div id="game-board">
-                </div>
+                    <div id="game-board">
+                    </div>
                 <div class="lose-cover">
                     <span>You lost... better luck next time!</span>
                 </div>
@@ -65,5 +65,9 @@
         </div>
     </div>
 </body>
+<script type="module" src="./game-settings/configs.js"></script>
+<script type="module" src="./game-logic/stopwatch.js"></script>
 <script type="module" src="./game-logic/game.js"></script>
+<script type="module" src="./game-settings/game-settings.js"></script>
+
 </html>
