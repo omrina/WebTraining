@@ -1,4 +1,4 @@
-import { markingClasses, selectedModeSettings as modeSetttings } from '../game-settings/game-settings.js';
+import { tileStates, selectedModeSettings as modeSetttings } from '../game-settings/game-settings.js';
 import { startTime, stopTime } from './stopwatch.js';
 import { Board } from './board.js';
 
@@ -9,9 +9,9 @@ const startGame = () => {
 };
 
 export const updateFlagsData = (previousMarking, currentMarking) => {
-  if (previousMarking === markingClasses.flaggedClass) {
+  if (previousMarking === tileStates.FLAGGED) {
     board.flaggedTilesCount--;
-  } else if (currentMarking === markingClasses.flaggedClass) {
+  } else if (currentMarking === tileStates.FLAGGED) {
     board.flaggedTilesCount++;
   }
 

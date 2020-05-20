@@ -1,20 +1,20 @@
-import { markingClasses } from '../game-settings/game-settings.js';
+import { tileStates, markingClasses } from '../game-settings/game-settings.js';
 import { updateFlagsData, onDoubleClick, revealTile, loseGame } from './game.js';
 import { numbersClasses } from './numbersClasses.js';
 
 export class Tile {
-    constructor (element) {
+    constructor(element) {
         this.element = element;
         this.isMine = false;
-        this.currentMarking = markingClasses.unmarkedClass;
+        this.currentState = tileStates.UNMARKED;
         this.bindClickEvents();
     }
 
-    isRevealed = () => this.currentMarking === null;
+    isRevealed = () => this.currentState === tileStates.REVEALED;
 
-    isFlagged = () => this.currentMarking === markingClasses.flaggedClass;
+    isFlagged = () => this.currentState === tileStates.FLAGGED;
 
-    isUnmarked = () => this.currentMarking === markingClasses.unmarkedClass;
+    isUnmarked = () => this.currentState === tileStates.UNMARKED;
 
     bindClickEvents = () => {
         this.element.addEventListener('contextmenu', this.onRightClick);
@@ -27,14 +27,16 @@ export class Tile {
     }
 
     changeMarking = () => {
-        const markingClassesValues = Object.values(markingClasses); 
-        const currentMarkingIndex = markingClassesValues.indexOf(this.currentMarking);
-        const previousMarking = this.currentMarking;
+        const previousState = this.currentState;
 
-        this.currentMarking = markingClassesValues[(currentMarkingIndex + 1) % markingClassesValues.length];
-        this.element.classList.remove(previousMarking);
-        this.element.classList.add(this.currentMarking);
-        updateFlagsData(previousMarking, this.currentMarking);
+        this.currentState = (this.currentState + 1) % Object.keys(tileStates).length;
+        this.currentState = this.currentState !== tileStates.REVEALED
+                            ? this.currentState
+                            : tileStates.UNMARKED;
+
+        this.element.classList.remove(markingClasses[previousState]);
+        this.element.classList.add(markingClasses[this.currentState]);
+        updateFlagsData(previousState, this.currentState);
     }
 
     onOneClick = () => {
@@ -46,7 +48,7 @@ export class Tile {
     setAsRevealed = minesCount => {
         this.element.className = `tile ${numbersClasses[minesCount]}`;
         this.element.textContent = minesCount ? minesCount : '';
-        this.currentMarking = null;
+        this.currentState = tileStates.REVEALED;
         this.rebindClicksAsRevealedTile();
     }
 

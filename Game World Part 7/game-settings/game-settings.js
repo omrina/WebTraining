@@ -1,8 +1,19 @@
 import { restart } from '../game-logic/game.js';
-import { easyMode, mediumMode, hardMode, unmarkedClass, flaggedClass, questionMarkingClass } from './configs.js';
+import { easyMode, mediumMode, hardMode } from './configs.js';
 
 export let selectedModeSettings = easyMode;
-export const markingClasses = { unmarkedClass, flaggedClass, questionMarkingClass };
+export const tileStates = {
+  REVEALED: 0,
+  UNMARKED: 1,
+  FLAGGED: 2,
+  QUESTIONED: 3
+};
+export const markingClasses = {
+  [tileStates.REVEALED]: 'revealed',
+  [tileStates.UNMARKED]: 'unmarked',
+  [tileStates.FLAGGED]: 'flagged-tile',
+  [tileStates.QUESTIONED]: 'questioned-tile'
+};
 
 const bindSidebarToggeling = () => {
   document.getElementsByClassName('settings-button')[0].addEventListener('click', toggleSidebar);
@@ -21,8 +32,8 @@ const bindModeButtons = () => {
   const modeButtons = [...document.getElementsByClassName('mode-button')];
   const [easyButton, mediumButton, hardButton] =
     [modeButtons.find(x => x.classList.contains('easy-button')),
-      modeButtons.find(x => x.classList.contains('medium-button')),
-      modeButtons.find(x => x.classList.contains('hard-button'))];
+    modeButtons.find(x => x.classList.contains('medium-button')),
+    modeButtons.find(x => x.classList.contains('hard-button'))];
 
   easyButton.addEventListener('click', () => changeMode(easyButton, easyMode, modeButtons));
   mediumButton.addEventListener('click', () => changeMode(mediumButton, mediumMode, modeButtons));
@@ -47,9 +58,9 @@ const bindQuestionMarkSwitch = () => {
 
 const toggleQuestionMarking = checkboxElement => {
   if (checkboxElement.checked) {
-    markingClasses.questionMarkingClass = questionMarkingClass;
+    tileStates.QUESTIONED = Object.keys(tileStates).length;
   } else {
-    delete markingClasses.questionMarkingClass;
+    delete tileStates.QUESTIONED;
   }
 
   restart();
