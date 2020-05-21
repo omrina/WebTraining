@@ -1,0 +1,27 @@
+{
+  "incoming": [
+    {
+      "id": 1,
+      "from": "noycohen@gmail.com",
+      "to": "amitwolfus@gmail.com",
+      "subject": "Lorem Ipsum",
+      "content": "Lorem ipsum dolor sit amet, graeci habemus imperdiet vel cu"
+    },
+    {
+      "id": 2,
+      "from": "okielad@gmail.com",
+      "to": "amitwolfus@gmail.com",
+      "subject": "Lorem Ipsum",
+      "content": "Lorem ipsum dolor sit amet, graeci habemus imperdiet vel cu"
+    }
+  ],
+  "outgoing": [
+    {
+      "id": 1,
+      "from": "amitwolfus@gmail.com",
+      "to": "yossiraiko@idf.il",
+      "subject": "Lorem Ipsum",
+      "content": "Lorem ipsum dolor sit amet, graeci habemus imperdiet vel cu"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "mail",
+  "version": "1.0.0",
+  "description": "Mail With Client Framework",
+  "scripts": {
+    "test": "eslint */*.js",
+    "fix": "eslint */*.js --fix",
+    "dev": "json-server db.json --static client --middlewares bin/static.js"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^7.0.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "json-server": "^0.10.1",
+    "serve-static": "^1.12.3"
+  },
+  "dependencies": {
+    "angular": "^1.7.9",
+    "angular-material": "^1.1.22",
+    "angular-ui-router": "^1.0.26"
+  }
+}
