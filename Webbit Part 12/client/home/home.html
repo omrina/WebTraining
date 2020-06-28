@@ -1,0 +1,16 @@
+<md-toolbar>
+    <div layout-padding layout="row">
+        <i class="mdi mdi-duck"></i>
+        <span>Webbit</span>
+        <span flex></span>
+        <md-button ng-click="logout()" class="md-icon-button">
+            <i class="mdi mdi-logout">
+                <md-tooltip>Logout</md-tooltip>
+            </i>
+        </md-button>
+    </div>
+</md-toolbar>
+<md-content layout-align="center center" layout="column">
+    <span class="md-title">Welcome to Webbit!</span>
+    <span class="md-subhead">hi {{user.Username}}</span>
+</md-content>

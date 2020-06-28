@@ -2,12 +2,35 @@
 <html>
 <head>
     <title>Mail</title>
+    <link rel="stylesheet" href="../node_modules/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../node_modules/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="./index.css">
     <script src="../node_modules/angular/angular.min.js"></script>
+    <script src="../node_modules/angular-resource/angular-resource.min.js"></script>
+    <script src="../node_modules/angular-aria/angular-aria.min.js"></script> 
+    <script src="../node_modules/angular-animate/angular-animate.min.js"></script> 
+    <script src="../node_modules/angular-messages/angular-messages.min.js"></script> 
+    <script src="../node_modules/angular-material/angular-material.min.js"></script> 
     <script src="../node_modules/angular-ui-router/release/angular-ui-router.js"></script>
 </head>
-
-<body>
-    <span>Hello World!</span>
-    <script src="../node_modules/lodash/lodash.js"></script>
+<body ng-app="mailApp">
+    <div class="page-container">
+        <div class="toolbar">
+            <img class="logo" src="./assets/envelope.png" alt="MailBox Logo">
+            <span class="title">Mail</span>
+        </div>
+        <div class="main-container">
+            <div class="navigation-panel">
+                <md-button ui-sref="incoming" ui-sref-active="active-navigation-button" class="navigation-button">Inbox</md-button>
+                <md-button ui-sref="outgoing" ui-sref-active="active-navigation-button" class="navigation-button">Outgoing Mail</md-button>
+            </div>
+            <div class="content">
+                <ui-view></ui-view>                
+            </div>
+        </div>
+        <i class="mdi mdi-pencil new-mail-button">
+        </i>
+    </div>
 </body>
+<script src="./app.js"></script>
 </html>

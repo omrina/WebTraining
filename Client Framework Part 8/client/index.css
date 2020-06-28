@@ -1,0 +1,154 @@
+html, body {
+  height: 100vh;
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.page-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.toolbar {
+  flex: 1;
+  background-color: #03a9f4;
+  padding-left: 24px;
+  padding-top: 24px;
+}
+
+.logo {
+  width: 60px;
+  height: 42px;
+}
+
+.title {
+  font-size: 30px;
+  color: white;
+  font-weight: bold;
+  padding-left: 5px;
+}
+
+.main-container {
+  display: flex;
+  flex: 12;
+}
+
+.navigation-panel {
+  background-color: #212121;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: 16px;
+  padding-right: 5px;
+}
+
+.navigation-button {
+  color: white;
+  background-color: #757575;
+  display: flex;
+  height: 42px;
+  align-items: center;
+  width: 95%;
+  margin-bottom: 5px;
+  padding-left: 12%;
+  border-radius: 2px;
+  transform: translateX(-10%);
+  transition: transform 1s;
+}
+
+.navigation-button:hover {
+  transform: translateX(0);
+}
+
+.active-navigation-button {
+  background-color: #ff9100;
+}
+
+.content {
+  flex: 4;
+  overflow-y: auto;
+  background-color: #424242;
+}
+
+.message-box {
+  background-color: white;
+  height: 68px;
+  width: 80%;
+  margin: 10px auto;
+  padding: 5px;
+  border-radius: 2px;
+  box-shadow: 0px 3px 5px -1px white;
+  display: flex;
+  transition: transform 1s;
+}
+
+.message-box:nth-child(odd) {
+  background-color: gainsboro;
+}
+
+.message-box:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.message-box:hover .importance-icon {
+  color: gray;
+}
+
+.message-header {
+  padding-right: 10px;
+  padding-top: 4px;
+  flex: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.message-subject {
+  font-size: 32px;
+  padding-bottom: 4px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.vertical-separator {
+  width: 1px;
+  display: inline-block;
+  height: 100%;
+  background-color: #808080;
+}
+
+.message-body {
+  flex: 4;
+  padding-left: 4px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.importance-icon {
+  align-self: flex-end;
+  color: #ff0000;
+  font-size: 24px;
+}
+
+.new-mail-button {
+  position: absolute;
+  bottom: 16px;
+  right: 32px;
+  height: 50px;
+  width: 50px;
+  background-color: #ff9100;
+  color: white;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: transform 1.5s;
+}
+
+.new-mail-button:hover {
+  transform: rotate(360deg);
+}

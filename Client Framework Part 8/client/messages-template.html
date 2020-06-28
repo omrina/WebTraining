@@ -1,0 +1,15 @@
+<div>
+    <div ng-repeat="msg in $ctrl.messages" class="message-box">
+        <div class="message-header">
+            <div class="message-subject">
+                <span>{{ msg.subject }}</span>
+            </div>
+            <span>
+                <b>{{ addressPrefix }}: </b>{{ msg.from }}
+            </span>
+        </div>
+        <div class="vertical-separator"></div>
+        <span class="message-body">{{ msg.content }}</span>
+        <i class="mdi mdi-alert importance-icon"></i>
+    </div>
+</div>
