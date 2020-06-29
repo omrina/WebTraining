@@ -4,9 +4,13 @@ namespace Server.ViewModels
 {
     public class UserViewModel
     {
+        public string Id { get; set; }
+        public string Username { get; set; }
+
         public UserViewModel(User user)
         {
-            // TODO: what should we do here
+            Id = user.Id.ToString();
+            Username = user.Username;
         }
     }
 }

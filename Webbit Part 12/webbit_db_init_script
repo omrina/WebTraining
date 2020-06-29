@@ -1,0 +1,14 @@
+use webbit
+db.dropDatabase();
+
+var users = [
+	{
+		username: "admin",
+		password: "admin",
+		salt: "",
+		sessionToken: ""
+	}
+];
+
+db.user.createIndex( { "username": 1 }, { unique: true } )
+db.user.insert(users);

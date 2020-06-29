@@ -1,11 +1,12 @@
 ﻿using System.Configuration;
 using System.Web.Http;
-using Microsoft.Owin;
+using System.Web.Http.ExceptionHandling;
 using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.StaticFiles;
+using Newtonsoft.Json.Serialization;
 using Owin;
-
-[assembly: OwinStartup(typeof(Server.Startup))]
+using Server.Middlewares;
+using Server.WebApiConfig;
 
 namespace Server
 {
@@ -13,18 +14,19 @@ namespace Server
     {
         public void Configuration(IAppBuilder appBuilder)
         {
-            // TODO: make sure the client recognizes the server
-            var config = new HttpConfiguration();
+            appBuilder.Use<ExceptionsMiddleware>();
 
-            config.MapHttpAttributeRoutes();
+            var config = new HttpConfiguration();
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            config.MapHttpAttributeRoutes(new InheritedAttributesRouteProvider());
+            config.Services.Replace(typeof(IExceptionHandler), new PassThroughExceptionsHandler());
+
             appBuilder.UseWebApi(config);
 
             var physicalFileSystem = new PhysicalFileSystem(ConfigurationManager.AppSettings["ClientPath"]);
 
             var options = new FileServerOptions
             {
-                EnableDefaultFiles = true,
-                FileSystem = physicalFileSystem,
                 StaticFileOptions =
                 {
                     FileSystem = physicalFileSystem,

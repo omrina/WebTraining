@@ -1,22 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
+using Server.Exceptions;
 using Server.Logic;
+using Server.Models;
 using Server.ViewModels;
 
 namespace Server.Controllers
 {
-    [RoutePrefix("api/auth")]
-    public class AuthController : ApiController
+    [RoutePrefix("auth")]
+    public class AuthController : BaseController<AuthLogic, User>
     {
-        private UserLogic Logic { get; }
-
-        public AuthController()
+        public AuthController() : base(new AuthLogic())
         {
-            Logic = new UserLogic();
         }
 
         [Route("login")]
@@ -24,6 +21,15 @@ namespace Server.Controllers
         public IHttpActionResult Login(LoginViewModel user)
         {
             return Ok(Logic.Login(user));
+        }
+
+        [Route("signup")]
+        [HttpPost]
+        public async Task<IHttpActionResult> Signup(UserSignupViewModel user)
+        {
+            await Logic.Signup(user);
+
+            return Ok();
         }
     }
 }

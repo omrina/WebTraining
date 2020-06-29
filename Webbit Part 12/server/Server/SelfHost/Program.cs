@@ -1,19 +1,34 @@
 ﻿using System;
 using System.Configuration;
 using Microsoft.Owin.Hosting;
+using Microsoft.Owin.Logging;
+using SelfHost.Resources;
 using Server;
 
 namespace SelfHost
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            using (WebApp.Start<Startup>(ConfigurationManager.AppSettings["HostAddress"]))
+            try
             {
-                Console.WriteLine($"server listening at port 80");
-                Console.ReadLine();
+                var hostAddress = ConfigurationManager.AppSettings["HostAddress"];
+
+                using (WebApp.Start<Startup>(hostAddress))
+                {
+                    Console.WriteLine(ServerConsoleMessages.ServerRunning, hostAddress);
+                    Console.ReadLine();
+                }
             }
+            catch (Exception exception)
+            {
+                Console.WriteLine(ServerConsoleMessages.ServerHasCrashed);
+                // Console.WriteLine(exception.Message);
+                // TODO: logger!?
+                LoggerFactory.Default.Create("Asd").WriteCritical(exception.Message, exception);
+            }
+            
         }
     }
 }

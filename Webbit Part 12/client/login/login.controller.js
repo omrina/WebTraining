@@ -15,14 +15,14 @@ angular.module('webbit.controllers')
                     status = status > 500 ? 500 : status;
 
                     const errors = {
-                        400: 'Username and Password are invalid',
+                        401: 'Username or Password are invalid',
                         500: 'An error has occurred, please try later'
                     };
 
                     $mdToast.show(
                         $mdToast.simple()
                             .textContent(errors[status])
-                            .hideDelay(4000)
+                            .hideDelay(3500)
                     );
                 });
         }

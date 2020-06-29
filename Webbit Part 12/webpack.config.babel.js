@@ -51,7 +51,6 @@ export default {
   devServer: {
     inline: true,
     historyApiFallback: true,
-    hot: true,
     port: 8000,
     proxy: {
       '/auth': {

@@ -3,14 +3,14 @@ import ngMaterial from 'angular-material';
 import ngAnimate from 'angular-animate';
 import ngAria from 'angular-aria';
 import ngResource from 'angular-resource';
+import ngMessages from 'angular-messages';
 import uiRouter from 'angular-ui-router';
 import 'angular-material/angular-material.min.css';
 import 'mdi/css/materialdesignicons.css';
-
 import services from './services';
 import controllers from './controllers';
 
-angular.module('webbit', [uiRouter, ngResource, ngAnimate, ngAria, ngMaterial, services, controllers])
+angular.module('webbit', [uiRouter, ngResource, ngAnimate, ngAria, ngMessages, ngMaterial, services, controllers])
     .config(($locationProvider, $urlRouterProvider) => {
         $urlRouterProvider.otherwise('/');
         $locationProvider.html5Mode(true);

@@ -1,8 +1,35 @@
-<md-subheader>Login</md-subheader>
-<md-input-container>
-    <input ng-model="user.username"/>
-</md-input-container>
-<md-input-container>
-    <input type="password" ng-model="user.password" />
-</md-input-container>
-<md-button ng-click="login()">Login</md-button>
+<div class="panel">
+  <div layout="column" layout-align="center center">
+    <div layout="column" class="loginBox md-whiteframe-z1">
+      <md-toolbar layout="row" layout-align="center center">
+        <h2><span class="login-label">Login</span></h2>
+      </md-toolbar>
+      <form name="loginForm">
+        <md-content layout="column" class="md-padding">
+          <md-input-container>
+            <label><i class="mdi mdi-account"></i> Username</label>
+            <input required md-no-asterisk type="text" ng-model="user.username" name="username" maxlength="100" />
+            <div ng-messages="loginForm.username.$error">
+              <div ng-message="required">Whats your username?</div>
+            </div>
+          </md-input-container>
+          <md-input-container>
+            <label><i class="mdi mdi-lock"></i> Password</label>
+            <input required md-no-asterisk type="password" ng-model="user.password" name="password" />
+            <div ng-messages="loginForm.password.$error" role="alert">
+              <div ng-message="required">Please enter your password</div>
+            </div>
+          </md-input-container>
+          <md-button ng-disabled="!loginForm.$valid" ng-click="login()" class="md-raised md-primary submit-button">Login
+          </md-button>
+          <md-divider></md-divider>
+          <div layout="row" layout-align="center center">
+            <span>New to Webbit?
+              <a ui-sref="exterior.signup">Sign Up</a>
+            </span>
+          </div>
+        </md-content>
+      </form>
+    </div>
+  </div>
+</div>

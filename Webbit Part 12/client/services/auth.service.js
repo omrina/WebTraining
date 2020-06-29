@@ -16,6 +16,7 @@ angular.module('webbit.services')
         };
 
         return {
+            signup: ({username = '', password = ''} = {}) => $http.post('/auth/signup', {username, password}),
             login ({username = '', password = ''} = {}) {
                 return $http.post('/auth/login', {username, password})
                     .then(({data}) => {
