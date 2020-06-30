@@ -6,14 +6,71 @@
   position: fixed !important;
 }
 
-.nav-bar{
+.nav-bar {
   width: 100%;
 
-  .logo{
+  .logo {
     text-decoration: none;
   }
 }
 
 .new-subwebbit-link {
   color: #47d6d8;
+}
+
+// Their rules ^
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// My rules v
+
+.toolbar {
+  padding: 0 50px;
+
+  .logo {
+    font-size: 32px;
+  }
+
+  .logout-icon {
+    font-size: 32px;
+  }
+
+  .search-bar {
+    width: 35%;
+  }
+}
+
+#custom-template input {
+  font-size: 24px;
+}
+
+.search-results-container {
+  .md-autocomplete-suggestion {
+    border-bottom: .5px solid #ccc;
+    line-height  : normal;
+    height       : auto;
+    padding      : 4px 8px;
+  }
+
+  .md-autocomplete-suggestion:last-child {
+    border-bottom-width: 0;
+  }
+
+  .subwebbit-name,
+  .subscribers-count {
+    font-size: 20px;
+  }
+
+  .subwebbit-name {
+    font-weight: 500;
+    color      : black;
+  }
+
+  .subscribers-count {
+    color: rgb(49, 46, 46)
+  }
+}
+
+.logout-tooltip {
+  font-size: 20px;
+  height   : 30px;
 }

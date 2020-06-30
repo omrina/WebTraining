@@ -7,8 +7,7 @@ namespace Server.Logic
 {
     public class MongoConnection
     {
-        // TODO: check when this is triggered
-        public IMongoDatabase Database = ConnectToDatabase();
+        public static IMongoDatabase Database = ConnectToDatabase();
 
         private static IMongoDatabase ConnectToDatabase()
         {

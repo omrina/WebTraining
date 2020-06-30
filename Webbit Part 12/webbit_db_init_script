@@ -3,6 +3,7 @@ db.dropDatabase();
 
 var users = [
 	{
+		_id: ObjectId("5ef9b50ffb356c82d30ddb73"),
 		username: "admin",
 		password: "admin",
 		salt: "",
@@ -10,5 +11,23 @@ var users = [
 	}
 ];
 
+var subwebbits = [
+	{
+		ownerId: ObjectId("5ef9b50ffb356c82d30ddb73"),
+		name: "Animals",
+		threads: [],
+		subscribersCount: 3
+	},
+	{
+		ownerId: ObjectId("5ef9b50ffb356c82d30ddb73"),
+		name: "askOmri",
+		threads: [],
+		subscribersCount: 745
+	}
+];
+
 db.user.createIndex( { "username": 1 }, { unique: true } )
+db.subwebbit.createIndex( { "name": 1 }, { unique: true } )
+
 db.user.insert(users);
+db.subwebbit.insert(subwebbits);

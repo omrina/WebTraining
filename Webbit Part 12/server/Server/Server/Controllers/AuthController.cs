@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
-using Server.Exceptions;
 using Server.Logic;
 using Server.Models;
 using Server.ViewModels;

@@ -1,1 +1,33 @@
+<md-toolbar class="toolbar" layout-padding layout="row" layout-align="space-between center">
+    <div class="logo">
+        <i class="mdi mdi-duck"></i>
+        <span>Webbit</span>
+    </div>
+    <!-- <span flex></span> -->
+    <div class="search-bar" flex-offset="15">
+        <md-autocomplete id="custom-template" md-no-cache="true" md-selected-item="selectedItem" md-delay="500"
+            md-search-text-change="searchTextChange(searchText)" md-search-text="searchText"
+            md-selected-item-change="selectedItemChange(item)" md-items="subwebbit in querySearch(searchText)"
+            md-min-length="1" placeholder="Search subwebbits..." md-menu-container-class="search-results-container">
+            <md-item-template>
+                <div>
+                    <span class="subwebbit-name">{{subwebbit.name}}</span>
+                </div>
+                <div class="subscribers-count">
+                    <span>{{subwebbit.subscribersCount}} subscriebrs</span>
+                </div>
+            </md-item-template>
+            <md-not-found>
+                No results where found
+            </md-not-found>
+        </md-autocomplete>
+    </div>
+    <span flex></span>
+    <md-button ng-click="logout()" class="md-icon-button">
+        <i class="mdi mdi-logout logout-icon">
+            <md-tooltip class="mat-tooltip logout-tooltip">Logout</md-tooltip>
+        </i>
+    </md-button>
+</md-toolbar>
+
 <div ui-view></div>

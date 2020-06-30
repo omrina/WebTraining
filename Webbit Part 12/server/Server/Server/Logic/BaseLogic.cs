@@ -1,4 +1,5 @@
 ﻿using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using Server.Models;
 
 namespace Server.Logic
@@ -10,6 +11,11 @@ namespace Server.Logic
         protected BaseLogic()
         {
             Collection = new MongoConnection().GetCollection<TModel>(typeof(TModel).Name.ToLower());
+        }
+
+        public IMongoQueryable<TModel> GetAll()
+        {
+            return Collection.AsQueryable();
         }
     }
 }

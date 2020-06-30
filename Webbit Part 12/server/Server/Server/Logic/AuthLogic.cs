@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Driver;
 using Server.Exceptions;
@@ -13,7 +12,6 @@ namespace Server.Logic
     {
         public UserViewModel Login(LoginViewModel loginViewModel)
         {
-            var a = Collection.AsQueryable().ToList();
             var user =  Collection.AsQueryable().SingleOrDefault(x =>
                 x.Password == loginViewModel.Password &&
                 x.Username == loginViewModel.Username);
@@ -28,11 +26,8 @@ namespace Server.Logic
 
         public async Task Signup(UserSignupViewModel user)
         {
-            if (!new SignupDetailsValidator().IsValid(user))
-            {
-                throw new InvalidSignupDetailsException();
-            }
-            // TODO: check username taken index exception
+            EnsureSignupDetails(user);
+
             try
             {
                 await Collection.InsertOneAsync(new User(user.Username, user.Password));
@@ -41,6 +36,14 @@ namespace Server.Logic
             {
                 // TODO: Logger!?
                 throw new UsernameAlreadyTakenException();
+            }
+        }
+
+        private void EnsureSignupDetails(UserSignupViewModel user)
+        {
+            if (!new SignupDetailsValidator().IsValid(user))
+            {
+                throw new InvalidSignupDetailsException();
             }
         }
     }
