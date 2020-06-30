@@ -4,9 +4,12 @@ const CONTROLLER = 'shell';
 
 angular.module('webbit.controllers')
   .controller(CONTROLLER, ($scope, $state, Auth, $http, $timeout, $q, $log) => {
-    $scope.searchText = "";
+    $scope.searchedText = "";
     $scope.user = Auth.getCurrentUser();
-    $scope.selectedItemModel = {};
+    // $scope.selectedSubwebbit = {};
+    $scope.ba = () => {
+      console.log('clicked!');
+    }
 
     $scope.logout = () => {
       Auth.logout();
@@ -14,7 +17,7 @@ angular.module('webbit.controllers')
     };
 
     $scope.querySearch = () => 
-      $http.get(`/api/subwebbits/search/${$scope.searchText}`)
+      $http.get(`/api/subwebbits/search/${$scope.searchedText}`)
         .then(({data}) => data);
   });
 

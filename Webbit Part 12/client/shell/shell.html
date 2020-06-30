@@ -4,12 +4,11 @@
         <span>Webbit</span>
     </div>
     <!-- <span flex></span> -->
-    <div class="search-bar" flex-offset="15">
-        <md-autocomplete id="custom-template" md-no-cache="true" md-selected-item="selectedItem" md-delay="500"
-            md-search-text-change="searchTextChange(searchText)" md-search-text="searchText"
-            md-selected-item-change="selectedItemChange(item)" md-items="subwebbit in querySearch(searchText)"
+    <div class="search-bar-container" flex-offset="15">
+        <md-autocomplete id="asda" md-no-cache="true" md-selected-item="selectedSubwebbit" md-delay="500"
+            md-search-text="searchedText" md-items="subwebbit in querySearch(searchText)" md-item-text="subwebbit.name"
             md-min-length="1" placeholder="Search subwebbits..." md-menu-container-class="search-results-container">
-            <md-item-template>
+            <md-item-template ui-sref="shell.subwebbits({ subwebbitId: subwebbit.id })">
                 <div>
                     <span class="subwebbit-name">{{subwebbit.name}}</span>
                 </div>
