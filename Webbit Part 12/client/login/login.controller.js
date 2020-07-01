@@ -11,7 +11,7 @@ angular.module('webbit.controllers')
                 .then(() => {
                     $state.go('shell.home');
                 })
-                .catch(status => {
+                .catch(({status}) => {
                     status = status > 500 ? 500 : status;
 
                     const errors = {

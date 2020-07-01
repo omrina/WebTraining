@@ -22,19 +22,12 @@ angular.module('webbit.services')
                     .then(({data}) => {
                         setUser(data);
                         currentUser = data;
-                    })
-                    .catch(({status} = {}) => {
-                        setUser(null);
-
-                        return Promise.reject(status);
                     });
             },
             logout() {
               setUser(null);
             },
             getCurrentUser: () => JSON.parse(getUser()),
-            isLoggedIn: () => !!getUser(),
-            getUser: getUser,
-            setUser: setUser
+            isLoggedIn: () => !!getUser()
         };
     });
