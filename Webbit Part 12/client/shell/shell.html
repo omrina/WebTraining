@@ -1,25 +1,30 @@
 <md-toolbar class="toolbar" layout-padding layout="row" layout-align="space-between center">
-    <div class="logo">
-        <i class="mdi mdi-duck"></i>
-        <span>Webbit</span>
+    <div class="logo" ui-sref="shell.home">
+        <i class="mdi mdi-duck"></i><span> Webbit</span>
     </div>
-    <!-- <span flex></span> -->
     <div class="search-bar-container" flex-offset="15">
-        <md-autocomplete id="asda" md-no-cache="true" md-selected-item="selectedSubwebbit" md-delay="500"
-            md-search-text="searchedText" md-items="subwebbit in querySearch(searchText)" md-item-text="subwebbit.name"
-            md-min-length="1" placeholder="Search subwebbits..." md-menu-container-class="search-results-container">
+        <md-autocomplete md-no-cache="true" md-delay="500" md-min-length="1" placeholder="Search subwebbits..."
+            md-items="subwebbit in searchSubwebbits(searchedName)" md-search-text="searchedName" md-item-text="subwebbit.name"
+            md-menu-container-class="search-results-container">
             <md-item-template ui-sref="shell.subwebbits({ subwebbitId: subwebbit.id })">
-                <div>
-                    <span class="subwebbit-name">{{subwebbit.name}}</span>
-                </div>
-                <div class="subscribers-count">
-                    <span>{{subwebbit.subscribersCount}} subscriebrs</span>
-                </div>
+                <div class="search-result" layout-padding layout="row" layout-align="start center">
+                    <div>
+                        <i class="mdi mdi-account-multiple subwebbit-icon"></i>
+                    </div>
+                    <div>
+                        <div>
+                            <span class="subwebbit-name">{{subwebbit.name}}</span>
+                        </div>
+                        <div class="subscribers-count">
+                            <span>{{subwebbit.subscribersCount}} subscriebrs</span>
+                        </div>
+                    </div>
             </md-item-template>
             <md-not-found>
                 No results where found
             </md-not-found>
         </md-autocomplete>
+    </div>
     </div>
     <span flex></span>
     <md-button ng-click="logout()" class="md-icon-button">

@@ -1,7 +1,7 @@
 import angular from 'angular';
 
 angular.module('webbit.services')
-    .factory('Auth', ($http) => {
+    .factory('Auth', $http => {
         let currentUser = {};
 
         const getUser = () => localStorage.getItem('user');
@@ -22,8 +22,6 @@ angular.module('webbit.services')
                     .then(({data}) => {
                         setUser(data);
                         currentUser = data;
-
-                        return Promise.resolve();
                     })
                     .catch(({status} = {}) => {
                         setUser(null);
@@ -35,9 +33,7 @@ angular.module('webbit.services')
               setUser(null);
             },
             getCurrentUser: () => JSON.parse(getUser()),
-            isLoggedIn () {
-                return !!getUser();
-            },
+            isLoggedIn: () => !!getUser(),
             getUser: getUser,
             setUser: setUser
         };
