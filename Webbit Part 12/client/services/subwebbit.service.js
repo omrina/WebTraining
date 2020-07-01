@@ -5,4 +5,8 @@ angular.module('webbit.services')
         this.search = name =>
             $http.get(`/api/subwebbits/search/${name}`)
                 .then(({data}) => data);
+
+        this.create = newSubwebbit =>
+            $http.post(`/api/subwebbits/create`, newSubwebbit)
+                .then(({data}) => data);
     });

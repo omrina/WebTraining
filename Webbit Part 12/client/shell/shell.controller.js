@@ -14,7 +14,12 @@ angular.module('webbit.controllers')
       $state.go('exterior.login');
     };
 
-    $scope.searchSubwebbits = () => Subwebbit.search($scope.searchedName);
+    $scope.searchSubwebbits = name => Subwebbit.search(name);
+    $scope.createSubwebbit = (name, ownerId) => {
+      $scope.searchedName = "";
+      Subwebbit.create({name, ownerId})
+        .then(newSubwebbitId => $state.go('shell.subwebbit', {id: newSubwebbitId}));
+    };
   });
 
 export default CONTROLLER;

@@ -9,15 +9,17 @@ namespace Server.Middlewares
 {
     public class ExceptionsMiddleware : OwinMiddleware
     {
-        private IDictionary<Type, HttpStatusCode> ExceptionsToCodes { get; }
+        private const HttpStatusCode UnknownExceptionHttpCode = HttpStatusCode.InternalServerError;
+        private IDictionary<Type, HttpStatusCode> ExceptionsToHttpCodes { get; }
 
         public ExceptionsMiddleware(OwinMiddleware next) : base(next)
         {
-            ExceptionsToCodes = new Dictionary<Type, HttpStatusCode>
+            ExceptionsToHttpCodes = new Dictionary<Type, HttpStatusCode>
             {
                 {typeof(InvalidSignupDetailsException), HttpStatusCode.BadRequest},
                 {typeof(LoginFailedException), HttpStatusCode.Unauthorized},
                 {typeof(UsernameAlreadyTakenException), HttpStatusCode.Conflict},
+                {typeof(SubwebbitNameAlreadyTakenException), HttpStatusCode.Conflict},
                 {typeof(Exception), HttpStatusCode.InternalServerError},
             };
         }
@@ -31,7 +33,12 @@ namespace Server.Middlewares
             catch (Exception exception)
             {
                 // TODO: logger!?
-                context.Response.StatusCode = (int) ExceptionsToCodes[exception.GetType()];
+                var exceptionType = exception.GetType();
+                var httpStatusCode = ExceptionsToHttpCodes.ContainsKey(exceptionType)
+                                            ? ExceptionsToHttpCodes[exceptionType]
+                                            : UnknownExceptionHttpCode;
+
+                context.Response.StatusCode = (int) httpStatusCode;
             }
         }
     }

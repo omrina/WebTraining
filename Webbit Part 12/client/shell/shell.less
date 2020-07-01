@@ -27,7 +27,7 @@
   padding: 0 50px;
 
   .logo {
-    font-size: 32px;
+    font-size  : 32px;
     user-select: none;
 
     :hover {
@@ -53,7 +53,11 @@
     border-bottom: .5px solid #ccc;
     line-height  : normal;
     height       : auto;
-    padding      : 4px 8px;
+  }
+
+  .search-result {
+    padding: 4px 8px;
+
   }
 
   .md-autocomplete-suggestion:last-child {
@@ -82,4 +86,21 @@
 .logout-tooltip {
   font-size: 20px;
   height   : 30px;
+}
+
+.not-found-container {
+  font-size: 18px;
+
+  :hover {
+    cursor: default;
+  }
+
+  .create-subwebbit-link {
+    color          : #0e5eb9;
+    text-decoration: underline;
+  }
+
+  .create-subwebbit-link:hover {
+    cursor: pointer;
+  }
 }

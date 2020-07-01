@@ -4,10 +4,11 @@
     </div>
     <div class="search-bar-container" flex-offset="15">
         <md-autocomplete md-no-cache="true" md-delay="500" md-min-length="1" placeholder="Search subwebbits..."
-            md-items="subwebbit in searchSubwebbits(searchedName)" md-search-text="searchedName" md-item-text="subwebbit.name"
-            md-menu-container-class="search-results-container">
-            <md-item-template ui-sref="shell.subwebbits({ subwebbitId: subwebbit.id })">
-                <div class="search-result" layout-padding layout="row" layout-align="start center">
+            md-items="subwebbit in searchSubwebbits(searchedName)" md-search-text="searchedName"
+            md-item-text="subwebbit.name" md-menu-container-class="search-results-container">
+            <md-item-template>
+                <div ui-sref="shell.subwebbit({ id: subwebbit.id })"
+                     class="search-result" layout-padding layout="row" layout-align="start center">
                     <div>
                         <i class="mdi mdi-account-multiple subwebbit-icon"></i>
                     </div>
@@ -19,9 +20,22 @@
                             <span>{{subwebbit.subscribersCount}} subscriebrs</span>
                         </div>
                     </div>
+                </div>
             </md-item-template>
             <md-not-found>
-                No results where found
+                <div class="not-found-container">
+                    <div>
+                        <span>
+                            There are no subwebbits matching <b>{{searchedName}}</b> ...
+                        </span>
+                    </div>
+                    <div>
+                        <span>How about</span>
+                        <span ng-click="createSubwebbit(searchedName, user.id)" class="create-subwebbit-link">
+                            creating it?
+                        </span>
+                    </div>
+                </div>
             </md-not-found>
         </md-autocomplete>
     </div>

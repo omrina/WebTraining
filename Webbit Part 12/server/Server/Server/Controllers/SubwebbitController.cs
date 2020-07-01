@@ -1,6 +1,5 @@
-﻿using System.Linq;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
-using MongoDB.Driver.Linq;
 using Server.Logic;
 using Server.Models;
 using Server.ViewModels;
@@ -28,14 +27,14 @@ namespace Server.Controllers
             return Ok(Logic.GetAllByNameMatch(name));
         }
 
-        // [Route("create")]
-        // [HttpGet]
-        // public IHttpActionResult Create(NewSubwebbitViewModel subwebbit)
-        // {
-        //     Logic.Create(subwebbit);
-        //
-        //     return Ok();
-        // }
+        [Route("create")]
+        [HttpPost]
+        public async Task<IHttpActionResult> Create(NewSubwebbitViewModel subwebbit)
+        {
+            var id = await Logic.Create(subwebbit);
+        
+            return Ok(id);
+        }
 
         // [Route("{id}")]
         // [HttpGet]
