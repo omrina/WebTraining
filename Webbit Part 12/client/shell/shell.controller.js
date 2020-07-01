@@ -15,6 +15,11 @@ angular.module('webbit.controllers')
     };
 
     $scope.searchSubwebbits = name => Subwebbit.search(name);
+
+    $scope.clearSearchBar = () => {
+      $scope.searchedName = "";
+    }
+    
     $scope.createSubwebbit = (name, ownerId) => {
       // TODO: should clear the search bar here???
       $scope.searchedName = "";

@@ -13,13 +13,6 @@ namespace Server.Controllers
         {
         }
 
-        // [Route("")]
-        // [HttpGet]
-        // public IHttpActionResult GetAll()
-        // {
-        //     return Ok(Logic.GetAll());
-        // }
-
         [Route("search/{name}")]
         [HttpGet]
         public IHttpActionResult GetAllByName(string name)
@@ -36,14 +29,11 @@ namespace Server.Controllers
             return Ok(id);
         }
 
-        // [Route("{id}")]
-        // [HttpGet]
-        // public IHttpActionResult Get(string id)
-        // {
-        //     Logic.GetAll().Where();
-        //
-        //     return Ok();
-        // }
-
+        [Route("{id}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> Get(string id)
+        {
+            return Ok(await Logic.Get(id));
+        }
     }
 }

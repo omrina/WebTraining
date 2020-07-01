@@ -1,51 +1,52 @@
-<md-toolbar class="toolbar" layout-padding layout="row" layout-align="space-between center">
-    <div class="logo" ui-sref="shell.home">
-        <i class="mdi mdi-duck"></i><span> Webbit</span>
-    </div>
-    <div class="search-bar-container" flex-offset="15">
-        <md-autocomplete md-no-cache="true" md-delay="500" md-min-length="1" placeholder="Search subwebbits..."
-            md-items="subwebbit in searchSubwebbits(searchedName)" md-search-text="searchedName"
-            md-item-text="subwebbit.name" md-menu-container-class="search-results-container">
-            <md-item-template>
-                <div ui-sref="shell.subwebbit({ id: subwebbit.id })"
-                     class="search-result" layout-padding layout="row" layout-align="start center">
-                    <div>
-                        <i class="mdi mdi-account-multiple subwebbit-icon"></i>
-                    </div>
-                    <div>
+<div layout-fill layout="column">
+    <md-toolbar class="toolbar" layout-padding layout="row" layout-align="space-between center">
+        <div class="logo" ui-sref="shell.home">
+            <i class="mdi mdi-duck"></i><span> Webbit</span>
+        </div>
+        <div class="search-bar-container" flex-offset="15">
+            <md-autocomplete md-no-cache="true" md-delay="500" md-min-length="1" md-input-maxlength="30" placeholder="Search subwebbits..."
+                md-items="subwebbit in searchSubwebbits(searchedName)" md-search-text="searchedName"
+                md-item-text="subwebbit.name" md-selected-item-change="clearSearchBar()"
+                md-menu-container-class="search-results-container">
+                <md-item-template>
+                    <div ui-sref="shell.subwebbit({ id: subwebbit.id })" class="search-result" layout-padding
+                        layout="row" layout-align="start center">
                         <div>
-                            <span class="subwebbit-name">{{subwebbit.name}}</span>
+                            <i class="mdi mdi-account-multiple subwebbit-icon"></i>
                         </div>
-                        <div class="subscribers-count">
-                            <span>{{subwebbit.subscribersCount}} subscriebrs</span>
+                        <div>
+                            <div>
+                                <span class="subwebbit-name">{{subwebbit.name}}</span>
+                            </div>
+                            <div class="subscribers-count">
+                                <span>{{subwebbit.subscribersCount}} subscriebrs</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </md-item-template>
-            <md-not-found>
-                <div class="not-found-container">
-                    <div>
-                        <span>
-                            There are no subwebbits matching <b>{{searchedName}}</b> ...
-                        </span>
+                </md-item-template>
+                <md-not-found>
+                    <div class="not-found-container">
+                        <div>
+                            <span>
+                                There are no subwebbits matching <b>{{searchedName}}</b> ...
+                            </span>
+                        </div>
+                        <div>
+                            <span>How about</span>
+                            <span ng-click="createSubwebbit(searchedName, user.id)" class="create-subwebbit-link">
+                                creating it?
+                            </span>
+                        </div>
                     </div>
-                    <div>
-                        <span>How about</span>
-                        <span ng-click="createSubwebbit(searchedName, user.id)" class="create-subwebbit-link">
-                            creating it?
-                        </span>
-                    </div>
-                </div>
-            </md-not-found>
-        </md-autocomplete>
-    </div>
-    </div>
-    <span flex></span>
-    <md-button ng-click="logout()" class="md-icon-button">
-        <i class="mdi mdi-logout logout-icon">
-            <md-tooltip class="mat-tooltip logout-tooltip">Logout</md-tooltip>
-        </i>
-    </md-button>
-</md-toolbar>
-
-<div ui-view></div>
+                </md-not-found>
+            </md-autocomplete>
+        </div>
+        <span flex></span>
+        <md-button ng-click="logout()" class="md-icon-button">
+            <i class="mdi mdi-logout logout-icon">
+                <md-tooltip class="mat-tooltip logout-tooltip">Logout</md-tooltip>
+            </i>
+        </md-button>
+    </md-toolbar>
+    <ui-view flex></ui-view>
+</div>

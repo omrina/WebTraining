@@ -133,6 +133,7 @@
     <Compile Include="Exceptions\InvalidSignupDetailsException.cs" />
     <Compile Include="Exceptions\LoginFailedException.cs" />
     <Compile Include="Exceptions\SubwebbitNameAlreadyTakenException.cs" />
+    <Compile Include="Exceptions\SubwebbitNotFoundException.cs" />
     <Compile Include="Exceptions\UsernameAlreadyTakenException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -153,6 +154,7 @@
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\NewSubwebbitViewModel.cs" />
     <Compile Include="ViewModels\SearchedSubwebbitViewModel.cs" />
+    <Compile Include="ViewModels\SubwebbitViewModel.cs" />
     <Compile Include="ViewModels\UserSignupViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="WebApiConfig\InheritedAttributesRouteProvider.cs" />

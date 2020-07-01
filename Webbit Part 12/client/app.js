@@ -11,6 +11,7 @@ import 'mdi/css/materialdesignicons.css';
 import services from './services';
 import controllers from './controllers';
 import 'lodash';
+import './app.less';
 
 angular.module('webbit', [uiRouter, 'ui.router.state.events', ngResource, ngAnimate, ngAria, ngMessages, ngMaterial, services, controllers])
     .config(($locationProvider, $urlRouterProvider) => {

@@ -20,6 +20,7 @@ namespace Server.Middlewares
                 {typeof(LoginFailedException), HttpStatusCode.Unauthorized},
                 {typeof(UsernameAlreadyTakenException), HttpStatusCode.Conflict},
                 {typeof(SubwebbitNameAlreadyTakenException), HttpStatusCode.Conflict},
+                {typeof(SubwebbitNotFoundException), HttpStatusCode.NotFound},
                 {typeof(Exception), HttpStatusCode.InternalServerError},
             };
         }

@@ -8,5 +8,6 @@ require('./login');
 require('./signup');
 require('./shell');
 require('./home');
+require('./subwebbit');
 
 export default MODULE;

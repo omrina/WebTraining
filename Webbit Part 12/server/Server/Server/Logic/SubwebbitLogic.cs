@@ -36,5 +36,17 @@ namespace Server.Logic
 
             return newSubwebbit.Id;
         }
+
+        public async Task<SubwebbitViewModel> Get(string id)
+        {
+            var subwebbit = await GetAll().SingleOrDefaultAsync(x => x.Id == new ObjectId(id));
+
+            if (subwebbit == null)
+            {
+                throw new SubwebbitNotFoundException();   
+            }
+
+            return new SubwebbitViewModel(subwebbit);
+        }
     }
 }

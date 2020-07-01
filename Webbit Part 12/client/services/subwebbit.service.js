@@ -7,6 +7,10 @@ angular.module('webbit.services')
                 .then(({data}) => data);
 
         this.create = newSubwebbit =>
-            $http.post(`/api/subwebbits/create`, newSubwebbit)
+            $http.post('/api/subwebbits/create', newSubwebbit)
+                .then(({data}) => data);
+
+        this.get = id =>
+            $http.get(`/api/subwebbits/${id}`)
                 .then(({data}) => data);
     });
