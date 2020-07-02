@@ -13,4 +13,7 @@ angular.module('webbit.services')
         this.get = id =>
             $http.get(`/api/subwebbits/${id}`)
                 .then(({data}) => data);
+        
+        this.postThread = thread => 
+            $http.post(`/api/subwebbits/createThread`, thread);
     });

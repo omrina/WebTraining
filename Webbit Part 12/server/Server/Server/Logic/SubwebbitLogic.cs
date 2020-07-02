@@ -43,10 +43,21 @@ namespace Server.Logic
 
             if (subwebbit == null)
             {
-                throw new SubwebbitNotFoundException();   
+                throw new SubwebbitNotFoundException();
             }
 
             return new SubwebbitViewModel(subwebbit);
+        }
+
+        public async Task CreateThread(NewThreadViewModel thread)
+        {
+            // TODO: validate thread details!!!
+            var newThread = new Thread(thread.Title, thread.Content, thread.Author);
+            var a = await Collection.UpdateOneAsync(x => x.Id == new ObjectId(thread.SubwebbitId),
+                             Builders<Subwebbit>.Update.AddToSet(x => x.Threads, newThread));
+            var b = 1;
+            // var a = await GetAll().SingleOrDefaultAsync(x => x.Id == new ObjectId(thread.SubwebbitId));
+            // a.Threads.ToList().Add(new Thread(thread.Title, thread.Content, thread.Author));
         }
     }
 }

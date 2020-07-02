@@ -1,0 +1,58 @@
+.create-thread-dialog {
+    width     : 60vw;
+    min-height: 200px;
+    color: white;
+
+    .create-thread-header {
+        background-color: #4CAF50;
+
+        .create-thread-title {
+            font-size  : 28px;
+            font-weight: 400;
+        }
+
+        .close-dialog-button {
+            font-size: 24px;
+            margin   : 0;
+        }
+
+        .close-dialog-button:hover {
+            background-color: initial;
+        }
+    }
+
+    .create-thread-form {
+        padding: 6px 20% 0;
+        
+        md-input-container {
+            margin: 0;
+        }
+
+        .thread-input {
+            padding: 0 8px 4px;
+            .bordered-input();
+    
+            &.ng-invalid {
+                .bordered-input();
+    
+                &.ng-dirty {
+                    .bordered-input();
+                }
+            }
+    
+            &:focus {
+                .bordered-input();
+            }
+        }
+    
+        .bordered-input {
+            border: 1px solid #e0e0e0;
+            border-width: 1px;
+        }
+    }
+
+    .post-thread-button {
+        background-color: #4CAF50;
+    }
+        
+}

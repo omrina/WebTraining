@@ -153,6 +153,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\NewSubwebbitViewModel.cs" />
+    <Compile Include="ViewModels\NewThreadViewModel.cs" />
     <Compile Include="ViewModels\SearchedSubwebbitViewModel.cs" />
     <Compile Include="ViewModels\SubwebbitViewModel.cs" />
     <Compile Include="ViewModels\UserSignupViewModel.cs" />

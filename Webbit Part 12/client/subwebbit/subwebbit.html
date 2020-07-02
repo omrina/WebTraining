@@ -3,12 +3,25 @@
         <div layout="row" layout-align="space-between center">
             <span flex="40" class="subwebbit-title">{{subwebbit.name}}</span>
             <div flex>
-                <md-button class="subscribe-button">Subscribe</md-button>
+                <div ng-if="!isSubscribed">
+                    <md-button ng-click="subscribe()" class="subscribtion-button subscribe-button">
+                        subscribe
+                    </md-button>
+                </div>
+                <div ng-if="isSubscribed">
+                    <md-button ng-click="unsubscribe()" class="subscribtion-button unsubscribe-button">
+                        subscribed <i class="mdi mdi-check"></i>
+                    </md-button>
+                </div>
             </div>
         </div>
         <div>
             <span class="subwebbit-subscribers">{{subwebbit.subscribersCount}} subscriebrs</span>
         </div>
     </div>
-    <div flex class="page-content-container">hi my name is: {{subwebbit.name}}</div>
+    <div flex class="subwebbit-threads-container" layout="column" layout-align="start center">
+        <md-button md-ink-ripple="false" ng-click="showCreateDialog()" class="create-thread-button">
+                Create Thread
+        </md-button>
+    </div>
 </div>

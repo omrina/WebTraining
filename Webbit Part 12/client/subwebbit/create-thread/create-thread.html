@@ -1,0 +1,27 @@
+<md-dialog class="create-thread-dialog">
+    <div layout-padding layout="row" layout-align="space-between center" class="create-thread-header">
+        <span class="create-thread-title">Create a thread in {{targetSubwebbit.name}}</span>
+        <md-button class="close-dialog-button" md-ink-ripple="false" ng-click="closeDialog()">
+            X
+        </md-button>
+    </div>
+    <md-dialog-content>
+        <form name="createThreadForm" class="create-thread-form" layout="column" layout-align="start space-between"
+            layout-padding>
+            <md-input-container md-no-float>
+                <textarea required name="title" placeholder="An amazing title" class="thread-input" md-no-resize rows="1"
+                    ng-model="thread.title" md-maxlength="250" maxlength="250"></textarea>
+            </md-input-container>
+            <md-input-container md-no-float>
+                <textarea required name="content" placeholder="Content (required)" class="thread-input"
+                    ng-model="thread.content" md-no-resize rows="8"></textarea>
+            </md-input-container>
+        </form>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-padding>
+        <span flex></span>
+        <md-button class="post-thread-button" ng-disabled="!createThreadForm.$valid" ng-click="post(thread)">
+            post
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

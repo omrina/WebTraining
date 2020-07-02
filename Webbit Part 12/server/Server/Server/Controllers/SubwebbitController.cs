@@ -35,5 +35,14 @@ namespace Server.Controllers
         {
             return Ok(await Logic.Get(id));
         }
+
+        [Route("createThread")]
+        [HttpPost]
+        public async Task<IHttpActionResult> CreateThread(NewThreadViewModel thread)
+        {
+            await Logic.CreateThread(thread);
+
+            return Ok();
+        }
     }
 }

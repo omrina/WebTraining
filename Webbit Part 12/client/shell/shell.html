@@ -4,9 +4,9 @@
             <i class="mdi mdi-duck"></i><span> Webbit</span>
         </div>
         <div class="search-bar-container" flex-offset="15">
-            <md-autocomplete md-no-cache="true" md-delay="500" md-min-length="1" md-input-maxlength="30" placeholder="Search subwebbits..."
-                md-items="subwebbit in searchSubwebbits(searchedName)" md-search-text="searchedName"
-                md-item-text="subwebbit.name" md-selected-item-change="clearSearchBar()"
+            <md-autocomplete md-no-cache="true" md-delay="500" md-min-length="1" md-input-maxlength="30"
+                placeholder="Search subwebbits..." md-items="subwebbit in searchSubwebbits(searchedName)"
+                md-search-text="searchedName" md-item-text="subwebbit.name" md-selected-item-change="clearSearchBar()"
                 md-menu-container-class="search-results-container">
                 <md-item-template>
                     <div ui-sref="shell.subwebbit({ id: subwebbit.id })" class="search-result" layout-padding
@@ -44,7 +44,7 @@
         <span flex></span>
         <md-button ng-click="logout()" class="md-icon-button">
             <i class="mdi mdi-logout logout-icon">
-                <md-tooltip class="mat-tooltip logout-tooltip">Logout</md-tooltip>
+                <md-tooltip class="mat-tooltip">Logout</md-tooltip>
             </i>
         </md-button>
     </md-toolbar>
