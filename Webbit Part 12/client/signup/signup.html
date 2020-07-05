@@ -1,40 +1,35 @@
-<div class="panel">
-  <div layout="column" layout-align="center center" layout-fill="layout-fill">
-    <div class=" loginBox form-title" layout="column">
-      <div layout="row" layout-align="center center">
-        <h2><span class="form-title">Sign Up</span></h2>
+<form layout-fill name="signupForm" layout="column" class="form">
+  <div flex layout="column" layout-align="center stretch" class="form-inputs-container">
+    <md-input-container>
+      <label><i class="mdi mdi-account"></i> Username</label>
+    <input required type="text" ng-model="user.username" name="username" minlength="4" maxlength="14" />
+    <div ng-messages="signupForm.username.$error">
+      <div ng-message-exp="['required', 'minlength']">Username must contain at least 4 characters.</div>
+    </div>
+    </md-input-container>
+    <md-input-container>
+      <label><i class="mdi mdi-lock"></i> Password</label>
+      <input required type="password" ng-model="user.password" name="password" minlength="8" ng-maxlength="20" />
+      <div ng-messages="signupForm.password.$error" role="alert">
+        <div ng-message-exp="['required', 'minlength', 'maxlength']">Password must be 8-20 characters long.</div>
       </div>
-      <form name="signupForm" layout="column" layout-padding>
-        <md-input-container>
-          <label><i class="mdi mdi-account"></i> Username</label>
-          <input required type="text" ng-model="user.username" name="username" minlength="4" maxlength="14" />
-          <div ng-messages="signupForm.username.$error">
-            <div ng-message-exp="['required', 'minlength']">Username must contain at least 4 characters.</div>
-          </div>
-        </md-input-container>
-        <md-input-container>
-          <label><i class="mdi mdi-lock"></i> Password</label>
-          <input required type="password" ng-model="user.password" name="password" minlength="8" ng-maxlength="20" />
-          <div ng-messages="signupForm.password.$error" role="alert">
-            <div ng-message-exp="['required', 'minlength', 'maxlength']">Password must be 8-20 characters long.</div>
-          </div>
-        </md-input-container>
-        <md-input-container>
-          <label><i class="mdi mdi-lock-reset"></i> Repeat Password</label>
-          <input required type="password" ng-model="user.repeatedPassword" name="repeatPassword" />
-          <div ng-messages="signupForm.repeatPassword.$error" role="alert">
-            <div ng-message="required">Please re-enter your password</div>
-          </div>
-        </md-input-container>
-        <md-button ng-disabled="!signupForm.$valid" ng-click="signup()" class="md-raised md-primary submit-button">Sign
-          Up</md-button>
-        <md-divider></md-divider>
-        <div layout="row" layout-align="center center">
-          <span>Already a Webbiter?
-            <a ui-sref="exterior.login">Log in</a>
-          </span>
-        </div>
-      </form>
+    </md-input-container>
+    <md-input-container>
+      <label><i class="mdi mdi-lock-reset"></i> Repeat Password</label>
+      <input required type="password" ng-model="user.repeatedPassword" name="repeatPassword" />
+      <div ng-messages="signupForm.repeatPassword.$error" role="alert">
+        <div ng-message="required">Please re-enter your password</div>
+      </div>
+    </md-input-container>
+  </div>
+  <div class="form-footer" layout="column">
+    <md-button ng-disabled="!signupForm.$valid" ng-click="signup()"
+              class="submit-button">Sign Up
+    </md-button>
+    <div layout="row" layout-align="center center">
+      <span>Already a Webbiter?
+        <a ui-sref="exterior.login" class="link">Log in</a>
+      </span>
     </div>
   </div>
-</div>
+</form>

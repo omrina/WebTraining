@@ -1,4 +1,24 @@
-.exterior-content {
-  padding: 16px;
-  background: radial-gradient(circle, #9633ff 25%, #6c41bd 90%);
+@primary-color: #4caf50;
+
+.exterior-page-container {
+  font-size: 24px;
+
+  .box {
+    width: 500px;
+    height: 80%;
+    background-color: rgb(250, 250, 250);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+      0 2px 1px -1px rgba(0, 0, 0, 0.12);
+
+    .header {
+      padding: 6px 0;
+      background-color: @primary-color;
+      color: white;
+      font-size: 32px;
+
+      .logo {
+        font-size: 40px;
+      }
+    }
+  }
 }

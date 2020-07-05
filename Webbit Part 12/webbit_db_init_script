@@ -20,7 +20,7 @@ var subwebbits = [
 	},
 	{
 		ownerId: ObjectId("5ef9b50ffb356c82d30ddb73"),
-		name: "askOmri",
+		name: "AskOmri",
 		threads: [],
 		subscribersCount: 745
 	}

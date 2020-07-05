@@ -1,11 +1,9 @@
-<div layout="column" layout-fill>
-    <md-toolbar>
-        <div layout-padding layout="row">
-            <span flex></span>
-            <i class="mdi mdi-duck"></i>
+<div layout-fill class="exterior-page-container" layout="column" layout-align="center center">
+    <div layout="column" class="box">
+        <md-toolbar layout="column" layout-align="center center" class="header">
+            <i class="mdi mdi-duck logo"></i>
             <span>Webbit</span>
-            <span flex></span>
-        </div>
-    </md-toolbar>
-    <ui-view flex class="exterior-content"></ui-view>
+        </md-toolbar>
+        <ui-view flex></ui-view>
+    </div>
 </div>
