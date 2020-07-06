@@ -34,7 +34,7 @@ namespace Server.Logic
             }
             catch (MongoWriteException e) when(e.WriteError.Category == ServerErrorCategory.DuplicateKey)
             {
-                // TODO: Logger!?
+                // LOG HERE
                 throw new UsernameAlreadyTakenException();
             }
         }

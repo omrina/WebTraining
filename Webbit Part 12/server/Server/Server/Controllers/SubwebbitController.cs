@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Server.Logic;
 using Server.Models;
@@ -33,7 +34,16 @@ namespace Server.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> Get(string id)
         {
-            return Ok(await Logic.Get(id));
+            var subwebbit = await Logic.Get(id);
+
+            return Ok(new SubwebbitViewModel(subwebbit));
+        }
+
+        [Route("{subwebbitId}/threads/{index}/{amount}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> CreateThread(string subwebbitId, int index, int amount)
+        {
+            return Ok(await Logic.GetThreads(new FetchThreadsViewModel(subwebbitId, index, amount)));
         }
 
         [Route("createThread")]

@@ -25,10 +25,8 @@ namespace SelfHost
             catch (Exception exception)
             {
                 Console.WriteLine(ServerConsoleMessages.ServerHasCrashed);
-                // TODO: logger!?
-                LoggerFactory.Default.Create("Asd").WriteCritical(exception.Message, exception);
+                // LOG HERE
             }
-            
         }
     }
 }

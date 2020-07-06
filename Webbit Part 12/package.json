@@ -30,6 +30,7 @@
     "lodash": "^4.17.15",
     "mdi": "^2.2.43",
     "style-loader": "^0.16.0",
+    "time-ago": "^0.2.1",
     "webpack": "^3.3.0",
     "webpack-dev-server": "^1.16.3"
   },

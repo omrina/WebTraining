@@ -1,45 +1,119 @@
+@import (reference) '../app.less';
+
 .subwebbit-header {
-    padding: 28px;
+  padding: 28px;
 
-    .subwebbit-title {
-        font-size: 48px;
-        font-weight: bold;
-    }
+  .subwebbit-title {
+    font-size: 48px;
+    font-weight: bold;
+  }
 
-    .subscribtion-button {
-        width: 220px;
-        padding: 4px;
-        border-radius: 10px;
-        font-size: 24px;
-    }
+  .subscribtion-button {
+    width: 220px;
+    padding: 4px;
+    border-radius: 10px;
+    font-size: 24px;
+  }
 
-    .subscribe-button{
-        background-color: #66BB6A;
-    }
+  .subscribe-button {
+    background-color: @primary-color;
+  }
 
-    .unsubscribe-button {
-        color: #66BB6A;
-        border: solid 1.5px #66BB6A;
-    }
+  .unsubscribe-button {
+    color: @primary-color;
+    border: solid 1.5px @primary-color;
+  }
 
-    .subscribe-button:hover {
-        background-color: #A5D6A7;
-    }
+  .subscribe-button:hover {
+    background-color: #a5d6a7;
+  }
 
-    .subwebbit-subscribers {
-        font-size: 24px;
-    }
+  .subwebbit-subscribers {
+    font-size: 24px;
+  }
 }
 
 .subwebbit-threads-container {
-    background-color: rgb(216, 216, 216);
-    padding: 20px 48px;
-    
-    .create-thread-button {
-        background-color: #f6f6f6;
-        width: 60%;
-        font-size: 20px;
-        border: 1px solid black;
-        border-radius: 8px;
+  background-color: #C8E6C9;
+  padding: 20px 0;
+
+  .create-thread-button {
+    width: 25%;
+    background-color: #f6f6f6;
+    border: 1px solid black;
+    border-radius: 8px;
+    font-size: 20px;
+    margin-bottom: 24px;
+  }
+
+  #threads-repeater {
+    padding: 8px 0;
+    width: 100%;
+    font-size: 24px;
+
+    .repeated-item {
+      height: 300px;
+      margin: 12px 0;
+
+      .thread-container {
+        height: 100%;
+        width: 45%;
+        border: 1px solid #848484;
+        border-radius: 4px;
+        padding: 10px 16px;
+        background-color: white;
+
+        .subwebbit-name {
+          font-weight: 500;
+        }
+
+        .rating-container {
+          font-size: 30px;
+          font-weight: bold;
+
+          .vote-button {
+            font-size: 34px;
+            min-width: 50px;
+            transition: transform .1s ease-in-out;
+
+            &:hover {
+                background-color: transparent;
+                transform: scale(1.2);
+            }
+
+            &:active {
+                transform: scale(1);
+            }
+          }
+
+          .upvote-button:hover {
+              color: green;
+          }
+
+          .downvote-button:hover {
+              color: red;
+          }
+        }
+
+        .thread-title {
+            font-size: 36px;
+            font-weight: bold;
+            padding: 8px 0 4px;
+        }
+
+        .thread-content {
+            word-break: break-word;
+            margin: 0;
+            display: -webkit-box;
+            overflow: hidden;
+            -webkit-line-clamp: 5;
+            -webkit-box-orient: vertical;
+        }
+      }
+
+      .threads-end-title {
+        font-size: 36px;
+      }
     }
+  }
 }

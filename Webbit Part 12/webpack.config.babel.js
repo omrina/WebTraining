@@ -36,7 +36,16 @@ export default {
       },
       {
         test: /\.less$/,
-        use: ['style-loader', 'css-loader', 'less-loader']
+        use: ['style-loader', 'css-loader', 
+        {
+          loader: 'less-loader',
+          options: {
+            paths: [path.resolve(__dirname)],
+            globalVars: {
+              variablesLocation: './app.less'
+            }
+        }
+      ]
       }
     ]
   },

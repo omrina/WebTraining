@@ -33,7 +33,7 @@ namespace Server.Middlewares
             }
             catch (Exception exception)
             {
-                // TODO: logger!?
+                // LOG HERE
                 var exceptionType = exception.GetType();
                 var httpStatusCode = ExceptionsToHttpCodes.ContainsKey(exceptionType)
                                             ? ExceptionsToHttpCodes[exceptionType]

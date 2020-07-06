@@ -30,34 +30,39 @@ namespace Server.Logic
             }
             catch (MongoWriteException e) when (e.WriteError.Category == ServerErrorCategory.DuplicateKey)
             {
-                // TODO: Logger!?
+                // LOG HERE
                 throw new SubwebbitNameAlreadyTakenException();
             }
 
             return newSubwebbit.Id;
         }
 
-        public async Task<SubwebbitViewModel> Get(string id)
+        public new async Task<Subwebbit> Get(string id)
         {
-            var subwebbit = await GetAll().SingleOrDefaultAsync(x => x.Id == new ObjectId(id));
+            var subwebbit = await base.Get(id).SingleOrDefaultAsync();
 
             if (subwebbit == null)
             {
                 throw new SubwebbitNotFoundException();
             }
 
-            return new SubwebbitViewModel(subwebbit);
+            return subwebbit;
+        }
+
+        public async Task<IEnumerable<ThreadViewModel>> GetThreads(FetchThreadsViewModel fetchThreads)
+        {
+            var threads = await base.Get(fetchThreads.SubwebbitId).SelectMany(x => x.Threads)
+                .OrderByDescending(x => x.Date).Skip(fetchThreads.Index).Take(fetchThreads.Amount).ToListAsync();
+
+            return threads.Select(x => new ThreadViewModel(x));
         }
 
         public async Task CreateThread(NewThreadViewModel thread)
         {
             // TODO: validate thread details!!!
             var newThread = new Thread(thread.Title, thread.Content, thread.Author);
-            var a = await Collection.UpdateOneAsync(x => x.Id == new ObjectId(thread.SubwebbitId),
-                             Builders<Subwebbit>.Update.AddToSet(x => x.Threads, newThread));
-            var b = 1;
-            // var a = await GetAll().SingleOrDefaultAsync(x => x.Id == new ObjectId(thread.SubwebbitId));
-            // a.Threads.ToList().Add(new Thread(thread.Title, thread.Content, thread.Author));
+            await Collection.UpdateOneAsync(GenerateByIdFilter(thread.SubwebbitId),
+                Builders<Subwebbit>.Update.AddToSet(x => x.Threads, newThread));
         }
     }
 }

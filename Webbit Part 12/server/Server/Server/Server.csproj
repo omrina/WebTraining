@@ -151,11 +151,13 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\FetchThreadsViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\NewSubwebbitViewModel.cs" />
     <Compile Include="ViewModels\NewThreadViewModel.cs" />
     <Compile Include="ViewModels\SearchedSubwebbitViewModel.cs" />
     <Compile Include="ViewModels\SubwebbitViewModel.cs" />
+    <Compile Include="ViewModels\ThreadViewModel.cs" />
     <Compile Include="ViewModels\UserSignupViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="WebApiConfig\InheritedAttributesRouteProvider.cs" />
