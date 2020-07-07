@@ -10,9 +10,9 @@ namespace Server.Models
         public IEnumerable<Thread> Threads { get; set; }
         public long SubscribersCount { get; set; }
 
-        public Subwebbit(ObjectId ownerId, string name)
+        public Subwebbit(string ownerId, string name)
         {
-            OwnerId = ownerId;
+            OwnerId = new ObjectId(ownerId);
             Name = name;
             Threads = new List<Thread>();
         }

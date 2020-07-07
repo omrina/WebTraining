@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
 using Server.Logic;
 using Server.Models;
@@ -16,12 +15,11 @@ namespace Server.Controllers
 
         [Route("search/{name}")]
         [HttpGet]
-        public IHttpActionResult GetAllByName(string name)
+        public async Task<IHttpActionResult> GetAllByName(string name)
         {
-            return Ok(Logic.GetAllByNameMatch(name));
+            return Ok(await Logic.GetAllByName(name));
         }
 
-        [Route("create")]
         [HttpPost]
         public async Task<IHttpActionResult> Create(NewSubwebbitViewModel subwebbit)
         {
@@ -36,14 +34,23 @@ namespace Server.Controllers
         {
             var subwebbit = await Logic.Get(id);
 
-            return Ok(new SubwebbitViewModel(subwebbit));
+            return Ok(subwebbit);
         }
 
-        [Route("{subwebbitId}/threads/{index}/{amount}")]
+        [Route("{subwebbitId}/threads/{index}")]
         [HttpGet]
-        public async Task<IHttpActionResult> CreateThread(string subwebbitId, int index, int amount)
+        public async Task<IHttpActionResult> GetThreads(string subwebbitId, int index)
         {
-            return Ok(await Logic.GetThreads(new FetchThreadsViewModel(subwebbitId, index, amount)));
+            return Ok(await Logic.GetThreads(subwebbitId, index));
+        }
+
+        [Route("threads/{index}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetTopThreads(int index)
+        {
+            var userId = Request.Headers.Authorization.Scheme;
+
+            return Ok(await Logic.GetTopThreadsFromSubscribed(userId, index));
         }
 
         [Route("createThread")]

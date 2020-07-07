@@ -1,6 +1,4 @@
-﻿using MongoDB.Bson;
-
-namespace Server.ViewModels
+﻿namespace Server.ViewModels
 {
     public class NewSubwebbitViewModel
     {

@@ -7,21 +7,65 @@ var users = [
 		username: "admin",
 		password: "admin",
 		salt: "",
-		sessionToken: ""
+		sessionToken: "",
+		subscribedSubwebbits: [ObjectId("5f02e449c1fb8ccb5c95866a")]
 	}
 ];
 
 var subwebbits = [
 	{
+		_id: ObjectId("5f02e449c1fb8ccb5c95866a"),
 		ownerId: ObjectId("5ef9b50ffb356c82d30ddb73"),
 		name: "Animals",
-		threads: [],
+		threads: [
+			{
+				"_id": ObjectId("5f041d4c5683172060fdd6f0"),
+				"title": "mice or mouses",
+				"content": "how do you say it?",
+				"author": "admin",
+				"date": new Date("2020-07-07T06:59:24.802Z"),
+				"upvoters": [],
+				"downvoters": [],
+				"rating": -1
+			},
+			{
+				"_id": ObjectId("5f0426c65683175f6cfc7ca1"),
+				"title": "dogs",
+				"content": "what are the most popular dog breeds?",
+				"author": "admin",
+				"date": new Date("2020-07-07T07:39:50.816Z"),
+				"upvoters": [],
+				"downvoters": [],
+				"rating": 49
+			}
+		],
 		subscribersCount: 3
 	},
 	{
 		ownerId: ObjectId("5ef9b50ffb356c82d30ddb73"),
 		name: "AskOmri",
-		threads: [],
+		threads: [
+			{
+				"_id": ObjectId("5f041cfb5683172060fdd6ef"),
+				"title": "whats the weather today?",
+				"content": "i really dont know, please help...",
+				"author": "admin",
+				"date": new Date("2020-07-07T06:58:03.713Z"),
+				"upvoters": [],
+				"downvoters": [],
+				"rating": 0
+			},
+			{
+				"_id": ObjectId("5f0425a05683175f6cfc7ca0"),
+				"title": "how are you?",
+				"content": "just a question for you :)",
+				"author": "admin",
+				"date": new Date("2020-07-07T07:34:56.190Z"),
+				"upvoters": [],
+				"downvoters": [],
+				"rating": 27
+			}
+		],
 		subscribersCount: 745
 	}
 ];

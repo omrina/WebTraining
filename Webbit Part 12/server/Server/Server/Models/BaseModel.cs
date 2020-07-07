@@ -2,7 +2,7 @@
 
 namespace Server.Models
 {
-    public class BaseModel
+    public abstract class BaseModel
     {
         public ObjectId Id { get; set; }
     }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
@@ -13,16 +12,19 @@ namespace Server.Logic
 {
     public class SubwebbitLogic : BaseLogic<Subwebbit>
     {
-        public IEnumerable<SearchedSubwebbitViewModel> GetAllByNameMatch(string name)
+        private const int ThreadsPerPage = 3;
+
+        public async Task<IEnumerable<SearchedSubwebbitViewModel>> GetAllByName(string name)
         {
-            var matchingSubwebbits = GetAll().Where(x => x.Name.Contains(name)).ToList();
+            var matchingSubwebbits = await GetAll().Where(x => x.Name.Contains(name)).ToListAsync();
 
             return matchingSubwebbits.Select(x => new SearchedSubwebbitViewModel(x));
         }
 
         public async Task<ObjectId> Create(NewSubwebbitViewModel subwebbit)
         {
-            var newSubwebbit = new Subwebbit(new ObjectId(subwebbit.OwnerId), subwebbit.Name);
+            var newSubwebbit = new Subwebbit(subwebbit.OwnerId, subwebbit.Name);
+            // TODO: change validation of subwebbit name existence (and change the script for subwebbit's name index)
             // TODO: check name already exists exception
             try
             {
@@ -37,7 +39,7 @@ namespace Server.Logic
             return newSubwebbit.Id;
         }
 
-        public new async Task<Subwebbit> Get(string id)
+        public new async Task<SubwebbitViewModel> Get(string id)
         {
             var subwebbit = await base.Get(id).SingleOrDefaultAsync();
 
@@ -46,15 +48,37 @@ namespace Server.Logic
                 throw new SubwebbitNotFoundException();
             }
 
-            return subwebbit;
+            return new SubwebbitViewModel(subwebbit);
         }
 
-        public async Task<IEnumerable<ThreadViewModel>> GetThreads(FetchThreadsViewModel fetchThreads)
+        public async Task<IEnumerable<ThreadViewModel>> GetThreads(string subwebbitId, int index)
         {
-            var threads = await base.Get(fetchThreads.SubwebbitId).SelectMany(x => x.Threads)
-                .OrderByDescending(x => x.Date).Skip(fetchThreads.Index).Take(fetchThreads.Amount).ToListAsync();
+            var subwebbitName = (await Get(subwebbitId)).Name;
+            var threads = await base.Get(subwebbitId).SelectMany(x => x.Threads)
+                .OrderByDescending(x => x.Date).Skip(index).Take(ThreadsPerPage)
+                .ToListAsync();
 
-            return threads.Select(x => new ThreadViewModel(x));
+            return threads.Select(x => new ThreadViewModel(x, subwebbitName));
+        }
+
+        public async Task<IEnumerable<ThreadViewModel>> GetTopThreadsFromSubscribed
+            (string userId, int index)
+        {
+            var subwebbitsIds = (await new UserLogic().GetSubscribedIds(userId))
+                                .ToList();
+            var subwebbits = GetMany(subwebbitsIds);
+
+            var threads = await subwebbits.SelectMany(x => x.Threads).OrderByDescending(x => x.Rating)
+                            .Skip(index).Take(ThreadsPerPage).ToListAsync();
+
+            return threads.Select(thread =>
+                new ThreadViewModel(thread, subwebbits.First(subwebbit =>
+                                                             subwebbit.Threads.Contains(thread)).Name));
+        }
+
+        private IMongoQueryable<Subwebbit> GetMany(IEnumerable<ObjectId> ids)
+        {
+            return GetAll().Where(x => ids.Contains(x.Id));
         }
 
         public async Task CreateThread(NewThreadViewModel thread)

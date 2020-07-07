@@ -10,13 +10,23 @@ import 'angular-material/angular-material.min.css';
 import 'mdi/css/materialdesignicons.css';
 import services from './services';
 import controllers from './controllers';
+import components from './components';
 import 'lodash';
 import './app.less';
 
-angular.module('webbit', [uiRouter, 'ui.router.state.events', ngResource, ngAnimate, ngAria, ngMessages, ngMaterial, services, controllers])
-    .config(($locationProvider, $urlRouterProvider) => {
+angular.module('webbit', [uiRouter, 'ui.router.state.events', ngResource, ngAnimate, ngAria, ngMessages, ngMaterial, services, controllers, components])
+    .config(($locationProvider, $urlRouterProvider, $httpProvider) => {
         $urlRouterProvider.otherwise('/');
         $locationProvider.html5Mode(true);
+        $httpProvider.interceptors.push(function(Storage) {
+            return {
+              request: request => {
+                request.headers.Authorization = Storage.getUser().id;
+
+                return request;
+              }
+            };
+        });
     })
     .run(($rootScope, $state, Auth) => {
         $rootScope.$on('$stateChangeStart', (event, next) => {

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using Microsoft.Owin.Hosting;
-using Microsoft.Owin.Logging;
 using SelfHost.Resources;
 using Server;
 

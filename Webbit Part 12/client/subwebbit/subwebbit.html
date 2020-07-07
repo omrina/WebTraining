@@ -19,46 +19,12 @@
             <span class="subwebbit-subscribers">{{subwebbit.subscribersCount}} subscriebrs</span>
         </div>
     </div>
-    <div flex class="subwebbit-threads-container" layout="column" layout-align="start center">
-        <md-button md-ink-ripple="false" ng-click="showCreateDialog()" class="create-thread-button">
+    <div flex class="subwebbit-threads-container" layout="column">
+        <div layout="row" layout-align="center center">
+            <md-button md-ink-ripple="false" ng-click="showCreateDialog()" class="create-thread-button">
                 Create Thread <i class="mdi mdi-pencil"></i>
-        </md-button>
-        <md-virtual-repeat-container flex id="threads-repeater">
-            <div flex layout="column" layout-align="start center"
-                 md-virtual-repeat="thread in threadsFetcher" md-on-demand class="repeated-item">
-                <div ng-if="thread" layout="column" layout-align="start stretch"
-                     class="thread-container">
-                    <div layout="row">
-                        <span class="subwebbit-name">{{subwebbit.name}}</span>
-                        <span class="thread-metadata"> / posted by {{thread.author}} • {{toTimeAgo(thread.date)}}</span>
-                        <div flex></div>
-                        <div layout="row" layout-align="space-between center" class="rating-container">
-                            <md-button md-ink-ripple="false" class="vote-button upvote-button">
-                                <i class="mdi mdi-arrow-up-bold-circle-outline"></i>
-                            </md-button>
-                            <span>
-                                {{thread.rating}}
-                            </span>
-                            <md-button md-ink-ripple="false" class="vote-button downvote-button">
-                                <i class="mdi mdi-arrow-down-bold-circle-outline"></i>
-                            </md-button>
-                        </div>
-                    </div>
-                    <div class="thread-title">
-                        <span>{{thread.title}}</span>
-                    </div>
-                    <p flex class="thread-content">
-                       {{thread.content}}
-                    </p>
-                    <div>
-                        <i class="mdi mdi-comment-outline"></i>
-                        <span>{{thread.commentsCount}} Comments</span>
-                    </div>
-                </div>
-                <div ng-if="!thread" layout="column" layout-align="center center" layout-fill>
-                    <span class="threads-end-title">Wow, seems like we've reached rock bottom <i class="mdi mdi-robot"></i></span>
-                </div>
-            </div>
-          </md-virtual-repeat-container>
+            </md-button>
+        </div>
+        <threads-displayer ng-if="subwebbit.id" flex subwebbit-id="subwebbit.id"></threads-displayer>
     </div>
 </div>
