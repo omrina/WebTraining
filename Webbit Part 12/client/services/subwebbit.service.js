@@ -1,20 +1,19 @@
 import angular from "angular";
 
-angular.module("webbit.services").service("Subwebbit", function ($http) {
-  // TOOD: use $resource!!!
+angular.module("webbit.services").service("Subwebbit", function ($http, $resource) {
   this.search = name =>
-    $http.get(`/api/subwebbits/search/${name}`).then(({ data }) => data);
+    $resource(`/api/subwebbits/search/${name}`).query().$promise;
 
   this.create = newSubwebbit =>
-    $http.post("/api/subwebbits", newSubwebbit).then(({ data }) => data);
+    $http.post("/api/subwebbits", newSubwebbit)
+      .then(({ data }) => data);
 
   this.get = id =>
-    $http.get(`/api/subwebbits/${id}`).then(({ data }) => data);
+    $resource(`/api/subwebbits/${id}`).get().$promise;
 
   this.postThread = thread =>
-    $http.post(`/api/subwebbits/createThread`, thread);
+    $resource(`/api/subwebbits/createThread`).save(thread).$promise;
 
   this.getThreads = ({ id = "", index }) =>
-    $http.get(`/api/subwebbits/${id}/threads/${index}`)
-      .then(({ data }) => data);
+    $resource(`/api/subwebbits/${id}/threads/${index}`).query().$promise;
 });
