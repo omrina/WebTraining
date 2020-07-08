@@ -14,5 +14,10 @@ namespace Server.Controllers
         {
             Logic = logic;
         }
+
+        protected string GetAuthorizationToken()
+        {
+            return Request.Headers.Authorization.Scheme;
+        }
     }
 }

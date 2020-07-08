@@ -3,11 +3,11 @@ import angular from 'angular';
 const CONTROLLER = 'createThread';
 
 angular.module('webbit.controllers')
-    .controller(CONTROLLER, ($scope, $mdDialog, Auth, Subwebbit, targetSubwebbit) => {
-        $scope.targetSubwebbit = targetSubwebbit;
+    .controller(CONTROLLER, ($scope, $mdDialog, Auth, Subwebbit, subwebbit) => {
+        $scope.subwebbit = subwebbit;
         $scope.thread = {
             author: Auth.getCurrentUser().username,
-            subwebbitId: $scope.targetSubwebbit.id
+            subwebbitId: $scope.subwebbit.id
         };
 
         $scope.closeDialog = function () {

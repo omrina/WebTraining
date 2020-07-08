@@ -15,9 +15,11 @@ namespace Server.Controllers
 
         [Route("login")]
         [HttpPost]
-        public IHttpActionResult Login(LoginViewModel user)
+        public async Task<IHttpActionResult> Login(LoginViewModel user)
         {
-            return Ok(Logic.Login(user));
+            var loggedUser = await Logic.Login(user);
+
+            return Ok(loggedUser);
         }
 
         [Route("signup")]

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Server.Models;
+﻿using Server.Models;
 
 namespace Server.ViewModels
 {
@@ -8,15 +7,17 @@ namespace Server.ViewModels
         public string Id { get; set; }
         public string Name { get; set; }
         // TODO: change to thread viewModel???
-        public IEnumerable<Thread> Threads { get; set; }
+        // public IEnumerable<Thread> Threads { get; set; }
         public long SubscribersCount { get; set; }
+        public bool IsSubscribed { get; set; }
 
-        public SubwebbitViewModel(Subwebbit subwebbit)
+        public SubwebbitViewModel(Subwebbit subwebbit, bool isSubscribed)
         {
             Id = subwebbit.Id.ToString();
             Name = subwebbit.Name;
-            Threads = subwebbit.Threads;
+            // Threads = subwebbit.Threads;
             SubscribersCount = subwebbit.SubscribersCount;
+            IsSubscribed = isSubscribed;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using Server.Exceptions;
 using Server.Logic.Validation;
 using Server.Models;
@@ -10,9 +11,9 @@ namespace Server.Logic
 {    
     public class AuthLogic : BaseLogic<User>
     {
-        public UserViewModel Login(LoginViewModel loginViewModel)
+        public async Task<UserViewModel> Login(LoginViewModel loginViewModel)
         {
-            var user =  Collection.AsQueryable().SingleOrDefault(x =>
+            var user =  await GetAll().SingleOrDefaultAsync(x =>
                 x.Password == loginViewModel.Password &&
                 x.Username == loginViewModel.Username);
             

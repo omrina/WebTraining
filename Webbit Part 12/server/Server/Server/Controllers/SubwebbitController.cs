@@ -20,6 +20,7 @@ namespace Server.Controllers
             return Ok(await Logic.GetAllByName(name));
         }
 
+        [Route("")]
         [HttpPost]
         public async Task<IHttpActionResult> Create(NewSubwebbitViewModel subwebbit)
         {
@@ -32,7 +33,7 @@ namespace Server.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> Get(string id)
         {
-            var subwebbit = await Logic.Get(id);
+            var subwebbit = await Logic.Get(id, GetAuthorizationToken());
 
             return Ok(subwebbit);
         }
@@ -48,7 +49,7 @@ namespace Server.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetTopThreads(int index)
         {
-            var userId = Request.Headers.Authorization.Scheme;
+            var userId = GetAuthorizationToken();
 
             return Ok(await Logic.GetTopThreadsFromSubscribed(userId, index));
         }

@@ -21,7 +21,9 @@ angular.module('webbit', [uiRouter, 'ui.router.state.events', ngResource, ngAnim
         $httpProvider.interceptors.push(function(Storage) {
             return {
               request: request => {
-                request.headers.Authorization = Storage.getUser().id;
+                const currentUser = Storage.getUser();
+                
+                request.headers.Authorization = currentUser ? currentUser.id : "";
 
                 return request;
               }

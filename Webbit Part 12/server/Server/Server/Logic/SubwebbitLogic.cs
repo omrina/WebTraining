@@ -39,22 +39,25 @@ namespace Server.Logic
             return newSubwebbit.Id;
         }
 
-        public new async Task<SubwebbitViewModel> Get(string id)
+        public async Task<SubwebbitViewModel> Get(string subwebbitId, string userId)
         {
-            var subwebbit = await base.Get(id).SingleOrDefaultAsync();
+            var subwebbit = await Get(subwebbitId).SingleOrDefaultAsync();
 
             if (subwebbit == null)
             {
                 throw new SubwebbitNotFoundException();
             }
 
-            return new SubwebbitViewModel(subwebbit);
+            var isSubscribed = await new UserLogic().IsSubscribed(userId, subwebbitId);
+
+            return new SubwebbitViewModel(subwebbit, isSubscribed);
         }
 
         public async Task<IEnumerable<ThreadViewModel>> GetThreads(string subwebbitId, int index)
         {
-            var subwebbitName = (await Get(subwebbitId)).Name;
-            var threads = await base.Get(subwebbitId).SelectMany(x => x.Threads)
+            var subwebbit = Get(subwebbitId);
+            var subwebbitName = await subwebbit.Select(x => x.Name).SingleAsync();
+            var threads = await subwebbit.SelectMany(x => x.Threads)
                 .OrderByDescending(x => x.Date).Skip(index).Take(ThreadsPerPage)
                 .ToListAsync();
 
@@ -65,15 +68,16 @@ namespace Server.Logic
             (string userId, int index)
         {
             var subwebbitsIds = (await new UserLogic().GetSubscribedIds(userId))
-                                .ToList();
+                .ToList();
             var subwebbits = GetMany(subwebbitsIds);
 
-            var threads = await subwebbits.SelectMany(x => x.Threads).OrderByDescending(x => x.Rating)
-                            .Skip(index).Take(ThreadsPerPage).ToListAsync();
+            var threads = await subwebbits.SelectMany(x => x.Threads)
+                .OrderByDescending(x => x.Rating).Skip(index).Take(ThreadsPerPage)
+                .ToListAsync();
 
             return threads.Select(thread =>
                 new ThreadViewModel(thread, subwebbits.First(subwebbit =>
-                                                             subwebbit.Threads.Contains(thread)).Name));
+                    subwebbit.Threads.Contains(thread)).Name));
         }
 
         private IMongoQueryable<Subwebbit> GetMany(IEnumerable<ObjectId> ids)
@@ -87,6 +91,22 @@ namespace Server.Logic
             var newThread = new Thread(thread.Title, thread.Content, thread.Author);
             await Collection.UpdateOneAsync(GenerateByIdFilter(thread.SubwebbitId),
                 Builders<Subwebbit>.Update.AddToSet(x => x.Threads, newThread));
+        }
+
+        public async Task IncrementSubscribers(string subwebbitId)
+        {
+            await AddToSubscribersCount(subwebbitId, 1);
+        }
+
+        public async Task DecrementSubscribers(string subwebbitId)
+        {
+            await AddToSubscribersCount(subwebbitId, -1);
+        }
+
+        private async Task AddToSubscribersCount(string subwebbitId, int value)
+        {
+            await Collection.UpdateOneAsync(GenerateByIdFilter(subwebbitId),
+                Builders<Subwebbit>.Update.Inc(x => x.SubscribersCount, value));
         }
     }
 }

@@ -1,21 +1,21 @@
 <form layout-fill name="signupForm" layout="column" class="form">
   <div flex layout="column" layout-align="center stretch" class="form-inputs-container">
     <md-input-container>
-      <label><i class="mdi mdi-account"></i> Username</label>
+      <label><i class="mdi mdi-account input-icon"></i> Username</label>
     <input required type="text" ng-model="user.username" name="username" minlength="4" maxlength="14" />
     <div ng-messages="signupForm.username.$error">
       <div ng-message-exp="['required', 'minlength']">Username must contain at least 4 characters.</div>
     </div>
     </md-input-container>
     <md-input-container>
-      <label><i class="mdi mdi-lock"></i> Password</label>
+      <label><i class="mdi mdi-lock input-icon"></i> Password</label>
       <input required type="password" ng-model="user.password" name="password" minlength="8" ng-maxlength="20" />
       <div ng-messages="signupForm.password.$error" role="alert">
         <div ng-message-exp="['required', 'minlength', 'maxlength']">Password must be 8-20 characters long.</div>
       </div>
     </md-input-container>
     <md-input-container>
-      <label><i class="mdi mdi-lock-reset"></i> Repeat Password</label>
+      <label><i class="mdi mdi-lock-reset input-icon"></i> Repeat Password</label>
       <input required type="password" ng-model="user.repeatedPassword" name="repeatPassword" />
       <div ng-messages="signupForm.repeatPassword.$error" role="alert">
         <div ng-message="required">Please re-enter your password</div>

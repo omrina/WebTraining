@@ -5,10 +5,12 @@ const CONTROLLER = 'threadsDisplayer';
 
 angular.module('webbit.controllers')
     .controller(CONTROLLER, function($scope, Subwebbit) {
-        this.toTimeAgo = date => TimeAgo.ago(date);
         $scope.$on('CreateNewThread', () => {
             this.threadsFetcher.reloadThreads();
         });
+        
+        this.toTimeAgo = date => TimeAgo.ago(date);
+
         this.$onInit = () => {
             const subwebbitId = this.subwebbitId;
 

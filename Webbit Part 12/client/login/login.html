@@ -1,14 +1,14 @@
 <form layout-fill name="loginForm" layout="column" class="form">
   <div flex layout="column" layout-align="center stretch" class="form-inputs-container">
     <md-input-container>
-      <label><i class="mdi mdi-account"></i> Username</label>
+      <label><i class="mdi mdi-account input-icon"></i> Username</label>
       <input required md-no-asterisk type="text" ng-model="user.username" name="username" maxlength="100" />
       <div ng-messages="loginForm.username.$error">
         <div ng-message="required">Whats your username?</div>
       </div>
     </md-input-container>
     <md-input-container>
-      <label><i class="mdi mdi-lock"></i> Password</label>
+      <label><i class="mdi mdi-lock input-icon"></i> Password</label>
       <input required md-no-asterisk type="password" ng-model="user.password" name="password" />
       <div ng-messages="loginForm.password.$error" role="alert">
         <div ng-message="required">Please enter your password</div>

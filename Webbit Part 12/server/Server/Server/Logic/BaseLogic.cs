@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
@@ -21,12 +22,12 @@ namespace Server.Logic
             Collection = new MongoConnection().GetCollection<TModel>(typeof(TModel).Name.ToLower());
         }
 
-        public IMongoQueryable<TModel> GetAll()
+        protected IMongoQueryable<TModel> GetAll()
         {
             return Collection.AsQueryable();
         }
 
-        public IMongoQueryable<TModel> Get(string id)
+        protected IMongoQueryable<TModel> Get(string id)
         {
             return GetAll().Where(GenerateByIdFilter(id));
         }
