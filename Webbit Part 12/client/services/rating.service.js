@@ -6,8 +6,8 @@ angular.module('webbit.services')
             $resource(`/api/votes/`).save({itemId, direction}).$promise;
 
         return {
-            // TODO: is needed?
             // TODO: should i make enum id directions?
+            // TODO: is getRating needed?
             getRating: itemId =>
                 $resource(`/api/votes/${itemId}`).get().$promise,
 

@@ -9,5 +9,6 @@ require('./signup');
 require('./shell');
 require('./home');
 require('./subwebbit');
+require('./thread');
 
 export default MODULE;

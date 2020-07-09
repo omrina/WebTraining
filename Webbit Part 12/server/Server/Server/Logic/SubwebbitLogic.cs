@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -12,7 +13,7 @@ namespace Server.Logic
 {
     public class SubwebbitLogic : BaseLogic<Subwebbit>
     {
-        private const int ThreadsPerPage = 3;
+        private const int ThreadsPerPage = 4;
 
         public async Task<IEnumerable<SearchedSubwebbitViewModel>> GetAllByName(string name)
         {
@@ -61,28 +62,33 @@ namespace Server.Logic
                 .OrderByDescending(x => x.Date).Skip(index).Take(ThreadsPerPage)
                 .ToListAsync();
 
-            return threads.Select(x => new ThreadViewModel(x, subwebbitName));
+            return threads.Select(
+                x => new ThreadViewModel(x, new ObjectId(subwebbitId), subwebbitName));
         }
 
         public async Task<IEnumerable<ThreadViewModel>> GetTopThreadsFromSubscribed
             (string userId, int index)
         {
-            var subwebbitsIds = (await new UserLogic().GetSubscribedIds(userId))
-                .ToList();
-            var subwebbits = GetMany(subwebbitsIds);
+            var subwebbitsIds = (await new UserLogic().GetSubscribedIds(userId)).ToList();
+            var subwebbits = GetAll().Where(x => subwebbitsIds.Contains(x.Id));
 
+            // TODO: threads enumerates all nested comments???
             var threads = await subwebbits.SelectMany(x => x.Threads)
                 .OrderByDescending(x => x.Rating).Skip(index).Take(ThreadsPerPage)
                 .ToListAsync();
 
-            return threads.Select(thread =>
-                new ThreadViewModel(thread, subwebbits.First(subwebbit =>
-                    subwebbit.Threads.Contains(thread)).Name));
+            return threads.Select(x => ConvertThreadToViewModel(x, subwebbits));
         }
 
-        private IMongoQueryable<Subwebbit> GetMany(IEnumerable<ObjectId> ids)
+        private ThreadViewModel ConvertThreadToViewModel(Thread thread,
+                                                         IMongoQueryable<Subwebbit> subwebbits)
         {
-            return GetAll().Where(x => ids.Contains(x.Id));
+            var subwebbitName = subwebbits.Where(x => x.Threads.Contains(thread))
+                .Select(x => x.Name).First();
+            var subwebbitId = subwebbits.Where(x => x.Threads.Contains(thread))
+                .Select(x => x.Id).First();
+
+            return new ThreadViewModel(thread, subwebbitId, subwebbitName);
         }
 
         public async Task CreateThread(NewThreadViewModel thread)

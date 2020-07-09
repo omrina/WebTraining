@@ -1,26 +1,11 @@
 <md-virtual-repeat-container flex class="threads-repeater">
     <div flex layout="column" layout-align="start center"
          md-virtual-repeat="thread in $ctrl.threadsFetcher" md-on-demand class="repeated-item">
-        <div ng-if="thread" layout="column" layout-align="start stretch"
-             class="thread-container">
-            <div layout="row">
-                <span class="subwebbit-name">{{thread.subwebbitName}}</span>
-                <span class="thread-metadata"> / posted by {{thread.author}} • {{$ctrl.toTimeAgo(thread.date)}}</span>
-                <div flex="noshrink" class="minimal-space"></div>
-                <rating item-id="thread.id" rating="thread.rating"></rating>
-            </div>
-            <div class="thread-title">
-                <span>{{thread.title}}</span>
-            </div>
-            <p flex="noshrink" class="thread-content">
-               {{thread.content}}
-            </p>
-            <div class="thread-footer">
-                <i class="mdi mdi-comment-outline"></i>
-                <span>{{thread.commentsCount}} Comments</span>
-            </div>
+        <div ng-if="thread" class="thread-container">
+             <thread-preview ui-sref="shell.thread({ subwebbitId: thread.subwebbitId, threadId: thread.id, thread })" layout-fill layout="column" layout-align="start stretch"
+                             thread="thread"></thread-preview>
         </div>
-        <div ng-if="!thread" layout="column" layout-align="center center" layout-fill>
+        <div ng-if="!thread && !$ctrl.threadsFetcher.threads.length" layout="column" layout-align="center center" layout-fill>
             <span class="threads-end-title">Wow, seems like we've reached rock bottom <i class="mdi mdi-robot"></i></span>
         </div>
     </div>

@@ -1,15 +1,16 @@
-﻿using Server.Models;
+﻿using MongoDB.Bson;
+using Server.Models;
 
 namespace Server.ViewModels
 {
     public class UserViewModel
     {
-        public string Id { get; set; }
+        public ObjectId Id { get; set; }
         public string Username { get; set; }
 
         public UserViewModel(User user)
         {
-            Id = user.Id.ToString();
+            Id = user.Id;
             Username = user.Username;
         }
     }

@@ -1,0 +1,9 @@
+<div layout-fill layout="column" class="thread-page-container" layout-align="start center">
+    <div layout-fill class="thread-container">
+        <thread-preview layout="column" thread="thread" class="thread-preview"></thread-preview>
+        <md-divider></md-divider>
+        <div flex class="comments-container">
+            <div ng-repeat="comment in comments track by comment.id"></div>
+        </div>
+    </div>
+</div>

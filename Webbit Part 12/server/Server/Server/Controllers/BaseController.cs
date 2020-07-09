@@ -15,6 +15,7 @@ namespace Server.Controllers
             Logic = logic;
         }
 
+        // TODO: rename?
         protected string GetAuthorizationToken()
         {
             return Request.Headers.Authorization.Scheme;

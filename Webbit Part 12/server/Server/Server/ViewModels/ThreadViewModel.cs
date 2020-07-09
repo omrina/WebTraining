@@ -1,11 +1,13 @@
 ﻿using System;
+using MongoDB.Bson;
 using Server.Models;
 
 namespace Server.ViewModels
 {
     public class ThreadViewModel
     {
-        public string Id { get; set; }
+        public ObjectId Id { get; set; }
+        public ObjectId SubwebbitId { get; set; }
         public string SubwebbitName { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
@@ -15,9 +17,10 @@ namespace Server.ViewModels
         public int CommentsCount { get; set; }
         // TODO: add my rating (1 / 0 / -1 ?)
 
-        public ThreadViewModel(Thread thread, string subwebbitName)
+        public ThreadViewModel(Thread thread, ObjectId subwebbitId, string subwebbitName)
         {
-            Id = thread.Id.ToString();
+            Id = thread.Id;
+            SubwebbitId = subwebbitId;
             SubwebbitName = subwebbitName;
             Title = thread.Title;
             Content = thread.Content;

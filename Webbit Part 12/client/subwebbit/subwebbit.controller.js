@@ -13,15 +13,14 @@ angular.module("webbit.controllers")
       $scope.toTimeAgo = (date) => TimeAgo.ago(date);
 
       $scope.toggleSubscribe = (clickedButton, id) => {
-        let isSubscribed = $scope.subwebbit.isSubscribed;
+        const isSubscribed = $scope.subwebbit.isSubscribed;
 
         clickedButton.disabled = true;
-        User[isSubscribed ? 'unsubscribe' : 'subscribe'](id)
-            .then(() => {
-                $scope.subwebbit.subscribersCount += isSubscribed ? -1 : 1;
-                $scope.subwebbit.isSubscribed = !isSubscribed;
-                clickedButton.disabled = false;
-            });
+        User[isSubscribed ? "unsubscribe" : "subscribe"](id).then(() => {
+          $scope.subwebbit.subscribersCount += isSubscribed ? -1 : 1;
+          $scope.subwebbit.isSubscribed = !isSubscribed;
+          clickedButton.disabled = false;
+        });
       };
 
       $scope.showCreateDialog = () => {
@@ -37,7 +36,7 @@ angular.module("webbit.controllers")
           });
       };
 
-      Subwebbit.get(id).then((subwebbit) => {
+      Subwebbit.get(id).then(subwebbit => {
         $scope.subwebbit = subwebbit;
       });
     }

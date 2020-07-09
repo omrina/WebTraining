@@ -1,0 +1,15 @@
+<div layout="row">
+    <span class="subwebbit-name">{{$ctrl.thread.subwebbitName}}</span>
+    <span class="thread-metadata"> / posted by {{$ctrl.thread.author}} • {{$ctrl.toTimeAgo($ctrl.thread.date)}}</span>
+    <div flex="noshrink" class="minimal-space"></div>
+    <rating item-id="$ctrl.thread.id" rating="$ctrl.thread.rating"></rating>
+</div>
+<p class="thread-title">{{$ctrl.thread.title}}</p>
+<p flex="noshrink" class="thread-content">
+    {{$ctrl.thread.content}}
+</p>
+<div class="thread-footer">
+    <i class="mdi mdi-comment-outline"></i>
+    <span>{{$ctrl.thread.commentsCount}} Comments</span>
+</div>
+</div>

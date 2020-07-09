@@ -1,5 +1,4 @@
 import angular from 'angular';
-import TimeAgo from 'time-ago';
 
 const CONTROLLER = 'threadsDisplayer';
 
@@ -9,8 +8,6 @@ angular.module('webbit.controllers')
             this.threadsFetcher.reloadThreads();
         });
         
-        this.toTimeAgo = date => TimeAgo.ago(date);
-
         this.$onInit = () => {
             const subwebbitId = this.subwebbitId;
 
@@ -44,8 +41,7 @@ angular.module('webbit.controllers')
                 fetchMoreItems_(index) {
                     Subwebbit.getThreads({
                         id: this.subwebbitId,
-                        index: index,
-                        amount: 3,
+                        index
                     })
                     .then(angular.bind(this, function (threads) {
                         this.hasFetchedAllThreads = !threads.length;
