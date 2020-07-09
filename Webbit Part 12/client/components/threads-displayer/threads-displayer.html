@@ -6,26 +6,16 @@
             <div layout="row">
                 <span class="subwebbit-name">{{thread.subwebbitName}}</span>
                 <span class="thread-metadata"> / posted by {{thread.author}} • {{$ctrl.toTimeAgo(thread.date)}}</span>
-                <div flex></div>
-                <div layout="row" layout-align="space-between center" class="rating-container">
-                    <md-button md-ink-ripple="false" class="vote-button upvote-button">
-                        <i class="mdi mdi-arrow-up-bold-circle-outline"></i>
-                    </md-button>
-                    <span>
-                        {{thread.rating}}
-                    </span>
-                    <md-button md-ink-ripple="false" class="vote-button downvote-button">
-                        <i class="mdi mdi-arrow-down-bold-circle-outline"></i>
-                    </md-button>
-                </div>
+                <div flex="noshrink" class="minimal-space"></div>
+                <rating item-id="thread.id" rating="thread.rating"></rating>
             </div>
             <div class="thread-title">
                 <span>{{thread.title}}</span>
             </div>
-            <p flex class="thread-content">
+            <p flex="noshrink" class="thread-content">
                {{thread.content}}
             </p>
-            <div>
+            <div class="thread-footer">
                 <i class="mdi mdi-comment-outline"></i>
                 <span>{{thread.commentsCount}} Comments</span>
             </div>

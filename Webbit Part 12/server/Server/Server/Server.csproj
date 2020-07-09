@@ -129,8 +129,10 @@
   <ItemGroup>
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\RatingController.cs" />
     <Compile Include="Controllers\SubwebbitController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Enums\VoteDirections.cs" />
     <Compile Include="Exceptions\InvalidSignupDetailsException.cs" />
     <Compile Include="Exceptions\LoginFailedException.cs" />
     <Compile Include="Exceptions\SubwebbitNameAlreadyTakenException.cs" />
@@ -142,6 +144,7 @@
     <Compile Include="Logic\BaseLogic.cs" />
     <Compile Include="Logic\MongoConnection.cs" />
     <Compile Include="Logic\AuthLogic.cs" />
+    <Compile Include="Logic\RatingLogic.cs" />
     <Compile Include="Logic\SubwebbitLogic.cs" />
     <Compile Include="Logic\UserLogic.cs" />
     <Compile Include="Logic\Validation\SignupDetailsValidator.cs" />
@@ -162,6 +165,7 @@
     <Compile Include="ViewModels\ThreadViewModel.cs" />
     <Compile Include="ViewModels\UserSignupViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
+    <Compile Include="ViewModels\VoteOnItemViewModel.cs" />
     <Compile Include="WebApiConfig\InheritedAttributesRouteProvider.cs" />
     <Compile Include="WebApiConfig\PassThroughExceptionsHandler.cs" />
   </ItemGroup>

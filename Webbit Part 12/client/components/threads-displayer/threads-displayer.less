@@ -12,46 +12,29 @@
         overflow: auto;
         height: 100%;
         width: 45%;
-        border: 1px solid #848484;
+        border: 1.5px solid #848484;
         border-radius: 4px;
         padding: 10px 16px;
         background-color: white;
 
+        &:hover {
+        // TODO: check if needed after added ui-sref
+        cursor: pointer;
+        border-color: #020202;
+      }
+
         .subwebbit-name {
           font-weight: 500;
+        }
+
+        .minimal-space {
+          min-width: 80px;
         }
 
         .thread-metadata {
           white-space: pre;
         }
 
-        .rating-container {
-          font-size: 30px;
-          font-weight: bold;
-
-          .vote-button {
-            font-size: 34px;
-            min-width: 50px;
-            transition: transform 0.1s ease-in-out;
-
-            &:hover {
-              background-color: transparent;
-              transform: scale(1.2);
-            }
-
-            &:active {
-              transform: scale(1);
-            }
-          }
-
-          .upvote-button:hover {
-            color: green;
-          }
-
-          .downvote-button:hover {
-            color: red;
-          }
-        }
 
         .thread-title {
           font-size: 40px;
@@ -66,6 +49,12 @@
           overflow: hidden;
           -webkit-line-clamp: 5;
           -webkit-box-orient: vertical;
+        }
+
+        .thread-footer {
+          margin-top: 16px;
+          font-size: 28px;
+          color: #757575;
         }
       }
 

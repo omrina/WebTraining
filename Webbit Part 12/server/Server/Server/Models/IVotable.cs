@@ -7,5 +7,6 @@ namespace Server.Models
     {
         IEnumerable<ObjectId> Upvoters { get; set; }
         IEnumerable<ObjectId> Downvoters { get; set; }
+        int Rating { get; set; }
     }
 }
