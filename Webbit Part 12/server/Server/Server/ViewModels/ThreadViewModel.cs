@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using MongoDB.Bson;
 using Server.Models;
 
@@ -26,8 +27,8 @@ namespace Server.ViewModels
             Content = thread.Content;
             Author = thread.Author;
             Date = thread.Date;
-            Rating = thread.Rating; // TODO: upvoters - downvoters
-            CommentsCount = 0; // TODO: complete this
+            Rating = thread.Rating;
+            CommentsCount = thread.Comments.Sum(x => x.Comments.Count() + 1);
         }
     }
 }

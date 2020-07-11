@@ -3,8 +3,8 @@ import angular from 'angular';
 const CONTROLLER = 'threadsDisplayer';
 
 angular.module('webbit.controllers')
-    .controller(CONTROLLER, function($scope, Subwebbit) {
-        $scope.$on('CreateNewThread', () => {
+    .controller(CONTROLLER, function($scope, Thread) {
+        $scope.$on('CreatedNewThread', () => {
             this.threadsFetcher.reloadThreads();
         });
         
@@ -18,7 +18,12 @@ angular.module('webbit.controllers')
                 isRequestInProgress: false,
 
                 reloadThreads() {
-                    (this.threads = []), (this.hasFetchedAllThreads = false);
+                    this.threads = [];
+                    this.hasFetchedAllThreads = false;
+                },
+
+                hasNoThreadsAtAll() {
+                    return this.hasFetchedAllThreads && this.threads.length === 0;   
                 },
 
                 getItemAtIndex(index) {
@@ -28,7 +33,7 @@ angular.module('webbit.controllers')
 
                     if (!this.isRequestInProgress && !this.hasFetchedAllThreads) {
                         this.isRequestInProgress = true;
-                        this.fetchMoreItems_(index);
+                        this.getMoreThreads(index);
                     }
 
                     return null;
@@ -38,9 +43,9 @@ angular.module('webbit.controllers')
                     return this.threads.length + 1;
                 },
 
-                fetchMoreItems_(index) {
-                    Subwebbit.getThreads({
-                        id: this.subwebbitId,
+                getMoreThreads(index) {
+                    Thread.getThreads({
+                        subwebbitId: this.subwebbitId,
                         index
                     })
                     .then(angular.bind(this, function (threads) {

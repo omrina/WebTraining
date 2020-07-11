@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
+using MongoDB.Driver.Linq;
 using Server.Models;
 using Server.ViewModels;
 
@@ -11,7 +12,7 @@ namespace Server.Logic
         public async Task Vote(VoteOnItemViewModel voteInfo)
         {
             // TODO: use hierarchy of id's
-            var a = GetAll().SelectMany(x => x.Threads).FirstOrDefault(x => x.Id == new ObjectId(voteInfo.ItemId));
+            var a = await GetAll().SelectMany(x => x.Threads).FirstOrDefaultAsync(x => x.Id == new ObjectId(voteInfo.ItemId));
         }
     }
 }

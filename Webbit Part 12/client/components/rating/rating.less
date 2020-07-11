@@ -1,11 +1,17 @@
 .rating-container {
-    font-size: 30px;
+    font-size: 1.25em;
     font-weight: bold;
 
+    .rating-value {
+      margin: 0 6px;
+    }
+
     .vote-button {
-      font-size: 34px;
-      min-width: 50px;
-      margin: 0 4px;
+      font-size: 1.2em;
+      line-height: unset;
+      margin: 0;
+      padding: 0;
+      min-width: 30px;
       transition: transform 0.1s ease-in-out;
 
       &:focus, &:hover {
@@ -28,4 +34,6 @@
     .downvote-button:hover {
       color: red;
     }
+
+    
   }

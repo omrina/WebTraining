@@ -9,9 +9,9 @@
     </md-input-container>
     <md-input-container>
       <label><i class="mdi mdi-lock input-icon"></i> Password</label>
-      <input required type="password" ng-model="user.password" name="password" minlength="8" ng-maxlength="20" />
+      <input required type="password" ng-model="user.password" name="password" minlength="8" />
       <div ng-messages="signupForm.password.$error" role="alert">
-        <div ng-message-exp="['required', 'minlength', 'maxlength']">Password must be 8-20 characters long.</div>
+        <div ng-message-exp="['required', 'minlength', 'maxlength']">Password contain at least 8 characters.</div>
       </div>
     </md-input-container>
     <md-input-container>

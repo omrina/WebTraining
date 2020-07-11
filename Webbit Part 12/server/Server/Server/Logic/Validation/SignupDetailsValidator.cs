@@ -9,7 +9,7 @@ namespace Server.Logic.Validation
             var stringValidator = new StringValidator();
 
             return stringValidator.IsLengthBetween(user.Username, 4, 14) &&
-                   stringValidator.IsLengthBetween(user.Password, 8, 20);
+                   user.Password.Length >= 8;
         }
     }
 }

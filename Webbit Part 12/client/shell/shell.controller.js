@@ -21,7 +21,6 @@ angular.module('webbit.controllers')
     }
     
     $scope.createSubwebbit = (name, ownerId) => {
-      // TODO: should clear the search bar here???
       $scope.searchedName = "";
       Subwebbit.create({name, ownerId})
         .then(newSubwebbitId => $state.go('shell.subwebbit', {id: newSubwebbitId}));

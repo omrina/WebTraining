@@ -3,15 +3,16 @@ import angular from 'angular';
 const CONTROLLER = 'rating';
 
 angular.module('webbit.controllers')
-    .controller(CONTROLLER, function(Rating) {
-        // $scope.$on('CreateNewThread', () => {
-        //     this.threadsFetcher.reloadThreads();
-        // });
-        
-        
+    .controller(CONTROLLER, function (Rating) {
         this.$onInit = () => {
-            this.upvote = () => Rating.upvote(this.itemId);
-            this.downvote = () => Rating.downvote(this.itemId);
+            this.upvote = event => {
+                event.stopPropagation();
+                Rating.upvote(this.itemId);
+            };
+            this.downvote = event => {
+                event.stopPropagation();
+                Rating.downvote(this.itemId);
+            };
         }
     });
 

@@ -3,8 +3,9 @@ import angular from 'angular';
 const CONTROLLER = 'createThread';
 
 angular.module('webbit.controllers')
-    .controller(CONTROLLER, ($scope, $mdDialog, Auth, Subwebbit, subwebbit) => {
+    .controller(CONTROLLER, ($scope, $mdDialog, Auth, Thread, subwebbit) => {
         $scope.subwebbit = subwebbit;
+
         $scope.thread = {
             author: Auth.getCurrentUser().username,
             subwebbitId: $scope.subwebbit.id
@@ -15,7 +16,7 @@ angular.module('webbit.controllers')
         };
 
         $scope.post = thread => {
-            Subwebbit.postThread(thread)
+            Thread.post(thread)
                 .then(() => $mdDialog.hide())
                 .catch(() => alert('thread submission failed!'));
         };

@@ -24,6 +24,7 @@ var subwebbits = [
 				"content": "how do you say it?",
 				"author": "admin",
 				"date": new Date("2020-07-07T06:59:24.802Z"),
+				"comments": [],
 				"upvoters": [],
 				"downvoters": [],
 				"rating": -1
@@ -34,6 +35,7 @@ var subwebbits = [
 				"content": "what are the most popular dog breeds?",
 				"author": "admin",
 				"date": new Date("2020-07-07T07:39:50.816Z"),
+				"comments": [],
 				"upvoters": [],
 				"downvoters": [],
 				"rating": 49
@@ -51,6 +53,7 @@ var subwebbits = [
 				"content": "i really dont know, please help...",
 				"author": "admin",
 				"date": new Date("2020-07-07T06:58:03.713Z"),
+				"comments": [],
 				"upvoters": [],
 				"downvoters": [],
 				"rating": 0
@@ -61,6 +64,7 @@ var subwebbits = [
 				"content": "just a question for you :)",
 				"author": "admin",
 				"date": new Date("2020-07-07T07:34:56.190Z"),
+				"comments": [],
 				"upvoters": [],
 				"downvoters": [],
 				"rating": 27

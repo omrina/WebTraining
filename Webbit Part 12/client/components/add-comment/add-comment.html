@@ -1,0 +1,15 @@
+<div class="add-comment-container">
+    <md-input-container md-no-float class="comment-input-container">
+        <textarea name="content" placeholder={{$ctrl.inputPlaceholder}} class="comment-input"
+            ng-model="$ctrl.comment.content" md-no-resize></textarea>
+    </md-input-container>
+    <div ng-if="$ctrl.comment.content" layout="row" class="comment-actions-container">
+        <div flex></div>
+        <md-button class="comment-action-button comment-button" ng-click="$ctrl.postComment()">
+            {{$ctrl.comment.parentCommentId ? "reply" : "comment"}}
+        </md-button>
+        <md-button class="comment-action-button cancel-comment-button" ng-click="$ctrl.clearComment()">
+            cancel
+        </md-button>
+    </div>
+</div>

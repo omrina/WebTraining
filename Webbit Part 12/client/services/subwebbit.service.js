@@ -10,10 +10,4 @@ angular.module("webbit.services").service("Subwebbit", function ($http, $resourc
 
   this.get = id =>
     $resource(`/api/subwebbits/${id}`).get().$promise;
-
-  this.postThread = thread =>
-    $resource(`/api/subwebbits/createThread`).save(thread).$promise;
-
-  this.getThreads = ({ id = "", index }) =>
-    $resource(`/api/subwebbits/${id}/threads/${index}`).query().$promise;
 });

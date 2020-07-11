@@ -1,9 +1,17 @@
-<div layout-fill layout="column" class="thread-page-container" layout-align="start center">
-    <div layout-fill class="thread-container">
+<div layout-fill layout-padding layout="column" layout-align="start center" class="thread-page-container">
+    <div flex layout="column" class="thread-page">
         <thread-preview layout="column" thread="thread" class="thread-preview"></thread-preview>
         <md-divider></md-divider>
-        <div flex class="comments-container">
-            <div ng-repeat="comment in comments track by comment.id"></div>
+        <div ng-if="thread" class="comments-section">
+            <add-comment  subwebbit-id="thread.subwebbitId" thread-id="thread.id"></add-comment>
+            <div flex class="comments-container">
+                <div ng-repeat="comment in comments track by comment.id">
+                    <comment comment="comment" is-root-comment="true"></comment>
+                    <div class="sub-comments-container" ng-repeat="subComment in comment.subComments track by subComment.id">
+                        <comment comment="subComment" is-root-comment="false"></comment>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

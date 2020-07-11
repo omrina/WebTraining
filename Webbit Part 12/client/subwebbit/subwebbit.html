@@ -3,13 +3,10 @@
         <div layout="row" layout-align="space-between center">
             <span flex="40" class="subwebbit-title">{{subwebbit.name}}</span>
             <div flex>
-                <div>
-                    <md-button ng-click="toggleSubscribe($event.target, subwebbit.id)"
-                               class="subscribtion-button"
-                               ng-class="subwebbit.isSubscribed ? 'unsubscribe-button' : 'subscribe-button'">
-                        subscribe<span ng-if="subwebbit.isSubscribed">d <i class="mdi mdi-check"></i></span>
-                    </md-button>
-                </div>
+                <md-button ng-click="toggleSubscribe($event.target, subwebbit.id)" class="subscribtion-button"
+                    ng-class="subwebbit.isSubscribed ? 'unsubscribe-button' : 'subscribe-button'">
+                    subscribe<span ng-if="subwebbit.isSubscribed">d <i class="mdi mdi-check"></i></span>
+                </md-button>
             </div>
         </div>
         <div>

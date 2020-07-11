@@ -7,15 +7,19 @@ import TimeAgo from "time-ago";
 const CONTROLLER = "subwebbit";
 
 angular.module("webbit.controllers")
-    .controller(CONTROLLER, ($scope, $state, $timeout, $mdDialog, Subwebbit, User) => {
-      const id = $state.params.id;
-      // TODO: get from server if subscribed (AND if owner)!
-      $scope.toTimeAgo = (date) => TimeAgo.ago(date);
+    .controller(CONTROLLER, ($scope, $stateParams, $timeout, $mdDialog, Subwebbit, User) => {
+      // TODO: get from server if owner!
+      $scope.toTimeAgo = date => TimeAgo.ago(date);
+
+      Subwebbit.get($stateParams.id).then(subwebbit => {
+        $scope.subwebbit = subwebbit;
+      });
 
       $scope.toggleSubscribe = (clickedButton, id) => {
         const isSubscribed = $scope.subwebbit.isSubscribed;
 
         clickedButton.disabled = true;
+
         User[isSubscribed ? "unsubscribe" : "subscribe"](id).then(() => {
           $scope.subwebbit.subscribersCount += isSubscribed ? -1 : 1;
           $scope.subwebbit.isSubscribed = !isSubscribed;
@@ -32,13 +36,9 @@ angular.module("webbit.controllers")
           })
           .then(() => {
             // TODO: should move to the newly created thread page instead of reload?
-            $timeout(() => $scope.$broadcast("CreateNewThread"), 1000);
+            $timeout(() => $scope.$broadcast("CreatedNewThread"), 1000);
           });
       };
-
-      Subwebbit.get(id).then(subwebbit => {
-        $scope.subwebbit = subwebbit;
-      });
     }
   );
 

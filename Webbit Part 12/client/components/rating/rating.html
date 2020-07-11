@@ -1,11 +1,11 @@
-<div layout="row" layout-align="space-between center" class="rating-container">
-    <md-button ng-click="$ctrl.upvote()" md-ink-ripple="false" class="vote-button upvote-button">
+<div layout="row" layout-align="space-around center" class="rating-container">
+    <md-button ng-click="$ctrl.upvote($event)" md-ink-ripple="false" class="vote-button upvote-button">
         <i class="mdi mdi-arrow-up-bold-circle-outline"></i>
     </md-button>
-    <span>
+    <span class="rating-value">
         {{$ctrl.rating}}
     </span>
-    <md-button ng-click="$ctrl.downvote()" md-ink-ripple="false" class="vote-button downvote-button">
+    <md-button ng-click="$ctrl.downvote($event)" md-ink-ripple="false" class="vote-button downvote-button">
         <i class="mdi mdi-arrow-down-bold-circle-outline"></i>
     </md-button>
 </div>

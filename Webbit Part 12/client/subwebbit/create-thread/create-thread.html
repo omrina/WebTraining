@@ -9,8 +9,8 @@
         <form name="createThreadForm" class="create-thread-form" layout="column" layout-align="start space-between"
             layout-padding>
             <md-input-container md-no-float>
-                <textarea required name="title" placeholder="An amazing title" class="thread-input" md-no-resize rows="1"
-                    ng-model="thread.title" md-maxlength="250" maxlength="250"></textarea>
+                <textarea required name="title" placeholder="An amazing title" class="thread-input" md-no-resize
+                    rows="1" ng-model="thread.title" maxlength="200"></textarea>
             </md-input-container>
             <md-input-container md-no-float>
                 <textarea required name="content" placeholder="Content (required)" class="thread-input"
@@ -19,7 +19,7 @@
         </form>
     </md-dialog-content>
     <md-dialog-actions layout="row" layout-padding>
-        <span flex></span>
+        <flex></flex>
         <md-button class="post-thread-button" ng-disabled="!createThreadForm.$valid" ng-click="post(thread)">
             post
         </md-button>

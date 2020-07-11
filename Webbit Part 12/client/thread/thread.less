@@ -1,21 +1,33 @@
 @import (reference) "../app.less";
 
 .thread-page-container {
-  font-size: 1.3em;
-  padding: 10px 16px;
-  background-color: @neutral-color;
-  padding: 10px 25%;
 
-  .thread-container {
-    overflow: auto;
-    border: 1px solid;
-    border-radius: 8px;
-    padding: 10px 16px;
+  .thread-page {
+    width           : 60%;
+    min-height      : 300px;
+    font-size       : 30px;
+    padding         : 10px 16px;
+    border          : 1px solid;
+    border-radius   : 8px;
+    overflow        : auto;
     background-color: white;
 
     .thread-preview {
       padding-bottom: 10px;
-      min-height: 250px;
+      min-height    : 250px;
+    }
+
+    .comments-section {
+      margin-top   : 30px;
+      padding-right: 24px;
+
+      .comments-container {
+        padding: 0 8px 8px;
+
+        .sub-comments-container {
+          padding-left: 32px;
+        }
+      }
     }
   }
 }

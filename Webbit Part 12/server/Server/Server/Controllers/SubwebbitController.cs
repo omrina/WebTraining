@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
 using Server.Logic;
 using Server.Models;
@@ -21,15 +20,6 @@ namespace Server.Controllers
             return Ok(await Logic.GetAllByName(name));
         }
 
-        [Route("")]
-        [HttpPost]
-        public async Task<IHttpActionResult> Create(NewSubwebbitViewModel subwebbit)
-        {
-            var id = await Logic.Create(subwebbit);
-        
-            return Ok(id);
-        }
-
         [Route("{id}")]
         [HttpGet]
         public async Task<IHttpActionResult> Get(string id)
@@ -39,29 +29,13 @@ namespace Server.Controllers
             return Ok(subwebbit);
         }
 
-        [Route("{subwebbitId}/threads/{index}")]
-        [HttpGet]
-        public async Task<IHttpActionResult> GetThreads(string subwebbitId, int index)
-        {
-            return Ok(await Logic.GetThreads(subwebbitId, index));
-        }
-
-        [Route("threads/{index}")]
-        [HttpGet]
-        public async Task<IHttpActionResult> GetTopThreads(int index)
-        {
-            var userId = GetAuthorizationToken();
-
-            return Ok(await Logic.GetTopThreadsFromSubscribed(userId, index));
-        }
-
-        [Route("createThread")]
+        [Route("")]
         [HttpPost]
-        public async Task<IHttpActionResult> CreateThread(NewThreadViewModel thread)
+        public async Task<IHttpActionResult> Create(NewSubwebbitViewModel subwebbit)
         {
-            await Logic.CreateThread(thread);
-
-            return Ok();
+            var id = await Logic.Create(subwebbit);
+        
+            return Ok(id);
         }
     }
 }

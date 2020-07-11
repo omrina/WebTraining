@@ -1,12 +1,16 @@
 <md-virtual-repeat-container flex class="threads-repeater">
-    <div flex layout="column" layout-align="start center"
+    <div layout="column" layout-align="start center"
          md-virtual-repeat="thread in $ctrl.threadsFetcher" md-on-demand class="repeated-item">
         <div ng-if="thread" class="thread-container">
              <thread-preview ui-sref="shell.thread({ subwebbitId: thread.subwebbitId, threadId: thread.id, thread })" layout-fill layout="column" layout-align="start stretch"
                              thread="thread"></thread-preview>
         </div>
-        <div ng-if="!thread && !$ctrl.threadsFetcher.threads.length" layout="column" layout-align="center center" layout-fill>
+        <div ng-if="!thread && $index !== 0" layout="column" layout-align="center center" layout-fill>
             <span class="threads-end-title">Wow, seems like we've reached rock bottom <i class="mdi mdi-robot"></i></span>
         </div>
     </div>
-  </md-virtual-repeat-container>
+    <div ng-if="$ctrl.threadsFetcher.hasNoThreadsAtAll()"
+            layout="column" layout-align="center center" class="no-threads">
+        <span>Seems like there are no threads... <i class="mdi mdi-emoticon-sad"></i></span>
+    </div>
+</md-virtual-repeat-container>

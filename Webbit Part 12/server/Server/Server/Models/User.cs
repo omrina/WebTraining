@@ -15,6 +15,7 @@ namespace Server.Models
         {
             Username = username;
             Password = password;
+            SubscribedSubwebbits = new List<ObjectId>();
         }
     }
 }
