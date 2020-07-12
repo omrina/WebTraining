@@ -24,7 +24,7 @@ namespace Server.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> Get(string id)
         {
-            var subwebbit = await Logic.Get(id, GetAuthorizationToken());
+            var subwebbit = await Logic.Get(id, GetUserIdFromRequest());
 
             return Ok(subwebbit);
         }

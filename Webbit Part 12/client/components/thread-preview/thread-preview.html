@@ -2,7 +2,10 @@
     <span class="subwebbit-name">{{$ctrl.thread.subwebbitName}}</span>
     <span class="thread-metadata"> / posted by {{$ctrl.thread.author}} • {{$ctrl.toTimeAgo($ctrl.thread.date)}}</span>
     <div flex="noshrink" class="minimal-space"></div>
-    <rating item-id="$ctrl.thread.id" rating="$ctrl.thread.rating"></rating>
+    <rating item-ids="{'threadId': $ctrl.thread.id,
+                       'subwebbitId': $ctrl.thread.subwebbitId}"
+            rating="$ctrl.thread.rating"
+            user-vote="$ctrl.thread.userVote"></rating>
 </div>
 <p class="thread-title">{{$ctrl.thread.title}}</p>
 <p flex="noshrink" class="thread-content">

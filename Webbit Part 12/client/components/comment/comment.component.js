@@ -8,8 +8,8 @@ const COMPONENT = 'comment';
 angular.module('webbit.components')
     .component(COMPONENT, {
         bindings: {
-            isRootComment: '<',
             comment: '<',
+            parentCommentId: '<'
         },
         template,
         controller

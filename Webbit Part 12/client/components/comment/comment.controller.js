@@ -12,6 +12,8 @@ angular.module('webbit.controllers')
         this.toggleReply = () => {
             this.isReplyVisible = !this.isReplyVisible;
         }
+
+        this.isRootComment = () => !this.parentCommentId;
     });
 
 export default CONTROLLER;

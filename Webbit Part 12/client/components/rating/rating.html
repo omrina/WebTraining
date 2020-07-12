@@ -1,11 +1,15 @@
 <div layout="row" layout-align="space-around center" class="rating-container">
-    <md-button ng-click="$ctrl.upvote($event)" md-ink-ripple="false" class="vote-button upvote-button">
-        <i class="mdi mdi-arrow-up-bold-circle-outline"></i>
+    <md-button ng-click="$event.stopPropagation(); $ctrl.upvote()" md-ink-ripple="false"
+                class="vote-button upvote-button" 
+                ng-class="{'voted': $ctrl.currentVoteState === $ctrl.votingStates.UPVOTED}">
+        <i class="mdi mdi-thumb-up-outline"></i>
     </md-button>
-    <span class="rating-value">
+    <span class="rating-value" ng-class="{'voted': $ctrl.currentVoteState !== $ctrl.votingStates.NOVOTE}">
         {{$ctrl.rating}}
     </span>
-    <md-button ng-click="$ctrl.downvote($event)" md-ink-ripple="false" class="vote-button downvote-button">
-        <i class="mdi mdi-arrow-down-bold-circle-outline"></i>
+    <md-button ng-click="$event.stopPropagation(); $ctrl.downvote()" md-ink-ripple="false"
+                class="vote-button downvote-button" 
+                ng-class="{'voted': $ctrl.currentVoteState === $ctrl.votingStates.DOWNVOTED}">
+        <i class="mdi mdi-thumb-down-outline"></i>
     </md-button>
 </div>

@@ -14,12 +14,6 @@ namespace Server.Logic
         public async Task Post(NewCommentViewModel comment)
         {
             // TODO: add validation???
-            var filterBuilder = Builders<Subwebbit>.Filter;
-            var filterDefinition = filterBuilder.And(
-                filterBuilder.Eq(subwebbit => subwebbit.Id, new ObjectId(comment.SubwebbitId)),
-                filterBuilder.ElemMatch(subwebbit => subwebbit.Threads,
-                    thread => thread.Id == new ObjectId(comment.ThreadId)));
-
             var updateField = "Threads.$.Comments";
             var arrayFilters = new List<ArrayFilterDefinition>();
 
@@ -31,20 +25,21 @@ namespace Server.Logic
             }
 
             var newComment = new Comment(comment.Author, comment.Content);
-            
-            var a = await Collection.UpdateOneAsync(filterDefinition,
-                Builders<Subwebbit>.Update.AddToSet(updateField, newComment),
-                new UpdateOptions { ArrayFilters = arrayFilters });
-            var b = 1;
+            var threadFilter = new ThreadLogic()
+                .GetThreadFilterDefinition(comment.SubwebbitId, comment.ThreadId);
+
+            await Collection.UpdateOneAsync(threadFilter,
+                UpdateBuilder.AddToSet(updateField, newComment),
+                new UpdateOptions {ArrayFilters = arrayFilters});
         }
 
-        public async Task<IEnumerable<CommentViewModel>> GetAll(string subwebbitId, string threadId)
+        public async Task<IEnumerable<CommentViewModel>> GetAll(string subwebbitId, string threadId, string userId)
         {
             var thread = await Get(subwebbitId).SelectMany(x => x.Threads).Where(x => x.Id == new ObjectId(threadId))
                 .FirstAsync();
             var comments = thread.Comments.OrderByDescending(x => x.Rating);
 
-            return comments.Select(x => new CommentViewModel(x, subwebbitId, threadId));
+            return comments.Select(x => new CommentViewModel(x, subwebbitId, threadId, new ObjectId(userId)));
         }
     }
 }

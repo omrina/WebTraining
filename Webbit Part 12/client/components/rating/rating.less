@@ -1,39 +1,33 @@
+@import (reference) '../../app.less';
+
 .rating-container {
-    font-size: 1.25em;
-    font-weight: bold;
+  font-size: 1.25em;
+  font-weight: 500;
 
-    .rating-value {
-      margin: 0 6px;
-    }
-
-    .vote-button {
-      font-size: 1.2em;
-      line-height: unset;
-      margin: 0;
-      padding: 0;
-      min-width: 30px;
-      transition: transform 0.1s ease-in-out;
-
-      &:focus, &:hover {
-        background-color: transparent;
-      }
-
-      &:hover {
-        transform: scale(1.2);
-      }
-
-      &:active {
-        transform: scale(1);
-      }
-    }
-
-    .upvote-button:hover {
-      color: green;
-    }
-
-    .downvote-button:hover {
-      color: red;
-    }
-
-    
+  .rating-value {
+    margin: 0 6px;
   }
+
+  .vote-button {
+    font-size: 1.2em;
+    line-height: normal;
+    margin: 0;
+    padding: 0;
+    min-width: 30px;
+    transition: transform 0.1s ease-in-out;
+
+    &:focus,
+    &:hover {
+      background-color: transparent;
+    }
+
+    &:active {
+      transform: scale(.85);
+    }
+  }
+
+  .voted {
+    color: @secondary-color;
+    font-weight: 700;
+  }
+}

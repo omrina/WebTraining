@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Http;
+using MongoDB.Bson;
 using Server.Logic;
 using Server.Models;
 using Server.ViewModels;
@@ -12,10 +13,13 @@ namespace Server.Controllers
         public ThreadController() : base(new ThreadLogic())
         {
         }
+
         [Route("{subwebbitId}/recent/{index}")]
         [HttpGet]
         public async Task<IHttpActionResult> GetRecentThreads(string subwebbitId, int index)
         {
+            Logic.UserId = new ObjectId(GetUserIdFromRequest());
+
             return Ok(await Logic.GetRecentThreads(subwebbitId, index));
         }
 
@@ -23,17 +27,18 @@ namespace Server.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetTopThreadsFromSubscribed(int index)
         {
-            var userId = GetAuthorizationToken();
+            Logic.UserId = new ObjectId(GetUserIdFromRequest());
 
-            return Ok(await Logic.GetTopThreadsFromSubscribed(userId, index));
+            return Ok(await Logic.GetTopThreadsFromSubscribed(index));
         }
 
         [Route("{subwebbitId}/{threadId}")]
         [HttpGet]
         public async Task<IHttpActionResult> Get(string subwebbitId, string threadId)
         {
+            Logic.UserId = new ObjectId(GetUserIdFromRequest());
             var thread = await Logic.Get(subwebbitId, threadId);
-        
+
             return Ok(thread);
         }
 

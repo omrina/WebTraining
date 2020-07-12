@@ -22,14 +22,14 @@ namespace Server.Logic
 
         public async Task Subscribe(string userId, string subwebbitId)
         {
-            await Collection.UpdateOneAsync(GenerateByIdFilter(userId),
-                Builders<User>.Update.AddToSet(x => x.SubscribedSubwebbits, new ObjectId(subwebbitId)));
+            await Collection.UpdateOneAsync(GenerateByIdFilter<User>(userId),
+                UpdateBuilder.AddToSet(x => x.SubscribedSubwebbits, new ObjectId(subwebbitId)));
             await new SubwebbitLogic().IncrementSubscribers(subwebbitId);
         }
 
         public async Task Unsubscribe(string userId, string subwebbitId)
         {
-            await Collection.UpdateOneAsync(GenerateByIdFilter(userId),
+            await Collection.UpdateOneAsync(GenerateByIdFilter<User>(userId),
                 Builders<User>.Update.Pull(x => x.SubscribedSubwebbits, new ObjectId(subwebbitId)));
             await new SubwebbitLogic().DecrementSubscribers(subwebbitId);
         }

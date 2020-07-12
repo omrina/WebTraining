@@ -63,8 +63,8 @@ namespace Server.Logic
 
         private async Task AddToSubscribersCount(string subwebbitId, int value)
         {
-            await Collection.UpdateOneAsync(GenerateByIdFilter(subwebbitId),
-                Builders<Subwebbit>.Update.Inc(x => x.SubscribersCount, value));
+            await Collection.UpdateOneAsync(GenerateByIdFilter<Subwebbit>(subwebbitId),
+                UpdateBuilder.Inc(x => x.SubscribersCount, value));
         }
     }
 }

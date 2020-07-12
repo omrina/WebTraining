@@ -9,16 +9,12 @@ angular.module("webbit.controllers")
       Comment.getAll(subwebbitId, threadId)
         .then(comments => $scope.comments = comments);
 
-    $scope.thread = $stateParams.thread;
-
-    if (!$scope.thread) {
-      Thread.get(subwebbitId, threadId)
-        .then(thread => { $scope.thread = thread; });
-    }
+    Thread.get(subwebbitId, threadId)
+      .then(thread => { $scope.thread = thread; });
 
     $scope.$on('PostedComment', () => {
       reloadComments()
-      .then(() => {$scope.thread.commentsCount++;});
+        .then(() => {$scope.thread.commentsCount++;});
     })
 
     reloadComments();

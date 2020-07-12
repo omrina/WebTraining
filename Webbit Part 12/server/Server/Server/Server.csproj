@@ -150,6 +150,7 @@
     <Compile Include="Logic\RatingLogic.cs" />
     <Compile Include="Logic\SubwebbitLogic.cs" />
     <Compile Include="Logic\ThreadLogic.cs" />
+    <Compile Include="Logic\UpdateOperationDto.cs" />
     <Compile Include="Logic\UserLogic.cs" />
     <Compile Include="Logic\Validation\SignupDetailsValidator.cs" />
     <Compile Include="Logic\Validation\StringValidator.cs" />
@@ -172,7 +173,7 @@
     <Compile Include="ViewModels\ThreadViewModel.cs" />
     <Compile Include="ViewModels\UserSignupViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
-    <Compile Include="ViewModels\VoteOnItemViewModel.cs" />
+    <Compile Include="ViewModels\UserVoteViewModel.cs" />
     <Compile Include="WebApiConfig\InheritedAttributesRouteProvider.cs" />
     <Compile Include="WebApiConfig\PassThroughExceptionsHandler.cs" />
   </ItemGroup>

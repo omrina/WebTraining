@@ -8,8 +8,9 @@ const COMPONENT = 'rating';
 angular.module('webbit.components')
     .component(COMPONENT, {
         bindings: {
-            itemId: '<',
-            rating : '<'
+            itemIds: '<',
+            rating : '<',
+            userVote: '<'
         },
         template,
         controller

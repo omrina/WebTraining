@@ -7,9 +7,6 @@ angular.module('webbit.controllers')
   .config($stateProvider => {
     $stateProvider
       .state('shell.thread', {
-        params: {
-          thread: null
-        },
         url: '/subwebbits/{subwebbitId}/threads/{threadId}',
         template,
         controller

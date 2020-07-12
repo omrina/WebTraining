@@ -2,7 +2,7 @@
     <div layout="column" layout-align="start center"
          md-virtual-repeat="thread in $ctrl.threadsFetcher" md-on-demand class="repeated-item">
         <div ng-if="thread" class="thread-container">
-             <thread-preview ui-sref="shell.thread({ subwebbitId: thread.subwebbitId, threadId: thread.id, thread })" layout-fill layout="column" layout-align="start stretch"
+             <thread-preview ui-sref="shell.thread({ subwebbitId: thread.subwebbitId, threadId: thread.id })" layout-fill layout="column" layout-align="start stretch"
                              thread="thread"></thread-preview>
         </div>
         <div ng-if="!thread && $index !== 0" layout="column" layout-align="center center" layout-fill>
