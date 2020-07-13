@@ -1,19 +1,31 @@
 #toolbar {
   padding: 0 50px;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
 
   .logo {
-    font-size  : 32px;
+    font-size: 32px;
     user-select: none;
 
-    :hover {
+    &:hover {
       cursor: pointer;
+    }
+
+    &:focus {
+      outline: none;
     }
   }
 
-  .logout-icon {
-    font-size: 32px;
+  .logged-user {
+    margin: 0 80px 0 40px;
+  }
+
+  .logout-button {
+    font-size: 24px;
+
+    .logout-icon {
+      font-size: 28px;
+    }
   }
 
   .search-bar-container {
@@ -27,14 +39,13 @@
 
 .search-results-container {
   .md-autocomplete-suggestion {
-    border-bottom: .5px solid #ccc;
-    line-height  : normal;
-    height       : auto;
+    border-bottom: 0.5px solid #ccc;
+    line-height: normal;
+    height: auto;
   }
 
   .search-result {
     padding: 4px 8px;
-
   }
 
   .md-autocomplete-suggestion:last-child {
@@ -52,17 +63,17 @@
 
   .subwebbit-name {
     font-weight: 500;
-    color      : black;
+    color: black;
   }
 
   .subscribers-count {
-    color: rgb(49, 46, 46)
+    color: rgb(49, 46, 46);
   }
 }
 
 .mat-tooltip {
   font-size: 20px;
-  height   : 30px;
+  height: 30px;
 }
 
 .not-found-container {
@@ -73,7 +84,7 @@
   }
 
   .create-subwebbit-link {
-    color          : #0e5eb9;
+    color: #0e5eb9;
     text-decoration: underline;
   }
 

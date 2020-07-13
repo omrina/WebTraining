@@ -10,4 +10,7 @@ angular.module("webbit.services").service("Subwebbit", function ($http, $resourc
 
   this.get = id =>
     $resource(`/api/subwebbits/${id}`).get().$promise;
+
+  this.delete = id => 
+    $resource(`/api/subwebbits/${id}`).delete().$promise;
 });

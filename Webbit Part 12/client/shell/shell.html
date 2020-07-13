@@ -1,9 +1,10 @@
 <div layout-fill layout="column">
     <md-toolbar id="toolbar" layout-padding layout="row" layout-align="space-between center">
-        <div class="logo" ui-sref="shell.home">
+        <div class="logo" ng-click="goHome()">
             <i class="mdi mdi-duck"></i><span> Webbit</span>
         </div>
-        <div class="search-bar-container" flex-offset="15">
+        <span class="logged-user"><i class="mdi mdi-account"></i> {{user.username}}</span>
+        <div class="search-bar-container" >
             <md-autocomplete md-no-cache="true" md-delay="500" md-min-length="1" md-input-maxlength="30"
                 placeholder="Search subwebbits..." md-items="subwebbit in searchSubwebbits(searchedName)"
                 md-search-text="searchedName" md-item-text="subwebbit.name" md-selected-item-change="clearSearchBar()"
@@ -42,10 +43,10 @@
             </md-autocomplete>
         </div>
         <span flex></span>
-        <md-button ng-click="logout()" class="md-icon-button">
-            <i class="mdi mdi-logout logout-icon">
-                <md-tooltip class="mat-tooltip">Logout</md-tooltip>
-            </i>
+        
+        <md-button ng-click="logout()" class="logout-button">
+            Logout
+            <i class="mdi mdi-logout logout-icon"></i>
         </md-button>
     </md-toolbar>
     <ui-view flex></ui-view>

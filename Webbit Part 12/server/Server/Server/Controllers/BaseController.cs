@@ -14,23 +14,14 @@ namespace Server.Controllers
         protected BaseController(TLogic logic)
         {
             Logic = logic;
-            // SetUserId();
-            // Logic.UserId = new ObjectId(GetUserIdFromRequest());
         }
 
-        // TODO: rename?
-        //
-        // protected void SetUserId()
-        // {
-        //     if (Request != null)
-        //     {
-        //         Logic.UserId = new ObjectId(GetUserIdFromRequest());
-        //     }
-        // }
-
-        protected string GetUserIdFromRequest()
+        protected void SetUserId()
         {
-            return Request.Headers.Authorization.Scheme;
+            if (Request != null)
+            {
+                Logic.UserId = new ObjectId(Request.Headers.Authorization.Scheme);
+            }
         }
     }
 }

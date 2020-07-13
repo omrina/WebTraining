@@ -22,7 +22,8 @@ namespace Server.Controllers
         [HttpPost]
         public async Task<IHttpActionResult> Subscribe(string subwebbitId)
         {
-            await Logic.Subscribe(GetUserIdFromRequest(), subwebbitId);
+            SetUserId();
+            await Logic.Subscribe(subwebbitId);
 
             return Ok();
         }
@@ -31,7 +32,8 @@ namespace Server.Controllers
         [HttpPost]
         public async Task<IHttpActionResult> Unsubscribe(string subwebbitId)
         {
-            await Logic.Unsubscribe(GetUserIdFromRequest(), subwebbitId);
+            SetUserId();
+            await Logic.Unsubscribe(subwebbitId);
 
             return Ok();
         }

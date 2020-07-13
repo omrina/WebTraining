@@ -18,7 +18,7 @@ namespace Server.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetRecentThreads(string subwebbitId, int index)
         {
-            Logic.UserId = new ObjectId(GetUserIdFromRequest());
+            SetUserId();
 
             return Ok(await Logic.GetRecentThreads(subwebbitId, index));
         }
@@ -27,7 +27,7 @@ namespace Server.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetTopThreadsFromSubscribed(int index)
         {
-            Logic.UserId = new ObjectId(GetUserIdFromRequest());
+            SetUserId();
 
             return Ok(await Logic.GetTopThreadsFromSubscribed(index));
         }
@@ -36,8 +36,8 @@ namespace Server.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> Get(string subwebbitId, string threadId)
         {
-            Logic.UserId = new ObjectId(GetUserIdFromRequest());
-            var thread = await Logic.Get(subwebbitId, threadId);
+            SetUserId();
+            var thread = await Logic.GetViewModel(subwebbitId, threadId);
 
             return Ok(thread);
         }
@@ -51,6 +51,14 @@ namespace Server.Controllers
             return Ok();
         }
 
-        // TODO: should move to here create, delete, etc...?
+        [Route("{subwebbitId}/{threadId}")]
+        [HttpDelete]
+        public async Task<IHttpActionResult> Delete(string subwebbitId, string threadId)
+        {
+            SetUserId();
+            await Logic.Delete(subwebbitId, threadId);
+
+            return Ok();
+        }
     }
 }

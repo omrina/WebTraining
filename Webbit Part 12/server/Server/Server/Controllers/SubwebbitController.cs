@@ -24,7 +24,8 @@ namespace Server.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> Get(string id)
         {
-            var subwebbit = await Logic.Get(id, GetUserIdFromRequest());
+            SetUserId();
+            var subwebbit = await Logic.GetViewModel(id);
 
             return Ok(subwebbit);
         }
@@ -36,6 +37,16 @@ namespace Server.Controllers
             var id = await Logic.Create(subwebbit);
         
             return Ok(id);
+        }
+
+        [Route("{id}")]
+        [HttpDelete]
+        public async Task<IHttpActionResult> Delete(string id)
+        {
+            SetUserId();
+            await Logic.Delete(id);
+
+            return Ok();
         }
     }
 }

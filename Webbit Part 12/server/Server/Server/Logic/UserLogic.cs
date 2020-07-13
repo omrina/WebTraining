@@ -20,17 +20,17 @@ namespace Server.Logic
             return (await GetSubscribedIds(userId)).Contains(new ObjectId(subwebbitId));
         }
 
-        public async Task Subscribe(string userId, string subwebbitId)
+        public async Task Subscribe(string subwebbitId)
         {
-            await Collection.UpdateOneAsync(GenerateByIdFilter<User>(userId),
+            await Collection.UpdateOneAsync(GenerateByIdFilter<User>(UserId.ToString()),
                 UpdateBuilder.AddToSet(x => x.SubscribedSubwebbits, new ObjectId(subwebbitId)));
             await new SubwebbitLogic().IncrementSubscribers(subwebbitId);
         }
 
-        public async Task Unsubscribe(string userId, string subwebbitId)
+        public async Task Unsubscribe(string subwebbitId)
         {
-            await Collection.UpdateOneAsync(GenerateByIdFilter<User>(userId),
-                Builders<User>.Update.Pull(x => x.SubscribedSubwebbits, new ObjectId(subwebbitId)));
+            await Collection.UpdateOneAsync(GenerateByIdFilter<User>(UserId.ToString()),
+                UpdateBuilder.Pull(x => x.SubscribedSubwebbits, new ObjectId(subwebbitId)));
             await new SubwebbitLogic().DecrementSubscribers(subwebbitId);
         }
     }

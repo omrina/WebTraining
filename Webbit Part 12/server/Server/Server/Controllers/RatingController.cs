@@ -18,7 +18,8 @@ namespace Server.Controllers
         [HttpPost]
         public async Task<IHttpActionResult> Vote(UserVoteViewModel userVoteInfo)
         {
-            await Logic.Vote(userVoteInfo, new ObjectId(GetUserIdFromRequest()));
+            SetUserId();
+            await Logic.Vote(userVoteInfo);
 
             return Ok();
         }

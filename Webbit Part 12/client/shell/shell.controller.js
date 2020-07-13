@@ -5,8 +5,6 @@ const CONTROLLER = 'shell';
 angular.module('webbit.controllers')
   .controller(CONTROLLER, ($scope, $state, Auth, Subwebbit) => {
     $scope.searchedName = "";
-
-    // TODO: use this to show user name in toolbar?
     $scope.user = Auth.getCurrentUser();
 
     $scope.logout = () => {
@@ -21,10 +19,14 @@ angular.module('webbit.controllers')
     }
     
     $scope.createSubwebbit = (name, ownerId) => {
-      $scope.searchedName = "";
+      $scope.clearSearchBar();
       Subwebbit.create({name, ownerId})
         .then(newSubwebbitId => $state.go('shell.subwebbit', {id: newSubwebbitId}));
     };
+
+    $scope.goHome = () => {
+      $state.go('shell.home', {}, {reload: true});
+    }
   });
 
 export default CONTROLLER;

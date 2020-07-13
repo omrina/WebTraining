@@ -18,14 +18,13 @@ namespace Server.ViewModels
         public int CommentsCount { get; set; }
         public int Rating { get; set; }
         public VoteDirections UserVote { get; set; }
+        public bool IsOwner { get; set; }
 
-        // TODO: add my rating (1 / 0 / -1 ?)
-
-        public ThreadViewModel(Thread thread, ObjectId subwebbitId, string subwebbitName, ObjectId userId)
+        public ThreadViewModel(Thread thread, SubwebbitViewModel subwebbit, ObjectId userId)
         {
             Id = thread.Id;
-            SubwebbitId = subwebbitId;
-            SubwebbitName = subwebbitName;
+            SubwebbitId = subwebbit.Id;
+            SubwebbitName = subwebbit.Name;
             Title = thread.Title;
             Content = thread.Content;
             Author = thread.Author;
@@ -33,6 +32,7 @@ namespace Server.ViewModels
             CommentsCount = thread.Comments.Sum(x => x.Comments.Count() + 1);
             Rating = thread.Rating;
             UserVote = GetUserVote(thread, userId);
+            IsOwner = subwebbit.IsOwner;
         }
 
         private VoteDirections GetUserVote(IVotable item, ObjectId userId)

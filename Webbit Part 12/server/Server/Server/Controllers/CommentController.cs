@@ -26,7 +26,9 @@ namespace Server.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetAll(string subwebbitId, string threadId)
         {
-            return Ok(await Logic.GetAll(subwebbitId, threadId, GetUserIdFromRequest()));
+            SetUserId();
+
+            return Ok(await Logic.GetAll(subwebbitId, threadId));
         }
     }
 }

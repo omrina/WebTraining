@@ -1,3 +1,5 @@
+@import (reference) "../../app.less";
+
 .subwebbit-name {
   font-weight: 500;
 }
@@ -27,4 +29,13 @@
   margin-top: 16px;
   font-size: 28px;
   color: #757575;
+
+  .comments-icon {
+    margin-right: 6px;
+  }
+
+  .delete-thread-button{
+    .delete-button();
+    font-size: 34px;
+  }
 }

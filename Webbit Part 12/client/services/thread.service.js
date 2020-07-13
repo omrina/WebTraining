@@ -9,4 +9,7 @@ angular.module("webbit.services").service("Thread", function ($resource) {
 
     this.getThreads = ({ subwebbitId = "", index }) =>
         $resource(`/api/threads/${subwebbitId}/${subwebbitId ? 'recent' : 'topRated'}/${index}`).query().$promise;
+
+    this.delete = (subwebbitId, threadId) => 
+        $resource(`/api/threads/${subwebbitId}/${threadId}`).delete().$promise;
 });

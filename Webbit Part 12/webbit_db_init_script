@@ -9,9 +9,16 @@ var users = [
 		salt: "",
 		sessionToken: "",
 		subscribedSubwebbits: [ObjectId("5f02e449c1fb8ccb5c95866a")]
+	},
+	{
+		_id: ObjectId("5ef9b50afb356c85d30ddb73"),
+		username: "omri",
+		password: "omri",
+		salt: "",
+		sessionToken: "",
+		subscribedSubwebbits: [ObjectId("5f02e449c1fb8ccb5c95866a")]
 	}
 ];
-
 var subwebbits = [
 	{
 		_id: ObjectId("5f02e449c1fb8ccb5c95866a"),

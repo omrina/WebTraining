@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using Server.Models;
@@ -12,8 +12,6 @@ namespace Server.Logic
     public class ThreadLogic : BaseLogic<Subwebbit>
     {
         private const int ThreadsPerPage = 4;
-        // TODO: make user id prop in base logic so controllers would set it
-        // maybe on ctor of base controller put this in its base logic!
 
         public FilterDefinition<Subwebbit> GetThreadFilterDefinition(string subwebbitId, string threadId)
         {
@@ -23,20 +21,13 @@ namespace Server.Logic
                     GenerateByIdFilter<Thread>(threadId)));
         }
 
-        public async Task<ThreadViewModel> Get(string subwebbitId, string threadId)
+        public async Task<ThreadViewModel> GetViewModel(string subwebbitId, string threadId)
         {
-            var subwebbit = Get(subwebbitId);
+            var subwebbit = await new SubwebbitLogic {UserId = UserId}.GetViewModel(subwebbitId);
+            var thread = await Get(subwebbitId).SelectMany(x => x.Threads)
+                            .FirstAsync(GenerateByIdFilter<Thread>(threadId));
 
-            return await GetThreadViewModel(new ObjectId(threadId), subwebbit);
-        }
-
-        private async Task<ThreadViewModel> GetThreadViewModel(ObjectId threadId, IMongoQueryable<Subwebbit> subwebbit)
-        {
-            var subwebbitName = await subwebbit.Select(x => x.Name).FirstAsync();
-            var subwebbitId = await subwebbit.Select(x => x.Id).FirstAsync();
-            var thread = await subwebbit.SelectMany(x => x.Threads).FirstAsync(x => x.Id == threadId);
-
-            return new ThreadViewModel(thread, subwebbitId, subwebbitName, UserId);
+            return new ThreadViewModel(thread, subwebbit, UserId);
         }
 
         public async Task<IEnumerable<ThreadViewModel>> GetRecentThreads(string subwebbitId, int index)
@@ -50,7 +41,7 @@ namespace Server.Logic
 
             foreach (var threadId in threadsIds)
             {
-                threads.Add(await GetThreadViewModel(threadId, subwebbit));
+                threads.Add(await GetViewModel(subwebbitId, threadId.ToString()));
             }
 
             return threads;
@@ -69,9 +60,10 @@ namespace Server.Logic
 
             foreach (var threadId in threadsIds)
             {
-                var subwebbit = subwebbits.Where(x => x.Threads.Any(thread => thread.Id == threadId));
+                var subwebbitId = await subwebbits.Where(x => x.Threads.Any(thread => thread.Id == threadId))
+                                    .Select(x => x.Id).FirstAsync();
 
-                threads.Add(await GetThreadViewModel(threadId, subwebbit));
+                threads.Add(await GetViewModel(subwebbitId.ToString(), threadId.ToString()));
             }
 
             return threads;
@@ -83,6 +75,17 @@ namespace Server.Logic
             var newThread = new Thread(thread.Title, thread.Content, thread.Author);
             await Collection.UpdateOneAsync(GenerateByIdFilter<Subwebbit>(thread.SubwebbitId),
                 UpdateBuilder.AddToSet(x => x.Threads, newThread));
+        }
+
+        public async Task Delete(string subwebbitId, string threadId)
+        {
+            await new SubwebbitLogic().EnsureOwnership(subwebbitId, UserId);
+
+            var threadToDelete = await Get(subwebbitId).SelectMany(x => x.Threads)
+                .FirstAsync(GenerateByIdFilter<Thread>(threadId));
+
+            await Collection.UpdateOneAsync(GenerateByIdFilter<Subwebbit>(subwebbitId), 
+                UpdateBuilder.Pull(x => x.Threads, threadToDelete));
         }
     }
 }

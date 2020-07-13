@@ -7,6 +7,10 @@
                     ng-class="subwebbit.isSubscribed ? 'unsubscribe-button' : 'subscribe-button'">
                     subscribe<span ng-if="subwebbit.isSubscribed">d <i class="mdi mdi-check"></i></span>
                 </md-button>
+                <md-button ng-if="subwebbit.isOwner" class="delete-subwebbit-button" ng-click="delete()">
+                    <i class="mdi mdi-delete"></i>
+                    <md-tooltip class="mat-tooltip">Delete Subwebbit</md-tooltip>
+                </md-button>
             </div>
         </div>
         <div>
@@ -15,7 +19,7 @@
     </div>
     <div flex class="subwebbit-threads-container" layout="column">
         <div layout="row" layout-align="center center">
-            <md-button md-ink-ripple="false" ng-click="showCreateDialog()" class="create-thread-button">
+            <md-button md-ink-ripple="false" ng-click="showThreadCreationDialog()" class="create-thread-button">
                 Create Thread <i class="mdi mdi-pencil"></i>
             </md-button>
         </div>

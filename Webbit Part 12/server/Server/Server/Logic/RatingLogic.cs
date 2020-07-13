@@ -10,7 +10,7 @@ namespace Server.Logic
 {
     public class RatingLogic : BaseLogic<Subwebbit>
     {
-        public async Task Vote(UserVoteViewModel voteInfo, ObjectId userId)
+        public async Task Vote(UserVoteViewModel voteInfo)
         {
             var threadFilter = new ThreadLogic().GetThreadFilterDefinition(voteInfo.SubwebbitId,
                                                                            voteInfo.ThreadId);
@@ -37,8 +37,7 @@ namespace Server.Logic
             await UpdateRating(updateInfo, voteInfo.PreviousDirection, voteInfo.NewDirection);
             await UpdateUserInVotersLists(updateInfo,
                                           voteInfo.PreviousDirection,
-                                          voteInfo.NewDirection,
-                                          userId);
+                                          voteInfo.NewDirection);
         }
 
         private async Task UpdateRating(UpdateOperationDto updateInfo,
@@ -63,22 +62,21 @@ namespace Server.Logic
 
         private async Task UpdateUserInVotersLists(UpdateOperationDto updateInfo,
                                                    VoteDirections previousDirection,
-                                                   VoteDirections newDirection,
-                                                   ObjectId userId)
+                                                   VoteDirections newDirection)
         {
             //TODO: make previous and new a single change-directions dto???
             await Collection.UpdateOneAsync(updateInfo.Filter,
-                UpdateBuilder.Pull(updateInfo.Item + ".upvoters", userId),
+                UpdateBuilder.Pull(updateInfo.Item + ".upvoters", UserId),
                 updateInfo.Options);
 
             await Collection.UpdateOneAsync(updateInfo.Filter,
-                UpdateBuilder.Pull(updateInfo.Item + ".downvoters", userId),
+                UpdateBuilder.Pull(updateInfo.Item + ".downvoters", UserId),
                 updateInfo.Options);
 
             if (newDirection != previousDirection)
             {
                 await Collection.UpdateOneAsync(updateInfo.Filter,
-                    UpdateBuilder.AddToSet(updateInfo.Item + "." + GetVotersListName(newDirection), userId),
+                    UpdateBuilder.AddToSet(updateInfo.Item + "." + GetVotersListName(newDirection), UserId),
                     updateInfo.Options);
             }
         }
@@ -88,18 +86,6 @@ namespace Server.Logic
             return voteDirections == VoteDirections.Down
                 ? "downvoters"
                 : "upvoters";
-        }
-
-        public VoteDirections GetUserCurrentVote()
-        {
-            // var thread = Get(voteInfo.SubwebbitId).SelectMany(x => x.Threads)
-            // .Where(GenerateByIdFilter<Thread>(voteInfo.ThreadId));
-            // var currentUserVote = upvotersIds.Contains(userId)
-            // ? VoteDirections.Up
-            // : downvotersIds.Contains(userId)
-            // ? VoteDirections.Down
-            // : VoteDirections.Cancel;
-            return VoteDirections.Down;
         }
     }
 }

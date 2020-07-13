@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
@@ -37,7 +38,7 @@ namespace Server.Logic
             return newSubwebbit.Id;
         }
 
-        public async Task<SubwebbitViewModel> Get(string subwebbitId, string userId)
+        public async Task<SubwebbitViewModel> GetViewModel(string subwebbitId)
         {
             var subwebbit = await Get(subwebbitId).SingleOrDefaultAsync();
 
@@ -46,9 +47,9 @@ namespace Server.Logic
                 throw new SubwebbitNotFoundException();
             }
 
-            var isSubscribed = await new UserLogic().IsSubscribed(userId, subwebbitId);
+            var isSubscribed = await new UserLogic().IsSubscribed(UserId.ToString(), subwebbitId);
 
-            return new SubwebbitViewModel(subwebbit, isSubscribed);
+            return new SubwebbitViewModel(subwebbit, isSubscribed, UserId.ToString());
         }
 
         public async Task IncrementSubscribers(string subwebbitId)
@@ -65,6 +66,24 @@ namespace Server.Logic
         {
             await Collection.UpdateOneAsync(GenerateByIdFilter<Subwebbit>(subwebbitId),
                 UpdateBuilder.Inc(x => x.SubscribersCount, value));
+        }
+
+        public async Task Delete(string id)
+        {
+            // TODO: ensure user is owner
+            await EnsureOwnership(id, UserId);
+            await Collection.DeleteOneAsync(GenerateByIdFilter<Subwebbit>(id));
+        }
+
+        public async Task EnsureOwnership(string subwebbitId, ObjectId userId)
+        {
+            var subwebbitOwnerId = await Get(subwebbitId).Select(x => x.OwnerId).FirstAsync();
+
+            if (subwebbitOwnerId != userId)
+            {
+                // TODO: change to not-owner exception (unauthorized code)
+                throw new NotImplementedException();
+            }
         }
     }
 }

@@ -33,13 +33,13 @@ namespace Server.Logic
                 new UpdateOptions {ArrayFilters = arrayFilters});
         }
 
-        public async Task<IEnumerable<CommentViewModel>> GetAll(string subwebbitId, string threadId, string userId)
+        public async Task<IEnumerable<CommentViewModel>> GetAll(string subwebbitId, string threadId)
         {
-            var thread = await Get(subwebbitId).SelectMany(x => x.Threads).Where(x => x.Id == new ObjectId(threadId))
+            var thread = await Get(subwebbitId).SelectMany(x => x.Threads).Where(GenerateByIdFilter<Thread>(threadId))
                 .FirstAsync();
             var comments = thread.Comments.OrderByDescending(x => x.Rating);
 
-            return comments.Select(x => new CommentViewModel(x, subwebbitId, threadId, new ObjectId(userId)));
+            return comments.Select(x => new CommentViewModel(x, subwebbitId, threadId, UserId));
         }
     }
 }
