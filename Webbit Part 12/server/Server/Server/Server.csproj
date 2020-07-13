@@ -149,6 +149,7 @@
     <Compile Include="Logic\AuthLogic.cs" />
     <Compile Include="Logic\RatingLogic.cs" />
     <Compile Include="Logic\SubwebbitLogic.cs" />
+    <Compile Include="Logic\SubwebbitSubscribtionLogic.cs" />
     <Compile Include="Logic\ThreadLogic.cs" />
     <Compile Include="Logic\UpdateOperationDto.cs" />
     <Compile Include="Logic\UserLogic.cs" />

@@ -33,7 +33,5 @@ namespace Server.Logic
         {
             return GetAll().Where(GenerateByIdFilter<TModel>(id));
         }
-
-        // TODO: add more functions?
     }
 }

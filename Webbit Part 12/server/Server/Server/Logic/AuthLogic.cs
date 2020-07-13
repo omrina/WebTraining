@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using MongoDB.Driver;
+using MongoDB.Bson;
 using MongoDB.Driver.Linq;
 using Server.Exceptions;
 using Server.Logic.Validation;
@@ -26,17 +26,12 @@ namespace Server.Logic
 
         public async Task Signup(UserSignupViewModel user)
         {
+            var subscriptionsOnSignup = 10;
             EnsureSignupDetails(user);
 
-            try
-            {
-                await Collection.InsertOneAsync(new User(user.Username, user.Password));
-            }
-            catch (MongoWriteException e) when(e.WriteError.Category == ServerErrorCategory.DuplicateKey)
-            {
-                // LOG HERE
-                throw new UsernameAlreadyTakenException();
-            }
+            var newUser = new User(user.Username, user.Password);
+            await Collection.InsertOneAsync(newUser);
+            await SubscribeToTopSubwebbits(newUser.Id, subscriptionsOnSignup);
         }
 
         private void EnsureSignupDetails(UserSignupViewModel user)
@@ -44,6 +39,17 @@ namespace Server.Logic
             if (!new SignupDetailsValidator().IsValid(user))
             {
                 throw new InvalidSignupDetailsException();
+            }
+        }
+
+        private async Task SubscribeToTopSubwebbits(ObjectId userId, int amount)
+        {
+            var userLogic = new UserLogic {UserId = userId};
+            var subwebbitsIds = await new SubwebbitSubscriptionLogic().GetMostSubscribed(amount);
+
+            foreach (var id in subwebbitsIds)
+            {
+                await userLogic.Subscribe(id.ToString());
             }
         }
     }

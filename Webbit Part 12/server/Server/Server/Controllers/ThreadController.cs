@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Http;
-using MongoDB.Bson;
 using Server.Logic;
 using Server.Models;
 using Server.ViewModels;

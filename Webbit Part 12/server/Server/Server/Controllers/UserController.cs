@@ -13,11 +13,6 @@ namespace Server.Controllers
         {
         }
 
-        // public IHttpActionResult GetSubscribtions()
-        // {
-        //     return Ok();
-        // }
-
         [Route("subscribe/{subwebbitId}")]
         [HttpPost]
         public async Task<IHttpActionResult> Subscribe(string subwebbitId)

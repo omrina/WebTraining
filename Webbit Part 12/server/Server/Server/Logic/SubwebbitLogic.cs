@@ -52,22 +52,6 @@ namespace Server.Logic
             return new SubwebbitViewModel(subwebbit, isSubscribed, UserId.ToString());
         }
 
-        public async Task IncrementSubscribers(string subwebbitId)
-        {
-            await AddToSubscribersCount(subwebbitId, 1);
-        }
-
-        public async Task DecrementSubscribers(string subwebbitId)
-        {
-            await AddToSubscribersCount(subwebbitId, -1);
-        }
-
-        private async Task AddToSubscribersCount(string subwebbitId, int value)
-        {
-            await Collection.UpdateOneAsync(GenerateByIdFilter<Subwebbit>(subwebbitId),
-                UpdateBuilder.Inc(x => x.SubscribersCount, value));
-        }
-
         public async Task Delete(string id)
         {
             // TODO: ensure user is owner
