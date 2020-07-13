@@ -3,8 +3,7 @@
         <div class="logo" ng-click="goHome()">
             <i class="mdi mdi-duck"></i><span> Webbit</span>
         </div>
-        <span class="logged-user"><i class="mdi mdi-account"></i> {{user.username}}</span>
-        <div class="search-bar-container" >
+        <div flex-offset="10" class="search-bar-container" >
             <md-autocomplete md-no-cache="true" md-delay="500" md-min-length="1" md-input-maxlength="30"
                 placeholder="Search subwebbits..." md-items="subwebbit in searchSubwebbits(searchedName)"
                 md-search-text="searchedName" md-item-text="subwebbit.name" md-selected-item-change="clearSearchBar()"
@@ -43,7 +42,8 @@
             </md-autocomplete>
         </div>
         <span flex></span>
-        
+        <span class="logged-user"><i class="mdi mdi-account"></i> {{user.username}}</span>
+        <div flex></div>
         <md-button ng-click="logout()" class="logout-button">
             Logout
             <i class="mdi mdi-logout logout-icon"></i>

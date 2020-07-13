@@ -4,11 +4,11 @@ const MODULE = 'webbit.controllers';
 
 angular.module(MODULE, []);
 require('./exterior');
-require('./login');
-require('./signup');
+require('./exterior/login');
+require('./exterior/signup');
 require('./shell');
-require('./home');
-require('./subwebbit');
-require('./thread');
+require('./shell/home');
+require('./shell/subwebbit');
+require('./shell/thread');
 
 export default MODULE;
