@@ -14,13 +14,13 @@ namespace Server.BL.Threads
     {
         private const int ThreadsPerPage = 4;
 
-        public FilterDefinition<Subwebbit> GetThreadFilterDefinition(string subwebbitId, string threadId)
-        {
-            return FilterBuilder.And(
-                FilterBuilder.Where(GenerateByIdFilter<Subwebbit>(subwebbitId)),
-                FilterBuilder.ElemMatch(x => x.Threads,
-                    GenerateByIdFilter<Thread>(threadId)));
-        }
+        // public FilterDefinition<Subwebbit> GetThreadFilterDefinition(string subwebbitId, string threadId)
+        // {
+        //     return FilterBuilder.And(
+        //         FilterBuilder.Where(GenerateByIdFilter<Subwebbit>(subwebbitId)),
+        //         FilterBuilder.ElemMatch(x => x.Threads,
+        //             GenerateByIdFilter<Thread>(threadId)));
+        // }
 
         public async Task<ThreadViewModel> GetViewModel(string subwebbitId, string threadId)
         {

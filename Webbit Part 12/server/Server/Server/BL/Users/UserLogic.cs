@@ -23,20 +23,20 @@ namespace Server.BL.Users
 
         public async Task<bool> IsSubscribed(string userId, string subwebbitId)
         {
-            return (await GetSubscribedIds(userId)).Contains(new ObjectId(subwebbitId));
+            return (await GetSubscribedIds(userId)).Contains(ObjectId.Parse(subwebbitId));
         }
 
         public async Task Subscribe(string subwebbitId)
         {
             await Collection.UpdateOneAsync(GenerateByIdFilter<User>(UserId.ToString()),
-                UpdateBuilder.AddToSet(x => x.SubscribedSubwebbits, new ObjectId(subwebbitId)));
+                UpdateBuilder.AddToSet(x => x.SubscribedSubwebbits, ObjectId.Parse(subwebbitId)));
             await new SubwebbitSubscriptionLogic().IncrementSubscribers(subwebbitId);
         }
 
         public async Task Unsubscribe(string subwebbitId)
         {
             await Collection.UpdateOneAsync(GenerateByIdFilter<User>(UserId.ToString()),
-                UpdateBuilder.Pull(x => x.SubscribedSubwebbits, new ObjectId(subwebbitId)));
+                UpdateBuilder.Pull(x => x.SubscribedSubwebbits, ObjectId.Parse(subwebbitId)));
             await new SubwebbitSubscriptionLogic().DecrementSubscribers(subwebbitId);
         }
     }

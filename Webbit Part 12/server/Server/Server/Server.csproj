@@ -131,6 +131,7 @@
     <Compile Include="BL\BaseController.cs" />
     <Compile Include="BL\Comments\CommentController.cs" />
     <Compile Include="BL\Ratings\RatingController.cs" />
+    <Compile Include="BL\Ratings\ViewModels\VoteChangeViewModel.cs" />
     <Compile Include="BL\Subwebbits\SubwebbitController.cs" />
     <Compile Include="BL\Threads\ThreadController.cs" />
     <Compile Include="BL\Users\UserController.cs" />
@@ -151,7 +152,7 @@
     <Compile Include="BL\Subwebbits\SubwebbitLogic.cs" />
     <Compile Include="BL\Subwebbits\SubwebbitSubscribtionLogic.cs" />
     <Compile Include="BL\Threads\ThreadLogic.cs" />
-    <Compile Include="BL\Ratings\UpdateOperationDto.cs" />
+    <Compile Include="BL\Ratings\UpdatingOperation.cs" />
     <Compile Include="BL\Users\UserLogic.cs" />
     <Compile Include="BL\Authentication\Validation\SignupDetailsValidator.cs" />
     <Compile Include="BL\Validators\StringValidator.cs" />

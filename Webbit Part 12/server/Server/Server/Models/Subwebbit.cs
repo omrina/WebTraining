@@ -12,7 +12,7 @@ namespace Server.Models
 
         public Subwebbit(string ownerId, string name)
         {
-            OwnerId = new ObjectId(ownerId);
+            OwnerId = ObjectId.Parse(ownerId);
             Name = name;
             Threads = new List<Thread>();
         }

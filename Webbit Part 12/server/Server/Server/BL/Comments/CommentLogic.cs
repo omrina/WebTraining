@@ -2,10 +2,9 @@
 using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
-using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using Server.BL.Comments.ViewModels;
-using Server.BL.Threads;
+using Server.BL.Ratings;
 using Server.Models;
 
 namespace Server.BL.Comments
@@ -15,23 +14,18 @@ namespace Server.BL.Comments
         public async Task Post(NewCommentViewModel comment)
         {
             // TODO: add validation???
-            var updateField = "Threads.$.Comments";
-            var arrayFilters = new List<ArrayFilterDefinition>();
+            var updateInfo = new UpdatingOperation(comment.SubwebbitId, comment.ThreadId);
 
             if (!string.IsNullOrWhiteSpace(comment.ParentCommentId))
             {
-                updateField += ".$[comment].comments";
-                arrayFilters.Add((ArrayFilterDefinition<BsonDocument>) new BsonDocument("comment._id",
-                    new BsonDocument("$eq", new ObjectId(comment.ParentCommentId))));
+                updateInfo.AddNestedCommentFilter(ObjectId.Parse(comment.ParentCommentId));
             }
 
             var newComment = new Comment(comment.Author, comment.Content);
-            var threadFilter = new ThreadLogic()
-                .GetThreadFilterDefinition(comment.SubwebbitId, comment.ThreadId);
-
-            await Collection.UpdateOneAsync(threadFilter,
-                UpdateBuilder.AddToSet(updateField, newComment),
-                new UpdateOptions {ArrayFilters = arrayFilters});
+                
+            await Collection.UpdateOneAsync(updateInfo.Filter,
+                UpdateBuilder.AddToSet(updateInfo.ModelHierarchy + "." + nameof(Thread.Comments).ToLower(), newComment),
+                updateInfo.Options);
         }
 
         public async Task<IEnumerable<CommentViewModel>> GetAll(string subwebbitId, string threadId)

@@ -17,7 +17,7 @@ namespace Server.BL.Subwebbits.ViewModels
             Name = subwebbit.Name;
             SubscribersCount = subwebbit.SubscribersCount;
             IsSubscribed = isSubscribed;
-            IsOwner = subwebbit.OwnerId == new ObjectId(userId);
+            IsOwner = subwebbit.OwnerId == ObjectId.Parse(userId);
         }
     }
 }

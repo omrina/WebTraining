@@ -19,7 +19,7 @@ namespace Server.BL
         {
             if (Request != null)
             {
-                Logic.UserId = new ObjectId(Request.Headers.Authorization.Scheme);
+                Logic.UserId = ObjectId.Parse(Request.Headers.Authorization.Scheme);
             }
         }
     }

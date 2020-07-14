@@ -81,8 +81,5 @@ var subwebbits = [
 	}
 ];
 
-//db.user.createIndex( { "username": 1 }, { unique: true } )
-//db.subwebbit.createIndex( { "name": 1 }, { unique: true } )
-
 db.user.insert(users);
 db.subwebbit.insert(subwebbits);

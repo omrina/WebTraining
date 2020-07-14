@@ -9,20 +9,21 @@ angular.module('webbit.controllers')
         const vote = clickedVoteState =>
           Rating.vote({
             ...this.itemIds,
-            previousDirection: this.currentVoteState,
-            newDirection: clickedVoteState
-          })
-          .then(() => { 
-                this.rating +=
-                  clickedVoteState == this.currentVoteState
-                    ? clickedVoteState * -1
-                    : clickedVoteState - this.currentVoteState;
+            voteChange: {
+              previousDirection: this.currentVoteState,
+              newDirection: clickedVoteState,
+            },
+          }).then(() => {
+            this.rating +=
+              clickedVoteState == this.currentVoteState
+                ? clickedVoteState * -1
+                : clickedVoteState - this.currentVoteState;
 
-                this.currentVoteState =
-                  this.currentVoteState === clickedVoteState
-                    ? this.votingStates.NOVOTE
-                    : clickedVoteState; 
-            });
+            this.currentVoteState =
+              this.currentVoteState === clickedVoteState
+                ? this.votingStates.NOVOTE
+                : clickedVoteState;
+          });
 
         
         this.$onInit = () => {

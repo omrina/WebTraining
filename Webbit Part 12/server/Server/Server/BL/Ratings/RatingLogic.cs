@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MongoDB.Bson;
-using MongoDB.Driver;
 using Server.BL.Ratings.Enums;
 using Server.BL.Ratings.ViewModels;
-using Server.BL.Threads;
 using Server.Models;
 
 namespace Server.BL.Ratings
@@ -13,80 +10,64 @@ namespace Server.BL.Ratings
     {
         public async Task Vote(UserVoteViewModel voteInfo)
         {
-            var threadFilter = new ThreadLogic().GetThreadFilterDefinition(voteInfo.SubwebbitId,
-                                                                           voteInfo.ThreadId);
-            var itemDefinition = "Threads.$";
+            var updateInfo = new UpdatingOperation(voteInfo.SubwebbitId, voteInfo.ThreadId);
 
-            // TODO: move all this comment fiddling somewhere else!
-            var arrayFilters = new List<ArrayFilterDefinition>();
             if (!string.IsNullOrWhiteSpace(voteInfo.ParentCommentId))
             {
-                itemDefinition += ".comments.$[parentComment]";
-                arrayFilters.Add((ArrayFilterDefinition<BsonDocument>)new BsonDocument("parentComment._id",
-                    new BsonDocument("$eq", new ObjectId(voteInfo.ParentCommentId))));
+                updateInfo.AddNestedCommentFilter(ObjectId.Parse(voteInfo.ParentCommentId));
             }
 
             if (!string.IsNullOrWhiteSpace(voteInfo.CommentId))
             {
-                itemDefinition += ".comments.$[comment]";
-                arrayFilters.Add((ArrayFilterDefinition<BsonDocument>)new BsonDocument("comment._id",
-                    new BsonDocument("$eq", new ObjectId(voteInfo.CommentId))));
+                updateInfo.AddNestedCommentFilter(ObjectId.Parse(voteInfo.CommentId));
             }
 
-            // TODO: change everywhere to nameof
-            var updateInfo = new UpdateOperationDto(threadFilter, itemDefinition, arrayFilters);
-            await UpdateRating(updateInfo, voteInfo.PreviousDirection, voteInfo.NewDirection);
-            await UpdateUserInVotersLists(updateInfo,
-                                          voteInfo.PreviousDirection,
-                                          voteInfo.NewDirection);
+            await UpdateRating(updateInfo, voteInfo.VoteChange);
+            await UpdateUserInVotersLists(updateInfo, voteInfo.VoteChange);
         }
 
-        private async Task UpdateRating(UpdateOperationDto updateInfo,
-            VoteDirections previousDirection,
-            VoteDirections newDirection)
+        private async Task UpdateRating(UpdatingOperation updatingInfo,
+                                        VoteChangeViewModel voteChange)
         {
-            var votesAmountToAdd = GetVotesAmountToAdd(previousDirection,
-                newDirection);
+            var votesAmountToAdd = GetVotesAmountToAdd(voteChange);
 
-            await Collection.UpdateOneAsync(updateInfo.Filter,
-                UpdateBuilder.Inc(updateInfo.Item + ".rating", votesAmountToAdd),
-                updateInfo.Options);
+            await Collection.UpdateOneAsync(updatingInfo.Filter,
+                UpdateBuilder.Inc(updatingInfo.ModelHierarchy + "." + nameof(IVotable.Rating).ToLower(),
+                                  votesAmountToAdd),
+                updatingInfo.Options);
         }
 
-        private int GetVotesAmountToAdd(VoteDirections previousDirection,
-                                        VoteDirections newDirection)
+        private int GetVotesAmountToAdd(VoteChangeViewModel voteChange)
         {
-            return newDirection == previousDirection
-                    ? (int) newDirection * -1
-                    : newDirection - previousDirection;
+            return voteChange.NewDirection == voteChange.PreviousDirection
+                    ? (int) voteChange.NewDirection * -1
+                    : voteChange.NewDirection - voteChange.PreviousDirection;
         }
 
-        private async Task UpdateUserInVotersLists(UpdateOperationDto updateInfo,
-                                                   VoteDirections previousDirection,
-                                                   VoteDirections newDirection)
+        private async Task UpdateUserInVotersLists(UpdatingOperation updatingInfo,
+                                                   VoteChangeViewModel voteChange)
         {
-            //TODO: make previous and new a single change-directions dto???
-            await Collection.UpdateOneAsync(updateInfo.Filter,
-                UpdateBuilder.Pull(updateInfo.Item + ".upvoters", UserId),
-                updateInfo.Options);
+            await Collection.UpdateOneAsync(updatingInfo.Filter,
+                UpdateBuilder.Pull(updatingInfo.ModelHierarchy + "." + nameof(IVotable.Upvoters).ToLower(), UserId),
+                updatingInfo.Options);
 
-            await Collection.UpdateOneAsync(updateInfo.Filter,
-                UpdateBuilder.Pull(updateInfo.Item + ".downvoters", UserId),
-                updateInfo.Options);
+            await Collection.UpdateOneAsync(updatingInfo.Filter,
+                UpdateBuilder.Pull(updatingInfo.ModelHierarchy + "." + nameof(IVotable.Downvoters).ToLower(), UserId),
+                updatingInfo.Options);
 
-            if (newDirection != previousDirection)
+            if (voteChange.NewDirection != voteChange.PreviousDirection)
             {
-                await Collection.UpdateOneAsync(updateInfo.Filter,
-                    UpdateBuilder.AddToSet(updateInfo.Item + "." + GetVotersListName(newDirection), UserId),
-                    updateInfo.Options);
+                await Collection.UpdateOneAsync(updatingInfo.Filter,
+                    UpdateBuilder.AddToSet(updatingInfo.ModelHierarchy + "." + GetVotersListName(voteChange.NewDirection).ToLower(), UserId),
+                    updatingInfo.Options);
             }
         }
 
         private string GetVotersListName(VoteDirections voteDirections)
         {
             return voteDirections == VoteDirections.Down
-                ? "downvoters"
-                : "upvoters";
+                ? nameof(IVotable.Downvoters)
+                : nameof(IVotable.Upvoters);
         }
     }
 }
