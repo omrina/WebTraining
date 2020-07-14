@@ -4,7 +4,7 @@
     {
         public bool IsLengthBetween(string s, int min, int max)
         {
-            return s.Length >= min && s.Length <= max;
+            return !string.IsNullOrWhiteSpace(s) && s.Length >= min && s.Length <= max;
         }
     }
 }

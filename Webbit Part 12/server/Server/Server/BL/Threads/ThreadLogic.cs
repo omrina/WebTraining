@@ -4,8 +4,10 @@ using System.Threading.Tasks;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using Server.BL.Subwebbits;
+using Server.BL.Threads.Validation;
 using Server.BL.Threads.ViewModels;
 using Server.BL.Users;
+using Server.Exceptions;
 using Server.Models;
 
 namespace Server.BL.Threads
@@ -13,14 +15,6 @@ namespace Server.BL.Threads
     public class ThreadLogic : BaseLogic<Subwebbit>
     {
         private const int ThreadsPerPage = 4;
-
-        // public FilterDefinition<Subwebbit> GetThreadFilterDefinition(string subwebbitId, string threadId)
-        // {
-        //     return FilterBuilder.And(
-        //         FilterBuilder.Where(GenerateByIdFilter<Subwebbit>(subwebbitId)),
-        //         FilterBuilder.ElemMatch(x => x.Threads,
-        //             GenerateByIdFilter<Thread>(threadId)));
-        // }
 
         public async Task<ThreadViewModel> GetViewModel(string subwebbitId, string threadId)
         {
@@ -72,10 +66,18 @@ namespace Server.BL.Threads
 
         public async Task Create(NewThreadViewModel thread)
         {
-            // TODO: validate thread details!!!
+            EnsureThreadDetails(thread);
             var newThread = new Thread(thread.Title, thread.Content, thread.Author);
             await Collection.UpdateOneAsync(GenerateByIdFilter<Subwebbit>(thread.SubwebbitId),
                 UpdateBuilder.AddToSet(x => x.Threads, newThread));
+        }
+
+        private void EnsureThreadDetails(NewThreadViewModel thread)
+        {
+            if (!new ThreadValidator().IsValid(thread))
+            {
+                throw new InvalidModelDetailsException();
+            }
         }
 
         public async Task Delete(string subwebbitId, string threadId)

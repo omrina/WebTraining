@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
+using Server.BL.Subwebbits.Validation;
 using Server.BL.Subwebbits.ViewModels;
 using Server.BL.Users;
 using Server.Exceptions;
@@ -14,6 +14,12 @@ namespace Server.BL.Subwebbits
 {
     public class SubwebbitLogic : BaseLogic<Subwebbit>
     {
+        public async Task<bool> IsSubwebbitNameExists(string name)
+        {
+            return await GetAll().Where(x => x.Name == name)
+                .Select(x => x.Name).FirstOrDefaultAsync() != null;
+        }
+
         public async Task<IEnumerable<SearchedSubwebbitViewModel>> GetAllByName(string name)
         {
             var matchingSubwebbits = await GetAll().Where(x => x.Name.Contains(name)).ToListAsync();
@@ -23,20 +29,29 @@ namespace Server.BL.Subwebbits
 
         public async Task<ObjectId> Create(NewSubwebbitViewModel subwebbit)
         {
+            EnsureSubwebbitDetails(subwebbit);
+            await EnsureNameNotTaken(subwebbit.Name);
+
             var newSubwebbit = new Subwebbit(subwebbit.OwnerId, subwebbit.Name);
-            // TODO: change validation of subwebbit name existence (and change the script for subwebbit's name index)
-            // TODO: check name already exists exception
-            try
-            {
-                await Collection.InsertOneAsync(newSubwebbit);
-            }
-            catch (MongoWriteException e) when (e.WriteError.Category == ServerErrorCategory.DuplicateKey)
-            {
-                // LOG HERE
-                throw new SubwebbitNameAlreadyTakenException();
-            }
+            await Collection.InsertOneAsync(newSubwebbit);
 
             return newSubwebbit.Id;
+        }
+
+        private void EnsureSubwebbitDetails(NewSubwebbitViewModel subwebbit)
+        {
+            if (!new SubwebbitValidator().IsValid(subwebbit))
+            {
+                throw new InvalidModelDetailsException();
+            }
+        }
+
+        private async Task EnsureNameNotTaken(string name)
+        {
+            if (await IsSubwebbitNameExists(name))
+            {
+                throw new SubwebbitNameAlreadyTakenException();
+            }
         }
 
         public async Task<SubwebbitViewModel> GetViewModel(string subwebbitId)
@@ -55,7 +70,6 @@ namespace Server.BL.Subwebbits
 
         public async Task Delete(string id)
         {
-            // TODO: ensure user is owner
             await EnsureOwnership(id, UserId);
             await Collection.DeleteOneAsync(GenerateByIdFilter<Subwebbit>(id));
         }
@@ -66,8 +80,7 @@ namespace Server.BL.Subwebbits
 
             if (subwebbitOwnerId != userId)
             {
-                // TODO: change to not-owner exception (unauthorized code)
-                throw new NotImplementedException();
+                throw new UserNotOwnerException();
             }
         }
     }

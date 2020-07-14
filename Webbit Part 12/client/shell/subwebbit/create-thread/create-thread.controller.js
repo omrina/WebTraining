@@ -3,7 +3,7 @@ import angular from 'angular';
 const CONTROLLER = 'createThread';
 
 angular.module('webbit.controllers')
-    .controller(CONTROLLER, ($scope, $mdDialog, Auth, Thread, subwebbit, Alert) => {
+    .controller(CONTROLLER, ($scope, $mdDialog, Auth, Thread, subwebbit) => {
         $scope.subwebbit = subwebbit;
 
         $scope.thread = {
@@ -15,8 +15,8 @@ angular.module('webbit.controllers')
             $mdDialog.cancel();
         };
 
-        $scope.post = thread => {
-            Thread.post(thread)
+        $scope.post = () => {
+            Thread.post($scope.thread)
                 .then(() => $mdDialog.hide());
         };
     });

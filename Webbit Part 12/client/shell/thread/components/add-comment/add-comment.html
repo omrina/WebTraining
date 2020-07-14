@@ -1,7 +1,7 @@
 <div class="add-comment-container">
     <md-input-container md-no-float class="comment-input-container">
         <textarea name="content" placeholder={{$ctrl.inputPlaceholder}} class="comment-input"
-            ng-model="$ctrl.comment.content" md-no-resize></textarea>
+            ng-model="$ctrl.comment.content" maxlength="250" md-no-resize></textarea>
     </md-input-container>
     <div ng-if="$ctrl.comment.content" layout="row" class="comment-actions-container">
         <div flex></div>

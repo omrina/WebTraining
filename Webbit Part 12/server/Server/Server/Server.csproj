@@ -130,17 +130,22 @@
     <Compile Include="BL\Authentication\AuthController.cs" />
     <Compile Include="BL\BaseController.cs" />
     <Compile Include="BL\Comments\CommentController.cs" />
+    <Compile Include="BL\Comments\Validation\CommentValidator.cs" />
     <Compile Include="BL\Ratings\RatingController.cs" />
+    <Compile Include="BL\Ratings\ViewModels\BaseVotableViewModel.cs" />
     <Compile Include="BL\Ratings\ViewModels\VoteChangeViewModel.cs" />
     <Compile Include="BL\Subwebbits\SubwebbitController.cs" />
+    <Compile Include="BL\Subwebbits\Validation\SubwebbitValidator.cs" />
     <Compile Include="BL\Threads\ThreadController.cs" />
+    <Compile Include="BL\Threads\Validation\ThreadValidator.cs" />
     <Compile Include="BL\Users\UserController.cs" />
     <Compile Include="BL\Ratings\Enums\VoteDirections.cs" />
-    <Compile Include="Exceptions\InvalidSignupDetailsException.cs" />
+    <Compile Include="Exceptions\InvalidModelDetailsException.cs" />
     <Compile Include="Exceptions\LoginFailedException.cs" />
     <Compile Include="Exceptions\SubwebbitNameAlreadyTakenException.cs" />
     <Compile Include="Exceptions\SubwebbitNotFoundException.cs" />
     <Compile Include="Exceptions\UsernameAlreadyTakenException.cs" />
+    <Compile Include="Exceptions\UserNotOwnerException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

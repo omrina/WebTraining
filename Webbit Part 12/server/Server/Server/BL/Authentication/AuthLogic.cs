@@ -43,7 +43,7 @@ namespace Server.BL.Authentication
         {
             if (!new SignupDetailsValidator().IsValid(user))
             {
-                throw new InvalidSignupDetailsException();
+                throw new InvalidModelDetailsException();
             }
         }
 

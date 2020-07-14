@@ -48,7 +48,7 @@ var subwebbits = [
 				"rating": 49
 			}
 		],
-		subscribersCount: 0
+		subscribersCount: 2
 	},
 	{
 		ownerId: ObjectId("5ef9b50ffb356c82d30ddb73"),

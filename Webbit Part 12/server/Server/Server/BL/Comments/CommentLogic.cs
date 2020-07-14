@@ -3,8 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver.Linq;
+using Server.BL.Comments.Validation;
 using Server.BL.Comments.ViewModels;
 using Server.BL.Ratings;
+using Server.Exceptions;
 using Server.Models;
 
 namespace Server.BL.Comments
@@ -13,7 +15,7 @@ namespace Server.BL.Comments
     {
         public async Task Post(NewCommentViewModel comment)
         {
-            // TODO: add validation???
+            EnsureCommentDetails(comment);
             var updateInfo = new UpdatingOperation(comment.SubwebbitId, comment.ThreadId);
 
             if (!string.IsNullOrWhiteSpace(comment.ParentCommentId))
@@ -26,6 +28,14 @@ namespace Server.BL.Comments
             await Collection.UpdateOneAsync(updateInfo.Filter,
                 UpdateBuilder.AddToSet(updateInfo.ModelHierarchy + "." + nameof(Thread.Comments).ToLower(), newComment),
                 updateInfo.Options);
+        }
+
+        private void EnsureCommentDetails(NewCommentViewModel comment)
+        {
+            if (!new CommentValidator().IsValid(comment))
+            {
+                throw new InvalidModelDetailsException();
+            }
         }
 
         public async Task<IEnumerable<CommentViewModel>> GetAll(string subwebbitId, string threadId)

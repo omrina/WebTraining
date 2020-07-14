@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
 using MongoDB.Bson;
-using Server.BL.Ratings.Enums;
+using Server.BL.Ratings.ViewModels;
 using Server.BL.Subwebbits.ViewModels;
 using Server.Models;
 
 namespace Server.BL.Threads.ViewModels
 {
-    public class ThreadViewModel
+    public class ThreadViewModel : BaseVotableViewModel
     {
         public ObjectId Id { get; set; }
         public ObjectId SubwebbitId { get; set; }
@@ -17,11 +17,10 @@ namespace Server.BL.Threads.ViewModels
         public string Author { get; set; }
         public DateTime Date { get; set; }
         public int CommentsCount { get; set; }
-        public int Rating { get; set; }
-        public VoteDirections UserVote { get; set; }
         public bool IsOwner { get; set; }
 
         public ThreadViewModel(Thread thread, SubwebbitViewModel subwebbit, ObjectId userId)
+            : base(thread, userId)
         {
             Id = thread.Id;
             SubwebbitId = subwebbit.Id;
@@ -31,18 +30,7 @@ namespace Server.BL.Threads.ViewModels
             Author = thread.Author;
             Date = thread.Date;
             CommentsCount = thread.Comments.Sum(x => x.Comments.Count() + 1);
-            Rating = thread.Rating;
-            UserVote = GetUserVote(thread, userId);
             IsOwner = subwebbit.IsOwner;
-        }
-
-        private VoteDirections GetUserVote(IVotable item, ObjectId userId)
-        {
-            return item.Upvoters.Contains(userId)
-                ? VoteDirections.Up
-                : item.Downvoters.Contains(userId)
-                    ? VoteDirections.Down
-                    : VoteDirections.Cancel;
         }
     }
 }
