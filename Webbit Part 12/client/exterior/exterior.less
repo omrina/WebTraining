@@ -1,14 +1,22 @@
-@import (reference) '../app.less';
+@import (reference) "../app.less";
 
 .exterior-page-container {
   font-size: 24px;
+  background: radial-gradient(
+    circle,
+    rgb(236, 218, 226) ,
+    rgba(151, 124, 151, 0.5)
+  );
 
   .box {
     width: 600px;
-    height: 75%;
-    background-color: rgb(250, 250, 250);
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
-      0 2px 1px -1px rgba(0, 0, 0, 0.12);
+    min-width: 370px;
+    height: 620px;
+    min-height: 450px;
+    border: 1.5px solid black;
+    border-radius: 30px;
+    overflow: hidden;
+    background-color: white;
 
     .header {
       padding: 6px 0;
@@ -18,6 +26,40 @@
 
       .logo {
         font-size: 40px;
+      }
+    }
+
+    .form {
+      padding: 14px 36px;
+
+      .form-inputs-container {
+        overflow: hidden auto;
+        font-size: 1.1em;
+      }
+
+      .input-icon {
+        color: @dark-primary-color;
+      }
+
+      .submit-button {
+        background-color: @primary-color;
+        color: white;
+        padding: 4px;
+        border-radius: 24px;
+        font-size: 28px;
+
+        &:disabled {
+          background-color: #9b9a9ad9;
+        }
+
+        &:hover:not([disabled]) {
+          background-color: @dark-primary-color;
+        }
+      }
+
+      .link {
+        color: @primary-color;
+        font-weight: bold;
       }
     }
   }

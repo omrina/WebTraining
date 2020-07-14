@@ -10,5 +10,6 @@ require('./subwebbit.service');
 require('./thread.service');
 require('./rating.service');
 require('./comment.service');
+require('./alert.service');
 
 export default MODULE;

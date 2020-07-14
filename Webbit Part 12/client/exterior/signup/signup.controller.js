@@ -3,44 +3,25 @@ import angular from 'angular';
 const CONTROLLER = 'signup';
 
 angular.module('webbit.controllers')
-    .controller(CONTROLLER, ($scope, $state, Auth, $mdToast) => {
+    .controller(CONTROLLER, ($scope, $state, Auth, Alert) => {
         $scope.user = {};
 
         $scope.signup = () => {
             if ($scope.user.password !== $scope.user.repeatedPassword) {
-                $mdToast.show(
-                    $mdToast.simple()
-                        .textContent('The repeated password doesn\'t match...')
-                        .hideDelay(3500)
-                );
+                Alert.error('The repeated password doesn\'t match...');
 
                 return;
             }
 
             Auth.signup($scope.user)
                 .then(() => {
-                    $mdToast.show(
-                        $mdToast.simple()
-                            .textContent('Thanks for signing up to Webbit!')
-                            .hideDelay(3000)
-                    );
-
+                    Alert.success('Thanks for signing up to Webbit!');
                     $state.go('exterior.login');
                 })
-                .catch(({status}) => {
-                    status = status > 500 ? 500 : status;
-
-                    const errors = {
-                        400: 'Something\'s not right... but it\'s not your fault! Please try again later',
-                        409: 'This username is already taken :/',
-                        500: 'An error has occurred, please try later'
-                    };
-
-                    $mdToast.show(
-                        $mdToast.simple()
-                            .textContent(errors[status])
-                            .hideDelay(3500)
-                    );
+                .catch(({ status }) => {
+                    if (status === 409) {
+                      Alert.error("This username is already taken :/");
+                    }
                 });
         }
     });

@@ -3,7 +3,7 @@ import angular from 'angular';
 const CONTROLLER = 'addComment';
 
 angular.module('webbit.controllers')
-    .controller(CONTROLLER, function ($scope, Comment, Auth) {
+    .controller(CONTROLLER, function ($scope, Comment, Auth, Alert) {
         this.$onInit = () => {
             const { subwebbitId, threadId, parentCommentId = '' } = this;
 
@@ -23,6 +23,7 @@ angular.module('webbit.controllers')
 
             this.postComment = () => {
                 Comment.post(this.comment).then(() => {
+                    Alert.success('Your comment has been posted')
                     $scope.$emit('PostedComment');
                     this.clearComment();
                 })

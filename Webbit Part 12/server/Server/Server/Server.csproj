@@ -165,14 +165,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="BL\Comments\ViewModels\CommentViewModel.cs" />
-    <Compile Include="BL\Authentication\ViewModels\LoginViewModel.cs" />
     <Compile Include="BL\Comments\ViewModels\NewCommentViewModel.cs" />
     <Compile Include="BL\Subwebbits\ViewModels\NewSubwebbitViewModel.cs" />
     <Compile Include="BL\Threads\ViewModels\NewThreadViewModel.cs" />
     <Compile Include="BL\Subwebbits\ViewModels\SearchedSubwebbitViewModel.cs" />
     <Compile Include="BL\Subwebbits\ViewModels\SubwebbitViewModel.cs" />
     <Compile Include="BL\Threads\ViewModels\ThreadViewModel.cs" />
-    <Compile Include="BL\Authentication\ViewModels\UserSignupViewModel.cs" />
+    <Compile Include="BL\Authentication\ViewModels\UserAuthViewModel.cs" />
     <Compile Include="BL\Authentication\ViewModels\UserViewModel.cs" />
     <Compile Include="BL\Ratings\ViewModels\UserVoteViewModel.cs" />
     <Compile Include="WebApiConfig\InheritedAttributesRouteProvider.cs" />

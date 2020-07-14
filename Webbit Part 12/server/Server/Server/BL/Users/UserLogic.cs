@@ -11,6 +11,11 @@ namespace Server.BL.Users
 {
     public class UserLogic : BaseLogic<User>
     {
+        public async Task<bool> IsUsernameExists(string username)
+        {
+            return await GetAll().FirstOrDefaultAsync(x => x.Username == username) != null;
+        }
+
         public async Task<IEnumerable<ObjectId>> GetSubscribedIds(string userId)
         {
             return await Get(userId).SelectMany(x => x.SubscribedSubwebbits).ToListAsync();

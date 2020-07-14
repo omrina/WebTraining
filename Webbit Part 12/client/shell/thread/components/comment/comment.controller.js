@@ -4,7 +4,7 @@ import { ago } from 'time-ago';
 const CONTROLLER = 'comment';
 
 angular.module('webbit.controllers')
-    .controller(CONTROLLER, function () {
+    .controller(CONTROLLER, function ($scope) {
         this.isReplyVisible = false;
 
         this.toTimeAgo = date => ago(date);
@@ -14,6 +14,8 @@ angular.module('webbit.controllers')
         }
 
         this.isRootComment = () => !this.parentCommentId;
+
+        $scope.$on('PostedComment', () =>  {this.isReplyVisible = false;})
     });
 
 export default CONTROLLER;

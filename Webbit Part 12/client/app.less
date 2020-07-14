@@ -7,3 +7,28 @@ html, body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
 }
+
+md-toast.md-default-theme {
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+
+  .md-toast-content {
+    font-size: 24px;
+    background-color: white;
+    color: black;
+    border-left: 16px solid;
+    border-radius: 8px;
+  }
+
+  &.success {
+    .md-toast-content {
+      border-color: #4ccf62;
+    }
+  }
+
+  &.error {
+    .md-toast-content {
+      border-color: #ea0027;
+    }
+  }
+}

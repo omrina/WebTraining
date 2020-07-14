@@ -14,7 +14,7 @@ namespace Server.BL.Authentication
 
         [Route("login")]
         [HttpPost]
-        public async Task<IHttpActionResult> Login(LoginViewModel user)
+        public async Task<IHttpActionResult> Login(UserAuthViewModel user)
         {
             var loggedUser = await Logic.Login(user);
 
@@ -23,7 +23,7 @@ namespace Server.BL.Authentication
 
         [Route("signup")]
         [HttpPost]
-        public async Task<IHttpActionResult> Signup(UserSignupViewModel user)
+        public async Task<IHttpActionResult> Signup(UserAuthViewModel user)
         {
             await Logic.Signup(user);
 

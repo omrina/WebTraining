@@ -3,7 +3,7 @@ import angular from 'angular';
 const CONTROLLER = 'login';
 
 angular.module('webbit.controllers')
-    .controller(CONTROLLER, ($scope, $state, Auth, $mdToast) => {
+    .controller(CONTROLLER, ($scope, $state, Auth, Alert) => {
         $scope.user = {};
 
         $scope.login = () => {
@@ -11,19 +11,10 @@ angular.module('webbit.controllers')
                 .then(() => {
                     $state.go('shell.home');
                 })
-                .catch(({status}) => {
-                    status = status > 500 ? 500 : status;
-
-                    const errors = {
-                        401: 'Username or Password are invalid',
-                        500: 'An error has occurred, please try later'
-                    };
-
-                    $mdToast.show(
-                        $mdToast.simple()
-                            .textContent(errors[status])
-                            .hideDelay(3500)
-                    );
+                .catch(({ status }) => {
+                    if (status === 401) {
+                        Alert.error('Username or Password are invalid');
+                    }
                 });
         }
     });

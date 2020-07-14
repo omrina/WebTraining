@@ -12,7 +12,7 @@ namespace Server.BL.Authentication
 {    
     public class AuthLogic : BaseLogic<User>
     {
-        public async Task<UserViewModel> Login(LoginViewModel loginViewModel)
+        public async Task<UserViewModel> Login(UserAuthViewModel loginViewModel)
         {
             var user =  await GetAll().SingleOrDefaultAsync(x =>
                 x.Password == loginViewModel.Password &&
@@ -26,21 +26,32 @@ namespace Server.BL.Authentication
             return new UserViewModel(user);
         }
 
-        public async Task Signup(UserSignupViewModel user)
+        public async Task Signup(UserAuthViewModel user)
         {
-            var subscriptionsOnSignup = 10;
+            const int subscriptionsOnSignup = 10;
+
             EnsureSignupDetails(user);
+            await EnsureUsernameNotTaken(user.Username);
 
             var newUser = new User(user.Username, user.Password);
+
             await Collection.InsertOneAsync(newUser);
             await SubscribeToTopSubwebbits(newUser.Id, subscriptionsOnSignup);
         }
 
-        private void EnsureSignupDetails(UserSignupViewModel user)
+        private void EnsureSignupDetails(UserAuthViewModel user)
         {
             if (!new SignupDetailsValidator().IsValid(user))
             {
                 throw new InvalidSignupDetailsException();
+            }
+        }
+
+        private async Task EnsureUsernameNotTaken(string username)
+        {
+            if (await new UserLogic().IsUsernameExists(username))
+            {
+                throw new UsernameAlreadyTakenException();
             }
         }
 

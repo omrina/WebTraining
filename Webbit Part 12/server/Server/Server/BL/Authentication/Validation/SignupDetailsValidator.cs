@@ -5,7 +5,7 @@ namespace Server.BL.Authentication.Validation
 {
     public class SignupDetailsValidator
     {
-        public bool IsValid(UserSignupViewModel user)
+        public bool IsValid(UserAuthViewModel user)
         {
             var stringValidator = new StringValidator();
 
