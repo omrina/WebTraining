@@ -93,21 +93,21 @@ namespace Server.WebApi.Subwebbits
             return (await GetSubscribedIds(userId)).Contains(ObjectId.Parse(subwebbitId));
         }
 
-        public async Task Subscribe(string subwebbitId)
+        public async Task Subscribe(ObjectId subwebbitId)
         {
             var usersCollection = Database.GetCollection<User>(nameof(User));
 
             await usersCollection.UpdateOneAsync(x => x.Id == UserSession.UserId,
-                Builders<User>.Update.AddToSet(x => x.SubscribedSubwebbits, ObjectId.Parse(subwebbitId)));
+                Builders<User>.Update.AddToSet(x => x.SubscribedSubwebbits, subwebbitId));
             await new SubwebbitSubscriptionLogic().IncrementSubscribers(subwebbitId);
         }
 
-        public async Task Unsubscribe(string subwebbitId)
+        public async Task Unsubscribe(ObjectId subwebbitId)
         {
             var usersCollection = Database.GetCollection<User>(nameof(User));
 
             await usersCollection.UpdateOneAsync(x => x.Id == UserSession.UserId,
-                Builders<User>.Update.Pull(x => x.SubscribedSubwebbits, ObjectId.Parse(subwebbitId)));
+                Builders<User>.Update.Pull(x => x.SubscribedSubwebbits, subwebbitId));
             await new SubwebbitSubscriptionLogic().DecrementSubscribers(subwebbitId);
         }
     }

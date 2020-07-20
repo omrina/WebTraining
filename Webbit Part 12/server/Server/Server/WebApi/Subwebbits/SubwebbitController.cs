@@ -54,7 +54,7 @@ namespace Server.WebApi.Subwebbits
         public async Task<IHttpActionResult> Subscribe(string id)
         {
             SetUserId();
-            await Logic.Subscribe(id);
+            await Logic.Subscribe(ObjectId.Parse(id));
 
             return Ok();
         }
@@ -64,7 +64,7 @@ namespace Server.WebApi.Subwebbits
         public async Task<IHttpActionResult> Unsubscribe(string id)
         {
             SetUserId();
-            await Logic.Unsubscribe(id);
+            await Logic.Unsubscribe(ObjectId.Parse(id));
 
             return Ok();
         }

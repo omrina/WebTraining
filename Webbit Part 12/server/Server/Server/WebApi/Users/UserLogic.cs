@@ -20,12 +20,16 @@ namespace Server.WebApi.Users
             await EnsureSignupDetails(user);
             var newUser = new User(user.Username, user.Password)
             {
-                SubscribedSubwebbits =
-                    await new SubwebbitSubscriptionLogic()
-                        .GetMostSubscribed(SubscriptionsOnSignup)
+                SubscribedSubwebbits = await new SubwebbitSubscriptionLogic()
+                                            .GetMostSubscribed(SubscriptionsOnSignup)
             };
 
             await GetCollection().InsertOneAsync(newUser);
+
+            foreach (var subwebbitId in newUser.SubscribedSubwebbits)
+            {
+                await new SubwebbitSubscriptionLogic().IncrementSubscribers(subwebbitId);
+            }
         }
 
         private async Task EnsureSignupDetails(UserAuthViewModel user)
@@ -46,6 +50,5 @@ namespace Server.WebApi.Users
                 throw new UsernameAlreadyTakenException();
             }
         }
-
     }
 }

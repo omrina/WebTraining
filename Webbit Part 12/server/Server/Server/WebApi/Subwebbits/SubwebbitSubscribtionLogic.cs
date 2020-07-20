@@ -16,19 +16,19 @@ namespace Server.WebApi.Subwebbits
                 .Take(amount).Select(x => x.Id).ToListAsync();
         }
 
-        public async Task IncrementSubscribers(string id)
+        public async Task IncrementSubscribers(ObjectId id)
         {
             await AddToSubscribersCount(id, 1);
         }
 
-        public async Task DecrementSubscribers(string id)
+        public async Task DecrementSubscribers(ObjectId id)
         {
             await AddToSubscribersCount(id, -1);
         }
 
-        private async Task AddToSubscribersCount(string id, int value)
+        private async Task AddToSubscribersCount(ObjectId id, int value)
         {
-            await GetCollection().UpdateOneAsync(x => x.Id == ObjectId.Parse(id),
+            await GetCollection().UpdateOneAsync(x => x.Id == id,
                 UpdateBuilder.Inc(x => x.SubscribersCount, value));
         }
     }
