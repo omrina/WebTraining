@@ -1,0 +1,44 @@
+@import (reference) '../../../app.less';
+
+.add-comment-container {
+  .comment-input-container {
+    font-size: 24px;
+    display  : block;
+    margin   : 0;
+
+    .comment-input {
+      border-bottom: 2px solid black;
+      min-height   : 34px;
+
+      &:focus {
+        border-bottom-width: 3px;
+      }
+    }
+  }
+
+  .comment-actions-container {
+    .comment-action-button {
+      color: white;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    .comment-button {
+      background-color: @secondary-color;
+
+      &:hover {
+        background-color: @secondary-color;
+      }
+    }
+
+    .cancel-comment-button {
+      background-color: #757575;
+
+      &:hover {
+        background-color: #757575;
+      }
+    }
+  }
+}

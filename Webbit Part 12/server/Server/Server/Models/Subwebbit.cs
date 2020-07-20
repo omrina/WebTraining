@@ -7,14 +7,14 @@ namespace Server.Models
     {
         public ObjectId OwnerId { get; set; }
         public string Name { get; set; }
-        public IEnumerable<Thread> Threads { get; set; }
+        public IEnumerable<ObjectId> Threads { get; set; }
         public long SubscribersCount { get; set; }
 
         public Subwebbit(string ownerId, string name)
         {
             OwnerId = ObjectId.Parse(ownerId);
             Name = name;
-            Threads = new List<Thread>();
+            Threads = new List<ObjectId>();
         }
     }
 }

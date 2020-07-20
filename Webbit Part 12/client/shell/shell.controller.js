@@ -4,7 +4,6 @@ const CONTROLLER = 'shell';
 
 angular.module('webbit.controllers')
   .controller(CONTROLLER, ($scope, $state, Auth, Subwebbit) => {
-    $scope.searchedName = "";
     $scope.user = Auth.getCurrentUser();
 
     $scope.logout = () => {
@@ -19,9 +18,9 @@ angular.module('webbit.controllers')
     }
     
     $scope.createSubwebbit = (name, ownerId) => {
-      $scope.clearSearchBar();
       Subwebbit.create({name, ownerId})
-        .then(newSubwebbitId => $state.go('shell.subwebbit', {id: newSubwebbitId}));
+        .then(id => $state.go('shell.subwebbit', { id }))
+        .then($scope.clearSearchBar)
     };
 
     $scope.goHome = () => {

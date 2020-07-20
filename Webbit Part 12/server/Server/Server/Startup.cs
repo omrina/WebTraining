@@ -23,6 +23,7 @@ namespace Server
             config.MapHttpAttributeRoutes(new InheritedAttributesRouteProvider());
             config.Services.Replace(typeof(IExceptionHandler), new PassThroughExceptionsHandler());
 
+            appBuilder.Use<SessionTokenMiddleware>();
             appBuilder.UseWebApi(config);
 
             var physicalFileSystem = new PhysicalFileSystem(ConfigurationManager.AppSettings["ClientPath"]);

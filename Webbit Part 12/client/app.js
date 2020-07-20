@@ -10,31 +10,29 @@ import 'angular-material/angular-material.min.css';
 import 'mdi/css/materialdesignicons.css';
 import services from './services';
 import controllers from './controllers';
-import components from './components';
-import 'lodash';
 import './app.less';
 
-angular.module('webbit', [uiRouter, 'ui.router.state.events', ngResource, ngAnimate, ngAria, ngMessages, ngMaterial, services, controllers, components])
+angular.module('webbit', [uiRouter, 'ui.router.state.events', ngResource, ngAnimate, ngAria, ngMessages, ngMaterial, services, controllers])
     .config(($locationProvider, $urlRouterProvider, $httpProvider) => {
         $urlRouterProvider.otherwise('/');
         $locationProvider.html5Mode(true);
 
-        $httpProvider.interceptors.push(($rootScope, $q, Storage) => {
+        $httpProvider.interceptors.push(($rootScope, $q, UserStorage) => {
             return {
               responseError: response => {
                 const status = response.status;
 
                 if (status >= 500 || status === 400) {
-                  $rootScope.$broadcast("AlertError", status);
+                  $rootScope.$broadcast('AlertError');
                 }
 
                 return $q.reject(response);
               },
               request: request => {
-                const currentUser = Storage.getUser();
+                const currentUser = UserStorage.getUser();
 
                 request.headers.Authorization = currentUser
-                                                ? currentUser.id
+                                                ? currentUser.token
                                                 : "";
 
                 return request;
@@ -43,20 +41,12 @@ angular.module('webbit', [uiRouter, 'ui.router.state.events', ngResource, ngAnim
         });
     })
     .run(($rootScope, $state, Auth, Alert) => {
-        $rootScope.$on("AlertError", (event, status) => {
-          if (status === 400) {
-            Alert.error(
-              "Something's not right... but it's not your fault! Please try again later"
-            );
-
-            return;
-          }
-          
+        $rootScope.$on('AlertError', () => {
           Alert.error('Something went wrong... please try again later');
         });
         
         $rootScope.$on('$stateChangeStart', (event, next) => {
-            if (_.includes(['exterior.login', 'exterior.signup'], next.name)) {
+            if (['exterior.login', 'exterior.signup'].includes(next.name)) {
                 return;
             }
 

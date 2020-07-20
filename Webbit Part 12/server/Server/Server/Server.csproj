@@ -53,8 +53,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Owin, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.3.0.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin.FileSystems, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.FileSystems.3.0.0\lib\net45\Microsoft.Owin.FileSystems.dll</HintPath>
@@ -62,6 +62,9 @@
     </Reference>
     <Reference Include="Microsoft.Owin.Host.HttpListener, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Host.HttpListener.4.1.0\lib\net45\Microsoft.Owin.Host.HttpListener.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin.StaticFiles, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.StaticFiles.3.0.0\lib\net45\Microsoft.Owin.StaticFiles.dll</HintPath>
@@ -127,21 +130,24 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BL\Authentication\AuthController.cs" />
-    <Compile Include="BL\BaseController.cs" />
-    <Compile Include="BL\Comments\CommentController.cs" />
-    <Compile Include="BL\Comments\Validation\CommentValidator.cs" />
-    <Compile Include="BL\Ratings\RatingController.cs" />
-    <Compile Include="BL\Ratings\ViewModels\BaseVotableViewModel.cs" />
-    <Compile Include="BL\Ratings\ViewModels\VoteChangeViewModel.cs" />
-    <Compile Include="BL\Subwebbits\SubwebbitController.cs" />
-    <Compile Include="BL\Subwebbits\Validation\SubwebbitValidator.cs" />
-    <Compile Include="BL\Threads\ThreadController.cs" />
-    <Compile Include="BL\Threads\Validation\ThreadValidator.cs" />
-    <Compile Include="BL\Users\UserController.cs" />
-    <Compile Include="BL\Ratings\Enums\VoteDirections.cs" />
+    <Compile Include="Models\OnlineUser.cs" />
+    <Compile Include="WebApi\Authentication\AuthController.cs" />
+    <Compile Include="WebApi\Authentication\UserSession.cs" />
+    <Compile Include="WebApi\BaseController.cs" />
+    <Compile Include="WebApi\Comments\CommentController.cs" />
+    <Compile Include="WebApi\Comments\Validation\CommentValidator.cs" />
+    <Compile Include="WebApi\Ratings\RatingController.cs" />
+    <Compile Include="WebApi\Ratings\ViewModels\BaseVotableViewModel.cs" />
+    <Compile Include="WebApi\Ratings\ViewModels\VoteChangeViewModel.cs" />
+    <Compile Include="WebApi\Subwebbits\SubwebbitController.cs" />
+    <Compile Include="WebApi\Subwebbits\Validation\SubwebbitValidator.cs" />
+    <Compile Include="WebApi\Threads\ThreadController.cs" />
+    <Compile Include="WebApi\Threads\Validation\ThreadValidator.cs" />
+    <Compile Include="WebApi\Users\UserController.cs" />
+    <Compile Include="WebApi\Ratings\Enums\VoteDirections.cs" />
     <Compile Include="Exceptions\InvalidModelDetailsException.cs" />
     <Compile Include="Exceptions\LoginFailedException.cs" />
+    <Compile Include="Exceptions\ModelNotFoundException.cs" />
     <Compile Include="Exceptions\SubwebbitNameAlreadyTakenException.cs" />
     <Compile Include="Exceptions\SubwebbitNotFoundException.cs" />
     <Compile Include="Exceptions\UsernameAlreadyTakenException.cs" />
@@ -149,37 +155,40 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="BL\BaseLogic.cs" />
-    <Compile Include="BL\Comments\CommentLogic.cs" />
-    <Compile Include="BL\MongoConnection.cs" />
-    <Compile Include="BL\Authentication\AuthLogic.cs" />
-    <Compile Include="BL\Ratings\RatingLogic.cs" />
-    <Compile Include="BL\Subwebbits\SubwebbitLogic.cs" />
-    <Compile Include="BL\Subwebbits\SubwebbitSubscribtionLogic.cs" />
-    <Compile Include="BL\Threads\ThreadLogic.cs" />
-    <Compile Include="BL\Ratings\UpdatingOperation.cs" />
-    <Compile Include="BL\Users\UserLogic.cs" />
-    <Compile Include="BL\Authentication\Validation\SignupDetailsValidator.cs" />
-    <Compile Include="BL\Validators\StringValidator.cs" />
+    <Compile Include="WebApi\BaseLogic.cs" />
+    <Compile Include="WebApi\Comments\CommentLogic.cs" />
+    <Compile Include="MongoDB\MongoConnection.cs" />
+    <Compile Include="WebApi\Authentication\AuthLogic.cs" />
+    <Compile Include="WebApi\Ratings\RatingLogic.cs" />
+    <Compile Include="WebApi\Subwebbits\SubwebbitLogic.cs" />
+    <Compile Include="WebApi\Subwebbits\SubwebbitSubscribtionLogic.cs" />
+    <Compile Include="WebApi\Threads\ThreadLogic.cs" />
+    <Compile Include="WebApi\Ratings\UpdatingOperation.cs" />
+    <Compile Include="WebApi\Users\UserLogic.cs" />
+    <Compile Include="WebApi\Authentication\Validation\SignupDetailsValidator.cs" />
+    <Compile Include="WebApi\Validators\StringValidator.cs" />
     <Compile Include="Middlewares\ExceptionsMiddleware.cs" />
+    <Compile Include="Middlewares\SessionTokenMiddleware.cs" />
+    <Compile Include="Models\BaseContentItem.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\IVotable.cs" />
     <Compile Include="Models\Subwebbit.cs" />
     <Compile Include="Models\Thread.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="MongoDB\Extensions\DatabaseExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="BL\Comments\ViewModels\CommentViewModel.cs" />
-    <Compile Include="BL\Comments\ViewModels\NewCommentViewModel.cs" />
-    <Compile Include="BL\Subwebbits\ViewModels\NewSubwebbitViewModel.cs" />
-    <Compile Include="BL\Threads\ViewModels\NewThreadViewModel.cs" />
-    <Compile Include="BL\Subwebbits\ViewModels\SearchedSubwebbitViewModel.cs" />
-    <Compile Include="BL\Subwebbits\ViewModels\SubwebbitViewModel.cs" />
-    <Compile Include="BL\Threads\ViewModels\ThreadViewModel.cs" />
-    <Compile Include="BL\Authentication\ViewModels\UserAuthViewModel.cs" />
-    <Compile Include="BL\Authentication\ViewModels\UserViewModel.cs" />
-    <Compile Include="BL\Ratings\ViewModels\UserVoteViewModel.cs" />
+    <Compile Include="WebApi\Comments\ViewModels\CommentViewModel.cs" />
+    <Compile Include="WebApi\Comments\ViewModels\NewCommentViewModel.cs" />
+    <Compile Include="WebApi\Subwebbits\ViewModels\NewSubwebbitViewModel.cs" />
+    <Compile Include="WebApi\Threads\ViewModels\NewThreadViewModel.cs" />
+    <Compile Include="WebApi\Subwebbits\ViewModels\SearchedSubwebbitViewModel.cs" />
+    <Compile Include="WebApi\Subwebbits\ViewModels\SubwebbitViewModel.cs" />
+    <Compile Include="WebApi\Threads\ViewModels\ThreadViewModel.cs" />
+    <Compile Include="WebApi\Authentication\ViewModels\UserAuthViewModel.cs" />
+    <Compile Include="WebApi\Authentication\ViewModels\UserViewModel.cs" />
+    <Compile Include="WebApi\Ratings\ViewModels\UserVoteViewModel.cs" />
     <Compile Include="WebApiConfig\InheritedAttributesRouteProvider.cs" />
     <Compile Include="WebApiConfig\PassThroughExceptionsHandler.cs" />
   </ItemGroup>

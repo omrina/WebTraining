@@ -1,21 +1,17 @@
 import angular from "angular";
 
-angular.module("webbit.services").service("Auth", function ($resource, Storage) {
-  this.signup = ({ username = "", password = "" } = {}) =>
-    $resource("/auth/signup").save({ username, password }).$promise;
-
+angular.module("webbit.services").service("Auth", function ($resource, UserStorage) {
   this.login = ({ username = "", password = "" } = {}) => {
     return $resource("/auth/login").save({ username, password }).$promise
-      .then(({id, username}) => {
-        Storage.setUser({id, username});
-      });
+      .then(({token, username}) => UserStorage.setUser({token, username}));
   };
 
   this.logout = () => {
-    Storage.setUser(null);
+    $resource("/auth/logout").save().$promise
+      .then(() => UserStorage.setUser(null));
   };
 
-  this.getCurrentUser = () => Storage.getUser();
+  this.getCurrentUser = () => UserStorage.getUser();
 
-  this.isLoggedIn = () => !!Storage.getUser();
+  this.isLoggedIn = () => !!UserStorage.getUser();
 });

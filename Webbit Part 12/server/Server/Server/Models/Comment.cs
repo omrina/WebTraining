@@ -4,22 +4,16 @@ using MongoDB.Bson;
 
 namespace Server.Models
 {
-    public class Comment : BaseModel, IVotable
+    public class Comment : BaseContentItem, IVotable
     {
-        public string Author { get; set; }
-        public string Content { get; set; }
-        public DateTime Date { get; set; }
         public IEnumerable<ObjectId> Upvoters { get; set; }
         public IEnumerable<ObjectId> Downvoters { get; set; }
-        public int Rating { get; set; }
         public IEnumerable<Comment> Comments { get; set; }
 
-        public Comment(string author, string content)
+        public Comment(string content, ObjectId authorId, DateTime date)
+            : base(content, authorId, date)
         {
             Id = ObjectId.GenerateNewId();
-            Author = author;
-            Content = content;
-            Date = DateTime.Now;
             Upvoters = new List<ObjectId>();
             Downvoters = new List<ObjectId>();
             Comments = new List<Comment>();

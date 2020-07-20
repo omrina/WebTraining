@@ -1,0 +1,18 @@
+<div class="comment-container">
+    <div layout="row" class="comment-header">
+        <span class="comment-author">{{$ctrl.comment.author}} </span>
+        <span>{{$ctrl.toTimeAgo($ctrl.comment.date)}}</span>
+    </div>
+    <p class="comment-content">{{$ctrl.comment.content}}</p>
+    <div layout="row" class="comment-actions">
+        <rating item-ids="{'threadId': $ctrl.comment.threadId,
+                           'subwebbitId': $ctrl.comment.subwebbitId,
+                           'commentId': $ctrl.comment.id,
+                           'parentCommentId': $ctrl.parentCommentId}"
+                rating="$ctrl.comment.rating"
+                user-vote="$ctrl.comment.userVote"></rating>
+        <md-button ng-if="$ctrl.isRootComment()" class="reply-button" ng-click="$ctrl.toggleReply()">reply</md-button>
+    </div>
+    <add-comment ng-show="$ctrl.isReplyVisible" subwebbit-id="$ctrl.comment.subwebbitId" thread-id="$ctrl.comment.threadId"
+                 parent-comment-id="$ctrl.comment.id"></add-comment>
+</div>
