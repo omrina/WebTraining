@@ -82,16 +82,6 @@ namespace Server.WebApi.Subwebbits
             }
         }
 
-        public async Task SubscribeToTopSubwebbits(ObjectId userId, int amount)
-        {
-            var subwebbitsIds = await new SubwebbitSubscriptionLogic().GetMostSubscribed(amount);
-
-            foreach (var id in subwebbitsIds)
-            {
-                await Subscribe(id.ToString());
-            }
-        }
-
         public async Task<IEnumerable<ObjectId>> GetSubscribedIds(ObjectId userId)
         {
             return await Database.GetCollection<User>(nameof(User)).AsQueryable()

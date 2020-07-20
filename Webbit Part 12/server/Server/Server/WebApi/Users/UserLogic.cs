@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
@@ -17,11 +18,14 @@ namespace Server.WebApi.Users
         public async Task Signup(UserAuthViewModel user)
         {
             await EnsureSignupDetails(user);
-            var newUser = new User(user.Username, user.Password);
+            var newUser = new User(user.Username, user.Password)
+            {
+                SubscribedSubwebbits =
+                    await new SubwebbitSubscriptionLogic()
+                        .GetMostSubscribed(SubscriptionsOnSignup)
+            };
 
             await GetCollection().InsertOneAsync(newUser);
-            await new SubwebbitLogic()
-                .SubscribeToTopSubwebbits(newUser.Id, SubscriptionsOnSignup);
         }
 
         private async Task EnsureSignupDetails(UserAuthViewModel user)
