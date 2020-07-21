@@ -7,6 +7,8 @@ angular.module('webbit.controllers')
     .controller(CONTROLLER, function($state, Thread, Alert) {
         this.toTimeAgo = date => ago(date);
 
+        this.voteMethod = Thread.vote;
+
         this.delete = event => {
           event.stopPropagation();
           Thread.delete(this.thread.id)

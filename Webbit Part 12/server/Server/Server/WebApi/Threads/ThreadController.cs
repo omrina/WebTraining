@@ -53,5 +53,12 @@ namespace Server.WebApi.Threads
 
             return Ok();
         }
+
+        [Route("vote")]
+        [HttpPost]
+        public async Task<IHttpActionResult> Vote(ThreadVoteViewModel threadVote)
+        {
+            return Ok(await Logic.Vote(threadVote));
+        }
     }
 }

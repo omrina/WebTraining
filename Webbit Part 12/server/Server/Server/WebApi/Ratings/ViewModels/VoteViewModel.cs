@@ -5,24 +5,24 @@ using Server.WebApi.Ratings.Enums;
 
 namespace Server.WebApi.Ratings.ViewModels
 {
-    public abstract class BaseVotableViewModel
+    public class VoteViewModel
     {
         public int Rating { get; set; }
-        public VoteDirections UserVote { get; set; }
+        public VoteStates UserVote { get; set; }
 
-        protected BaseVotableViewModel(IVotable item, ObjectId userId)
+        public VoteViewModel(IVotable item, ObjectId userId)
         {
             Rating = item.Upvoters.Count() - item.Downvoters.Count();
             UserVote = GetUserVote(item, userId);
         }
 
-        private VoteDirections GetUserVote(IVotable item, ObjectId userId)
+        private VoteStates GetUserVote(IVotable item, ObjectId userId)
         {
             return item.Upvoters.Contains(userId)
-                ? VoteDirections.Up
+                ? VoteStates.Up
                 : item.Downvoters.Contains(userId)
-                    ? VoteDirections.Down
-                    : VoteDirections.Cancel;
+                    ? VoteStates.Down
+                    : VoteStates.Cancel;
         }
     }
 }

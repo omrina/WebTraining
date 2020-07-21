@@ -5,7 +5,6 @@ using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using Server.Exceptions;
 using Server.Models;
-using Server.MongoDB.Extensions;
 using Server.WebApi.Authentication;
 using Server.WebApi.Authentication.Validation;
 using Server.WebApi.Authentication.ViewModels;

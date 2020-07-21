@@ -1,6 +1,4 @@
-﻿using MongoDB.Bson;
-
-namespace Server.WebApi.Comments.ViewModels
+﻿namespace Server.WebApi.Comments.ViewModels
 {
     public class NewCommentViewModel
     {

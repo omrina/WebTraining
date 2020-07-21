@@ -9,7 +9,6 @@ using Server.Models;
 using Server.WebApi.Authentication;
 using Server.WebApi.Comments.Validation;
 using Server.WebApi.Comments.ViewModels;
-using Server.WebApi.Ratings;
 using Server.WebApi.Users;
 
 namespace Server.WebApi.Comments

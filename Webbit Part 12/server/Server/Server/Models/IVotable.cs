@@ -5,7 +5,7 @@ namespace Server.Models
 {
     public interface IVotable
     {
-        IEnumerable<ObjectId> Upvoters { get; set; }
-        IEnumerable<ObjectId> Downvoters { get; set; }
+        IList<ObjectId> Upvoters { get; set; }
+        IList<ObjectId> Downvoters { get; set; }
     }
 }

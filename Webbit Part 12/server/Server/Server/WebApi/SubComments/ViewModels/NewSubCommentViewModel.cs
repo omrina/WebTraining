@@ -1,5 +1,4 @@
-﻿using MongoDB.Bson;
-using Server.WebApi.Comments.ViewModels;
+﻿using Server.WebApi.Comments.ViewModels;
 
 namespace Server.WebApi.SubComments.ViewModels
 {

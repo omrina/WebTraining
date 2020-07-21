@@ -13,13 +13,13 @@ namespace Server.WebApi.Ratings
         {
         }
 
-        [Route("")]
-        [HttpPost]
-        public async Task<IHttpActionResult> Vote(UserVoteViewModel userVoteInfo)
-        {
-            await Logic.Vote(userVoteInfo);
-
-            return Ok();
-        }
+        // [Route("")]
+        // [HttpPost]
+        // public async Task<IHttpActionResult> Vote(UserVoteViewModel userVoteInfo)
+        // {
+        //     await Logic.Vote(userVoteInfo);
+        //
+        //     return Ok();
+        // }
     }
 }

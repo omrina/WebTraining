@@ -8,8 +8,8 @@ namespace Server.Models
     {
         public string Title { get; set; }
         public IEnumerable<Comment> Comments { get; set; }
-        public IEnumerable<ObjectId> Upvoters { get; set; }
-        public IEnumerable<ObjectId> Downvoters { get; set; }
+        public IList<ObjectId> Upvoters { get; set; }
+        public IList<ObjectId> Downvoters { get; set; }
 
         public Thread(string content, ObjectId authorId, DateTime date, string title) 
             : base(content, authorId, date)

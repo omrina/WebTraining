@@ -7,7 +7,7 @@ using Server.WebApi.Subwebbits.ViewModels;
 
 namespace Server.WebApi.Threads.ViewModels
 {
-    public class ThreadViewModel : BaseVotableViewModel
+    public class ThreadViewModel : Ratings.ViewModels.VoteViewModel
     {
         public ObjectId Id { get; set; }
         public ObjectId SubwebbitId { get; set; }

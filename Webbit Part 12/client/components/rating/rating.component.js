@@ -10,7 +10,9 @@ angular.module('webbit.controllers')
         bindings: {
             itemIds: '<',
             rating : '<',
-            userVote: '<'
+            userVote: '<',
+            // TODO: replace w/ '&'?
+            voteMethod : '<'
         },
         template,
         controller

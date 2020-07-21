@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using MongoDB.Bson;
 using Server.Models;
 using Server.WebApi.Ratings.ViewModels;
 
 namespace Server.WebApi.Comments.ViewModels
 {
-    public class CommentViewModel : BaseVotableViewModel
+    public class CommentViewModel : VoteViewModel
     {
         public ObjectId Id { get; set; }
         public ObjectId ThreadId { get; set; }

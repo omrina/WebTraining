@@ -12,4 +12,7 @@ angular.module("webbit.services").service("Thread", function ($resource) {
 
     this.delete = id => 
         $resource(`/api/threads/${id}`).delete().$promise;
+    
+    this.vote = voteInfo =>
+        $resource(`/api/threads/vote`).save(voteInfo).$promise;
 });
