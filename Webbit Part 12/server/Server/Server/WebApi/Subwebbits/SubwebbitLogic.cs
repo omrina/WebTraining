@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
@@ -6,41 +7,42 @@ using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using Server.Exceptions;
 using Server.Models;
+using Server.MongoDB.Extensions;
 using Server.WebApi.Authentication;
 using Server.WebApi.Subwebbits.Validation;
 using Server.WebApi.Subwebbits.ViewModels;
+using Server.WebApi.Users;
 
 namespace Server.WebApi.Subwebbits
 {
     public class SubwebbitLogic : BaseLogic<Subwebbit>
     {
-        
-
-        public async Task<IEnumerable<SearchedSubwebbitViewModel>> GetAllByName(string name)
+        public async Task<IEnumerable<SearchedSubwebbitViewModel>> Search(string name)
         {
-            var matchingSubwebbits = await GetCollection().AsQueryable().Where(x => x.Name.Contains(name)).ToListAsync();
+            var subwebbits = await GetCollection().AsQueryable()
+                .Where(x => x.Name.Contains(name)).ToListAsync();
 
-            return matchingSubwebbits.Select(x => new SearchedSubwebbitViewModel(x));
+            return subwebbits.Select(x => new SearchedSubwebbitViewModel(x));
         }
 
-        public async Task<ObjectId> Create(NewSubwebbitViewModel subwebbit)
+        public async Task<SubwebbitViewModel> Create(string name)
         {
-            await EnsureSubwebbitDetails(subwebbit);
-            var newSubwebbit = new Subwebbit(subwebbit.OwnerId, subwebbit.Name);
+            await EnsureSubwebbitDetails(name);
+            var newSubwebbit = new Subwebbit(UserSession.UserId, name);
 
-            await GetCollection().InsertOneAsync(newSubwebbit);
+            await Create(newSubwebbit);
 
-            return newSubwebbit.Id;
+            return await GetById(newSubwebbit.Id);
         }
 
-        private async Task EnsureSubwebbitDetails(NewSubwebbitViewModel subwebbit)
+        private async Task EnsureSubwebbitDetails(string name)
         {
-            if (!new SubwebbitValidator().IsValid(subwebbit))
+            if (!new SubwebbitValidator().IsValid(name))
             {
                 throw new InvalidModelDetailsException();
             }
 
-            await EnsureNameNotTaken(subwebbit.Name);
+            await EnsureNameNotTaken(name);
         }
 
         private async Task EnsureNameNotTaken(string name)
@@ -57,24 +59,36 @@ namespace Server.WebApi.Subwebbits
                 .Select(x => x.Name).FirstOrDefaultAsync() != null;
         }
 
-        public async Task<SubwebbitViewModel> GetViewModel(string subwebbitId)
+        public async Task<SubwebbitViewModel> GetById(ObjectId id)
         {
-            var subwebbit = await Get(ObjectId.Parse(subwebbitId));
+            var subwebbit = await Get(id);
 
-            var isSubscribed = await IsSubscribed(UserSession.UserId, subwebbitId);
+            return new SubwebbitViewModel(subwebbit,
+                                          await IsSubscribed(id),
+                                          subwebbit.OwnerId == UserSession.UserId);
+        }
 
-            return new SubwebbitViewModel(subwebbit, isSubscribed, UserSession.UserId);
+        private async Task<bool> IsSubscribed(ObjectId id)
+        {
+            // TODO: should be using the subscribersIds list of the subwebbit
+            // (instead of the subs count)
+            var subscribedIds = await new UserLogic().GetSubscribedIds();
+
+            return subscribedIds.Contains(id);
         }
 
         public async Task Delete(ObjectId id)
         {
             await EnsureOwnership(id, UserSession.UserId);
+            var threadsIds = (await Get(id)).Threads;
+
             await GetCollection().DeleteOneAsync(x => x.Id == id);
+            await Database.GetCollection<Thread>().DeleteManyAsync(x => threadsIds.Contains(x.Id));
         }
 
-        public async Task EnsureOwnership(ObjectId subwebbitId, ObjectId userId)
+        public async Task EnsureOwnership(ObjectId id, ObjectId userId)
         {
-            var subwebbitOwnerId = (await Get(subwebbitId)).OwnerId;
+            var subwebbitOwnerId = (await Get(id)).OwnerId;
 
             if (subwebbitOwnerId != userId)
             {
@@ -82,33 +96,22 @@ namespace Server.WebApi.Subwebbits
             }
         }
 
-        public async Task<IEnumerable<ObjectId>> GetSubscribedIds(ObjectId userId)
+        public async Task Subscribe(ObjectId id)
         {
-            return await Database.GetCollection<User>(nameof(User)).AsQueryable()
-                .SelectMany(x => x.SubscribedSubwebbits).ToListAsync();
-        }
-
-        public async Task<bool> IsSubscribed(ObjectId userId, string subwebbitId)
-        {
-            return (await GetSubscribedIds(userId)).Contains(ObjectId.Parse(subwebbitId));
-        }
-
-        public async Task Subscribe(ObjectId subwebbitId)
-        {
-            var usersCollection = Database.GetCollection<User>(nameof(User));
+            var usersCollection = Database.GetCollection<User>();
 
             await usersCollection.UpdateOneAsync(x => x.Id == UserSession.UserId,
-                Builders<User>.Update.AddToSet(x => x.SubscribedSubwebbits, subwebbitId));
-            await new SubwebbitSubscriptionLogic().IncrementSubscribers(subwebbitId);
+                Builders<User>.Update.AddToSet(x => x.SubscribedSubwebbits, id));
+            await new SubwebbitSubscriptionLogic().IncrementSubscribers(id);
         }
 
-        public async Task Unsubscribe(ObjectId subwebbitId)
+        public async Task Unsubscribe(ObjectId id)
         {
-            var usersCollection = Database.GetCollection<User>(nameof(User));
+            var usersCollection = Database.GetCollection<User>();
 
             await usersCollection.UpdateOneAsync(x => x.Id == UserSession.UserId,
-                Builders<User>.Update.Pull(x => x.SubscribedSubwebbits, subwebbitId));
-            await new SubwebbitSubscriptionLogic().DecrementSubscribers(subwebbitId);
+                Builders<User>.Update.Pull(x => x.SubscribedSubwebbits, id));
+            await new SubwebbitSubscriptionLogic().DecrementSubscribers(id);
         }
     }
 }

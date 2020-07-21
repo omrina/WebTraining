@@ -11,13 +11,13 @@ namespace Server.WebApi.Subwebbits.ViewModels
         public bool IsSubscribed { get; set; }
         public bool IsOwner { get; set; }
 
-        public SubwebbitViewModel(Subwebbit subwebbit, bool isSubscribed, ObjectId userId)
+        public SubwebbitViewModel(Subwebbit subwebbit, bool isSubscribed, bool isOwner)
         {
             Id = subwebbit.Id;
             Name = subwebbit.Name;
             SubscribersCount = subwebbit.SubscribersCount;
             IsSubscribed = isSubscribed;
-            IsOwner = subwebbit.OwnerId == userId;
+            IsOwner = isOwner;
         }
     }
 }

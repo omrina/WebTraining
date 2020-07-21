@@ -9,15 +9,15 @@ angular.module('webbit.controllers')
 
         this.delete = event => {
           event.stopPropagation();
-          Thread.delete(this.thread.subwebbitId, this.thread.id)
-            .then(() => Alert.success("The post has been deleted."))
+          Thread.delete(this.thread.id)
             .then(() =>
               $state.go(
                 "shell.subwebbit",
                 { id: this.thread.subwebbitId },
                 { reload: true }
               )
-            );
+            )
+            .then(() => Alert.success("The post has been deleted."));
         }
     });
 

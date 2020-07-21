@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Http;
+using MongoDB.Bson;
 using Server.Models;
 using Server.WebApi.Comments.ViewModels;
 
@@ -21,13 +22,11 @@ namespace Server.WebApi.Comments
             return Ok();
         }
 
-        [Route("{subwebbitId}/{threadId}")]
+        [Route("{threadId}")]
         [HttpGet]
-        public async Task<IHttpActionResult> GetAll(string subwebbitId, string threadId)
+        public async Task<IHttpActionResult> GetAll(string threadId)
         {
-            SetUserId();
-
-            return Ok(await Logic.GetAll(threadId));
+            return Ok(await Logic.GetAll(ObjectId.Parse(threadId)));
         }
     }
 }

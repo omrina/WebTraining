@@ -7,7 +7,7 @@ import TimeAgo from "time-ago";
 const CONTROLLER = "subwebbit";
 
 angular.module("webbit.controllers")
-    .controller(CONTROLLER, ($scope, $state, $timeout, $mdDialog, Subwebbit, User, Alert) => {
+    .controller(CONTROLLER, ($scope, $state, $mdDialog, Subwebbit, Alert) => {
       $scope.toTimeAgo = date => TimeAgo.ago(date);
 
       Subwebbit.get($state.params.id)
@@ -19,7 +19,7 @@ angular.module("webbit.controllers")
         const isSubscribed = $scope.subwebbit.isSubscribed;
         clickedButton.disabled = true;
 
-        User[isSubscribed ? "unsubscribe" : "subscribe"]($scope.subwebbit.id).then(() => {
+        Subwebbit[isSubscribed ? "unsubscribe" : "subscribe"]($scope.subwebbit.id).then(() => {
           $scope.subwebbit.subscribersCount += isSubscribed ? -1 : 1;
           $scope.subwebbit.isSubscribed = !isSubscribed;
           clickedButton.disabled = false;
@@ -28,8 +28,8 @@ angular.module("webbit.controllers")
 
       $scope.delete = () => 
         Subwebbit.delete($scope.subwebbit.id)
-          .then(() => Alert.success(`The subwebbit ${$scope.subwebbit.name} has been deleted.`))
-          .then(() => $state.go('shell.home'));
+          .then(() => $state.go('shell.home'))
+          .then(() => Alert.success(`The subwebbit ${$scope.subwebbit.name} has been deleted.`));
       
 
       $scope.showThreadCreationDialog = () => {

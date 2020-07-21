@@ -44,6 +44,8 @@ angular.module('webbit.controllers')
                 },
 
                 getMoreThreads(index) {
+                    // TODO: get the 'getThreads' method as parmeter
+                    // (send as param Thread.getTop OR Thread.getRecent)
                     Thread.getThreads({
                         subwebbitId: this.subwebbitId,
                         index

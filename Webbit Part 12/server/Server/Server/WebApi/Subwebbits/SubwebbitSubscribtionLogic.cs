@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -10,6 +9,7 @@ namespace Server.WebApi.Subwebbits
 {
     public class SubwebbitSubscriptionLogic : BaseLogic<Subwebbit>
     {
+        // TODO: move all to subwebbit logic
         public async Task<IEnumerable<ObjectId>> GetMostSubscribed(int amount)
         {
             return await GetCollection().AsQueryable().OrderByDescending(x => x.SubscribersCount)

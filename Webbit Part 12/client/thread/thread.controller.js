@@ -4,13 +4,13 @@ const CONTROLLER = "thread";
 
 angular.module("webbit.controllers")
   .controller(CONTROLLER, ($scope, $stateParams, Thread, Comment) => {
-    const { subwebbitId, threadId } = $stateParams;
+    const { threadId } = $stateParams;
 
     const reloadComments = () =>
-      Comment.getAll(subwebbitId, threadId)
+      Comment.getAll(threadId)
         .then(comments => {$scope.comments = comments;});
 
-    Thread.get(subwebbitId, threadId)
+    Thread.get(threadId)
       .then(thread => {$scope.thread = thread;})
       .then(reloadComments);
 

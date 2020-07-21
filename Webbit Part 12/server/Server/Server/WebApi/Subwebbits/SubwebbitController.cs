@@ -2,7 +2,6 @@
 using System.Web.Http;
 using MongoDB.Bson;
 using Server.Models;
-using Server.WebApi.Subwebbits.ViewModels;
 
 namespace Server.WebApi.Subwebbits
 {
@@ -15,26 +14,25 @@ namespace Server.WebApi.Subwebbits
 
         [Route("search/{name}")]
         [HttpGet]
-        public async Task<IHttpActionResult> GetAllByName(string name)
+        public async Task<IHttpActionResult> Search(string name)
         {
-            return Ok(await Logic.GetAllByName(name));
+            return Ok(await Logic.Search(name));
         }
 
         [Route("{id}")]
         [HttpGet]
         public async Task<IHttpActionResult> Get(string id)
         {
-            SetUserId();
-            var subwebbit = await Logic.GetViewModel(id);
+            var subwebbit = await Logic.GetById(ObjectId.Parse(id));
 
             return Ok(subwebbit);
         }
 
-        [Route("")]
+        [Route("{name}")]
         [HttpPost]
-        public async Task<IHttpActionResult> Create(NewSubwebbitViewModel subwebbit)
+        public async Task<IHttpActionResult> Create(string name)
         {
-            var id = await Logic.Create(subwebbit);
+            var id = await Logic.Create(name);
         
             return Ok(id);
         }
@@ -43,27 +41,24 @@ namespace Server.WebApi.Subwebbits
         [HttpDelete]
         public async Task<IHttpActionResult> Delete(string id)
         {
-            SetUserId();
             await Logic.Delete(ObjectId.Parse(id));
 
             return Ok();
         }
 
-        [Route("{subwebbitId}/subscribe")]
+        [Route("{id}/subscribe")]
         [HttpPost]
         public async Task<IHttpActionResult> Subscribe(string id)
         {
-            SetUserId();
             await Logic.Subscribe(ObjectId.Parse(id));
 
             return Ok();
         }
 
-        [Route("{subwebbitId}/unsubscribe")]
+        [Route("{id}/unsubscribe")]
         [HttpPost]
         public async Task<IHttpActionResult> Unsubscribe(string id)
         {
-            SetUserId();
             await Logic.Unsubscribe(ObjectId.Parse(id));
 
             return Ok();

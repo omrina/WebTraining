@@ -130,15 +130,20 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\UnauthenticatedRequestException.cs" />
     <Compile Include="Models\OnlineUser.cs" />
+    <Compile Include="MongoDB\Extensions\CollectionExtensions.cs" />
     <Compile Include="WebApi\Authentication\AuthController.cs" />
     <Compile Include="WebApi\Authentication\UserSession.cs" />
     <Compile Include="WebApi\BaseController.cs" />
     <Compile Include="WebApi\Comments\CommentController.cs" />
     <Compile Include="WebApi\Comments\Validation\CommentValidator.cs" />
+    <Compile Include="WebApi\SubComments\ViewModels\NewSubCommentViewModel.cs" />
     <Compile Include="WebApi\Ratings\RatingController.cs" />
     <Compile Include="WebApi\Ratings\ViewModels\BaseVotableViewModel.cs" />
     <Compile Include="WebApi\Ratings\ViewModels\VoteChangeViewModel.cs" />
+    <Compile Include="WebApi\SubComments\SubCommentController.cs" />
+    <Compile Include="WebApi\SubComments\SubCommentLogic.cs" />
     <Compile Include="WebApi\Subwebbits\SubwebbitController.cs" />
     <Compile Include="WebApi\Subwebbits\Validation\SubwebbitValidator.cs" />
     <Compile Include="WebApi\Threads\ThreadController.cs" />
@@ -181,7 +186,6 @@
     <Compile Include="Startup.cs" />
     <Compile Include="WebApi\Comments\ViewModels\CommentViewModel.cs" />
     <Compile Include="WebApi\Comments\ViewModels\NewCommentViewModel.cs" />
-    <Compile Include="WebApi\Subwebbits\ViewModels\NewSubwebbitViewModel.cs" />
     <Compile Include="WebApi\Threads\ViewModels\NewThreadViewModel.cs" />
     <Compile Include="WebApi\Subwebbits\ViewModels\SearchedSubwebbitViewModel.cs" />
     <Compile Include="WebApi\Subwebbits\ViewModels\SubwebbitViewModel.cs" />

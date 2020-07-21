@@ -2,7 +2,6 @@
 using System.Web.Http;
 using MongoDB.Bson;
 using Server.Models;
-using Server.WebApi.Authentication;
 using Server.WebApi.Threads.ViewModels;
 
 namespace Server.WebApi.Threads
@@ -18,26 +17,21 @@ namespace Server.WebApi.Threads
         [HttpGet]
         public async Task<IHttpActionResult> GetRecentThreads(string subwebbitId, int index)
         {
-            SetUserId();
-
-            return Ok(await Logic.GetRecentThreads(subwebbitId, index));
+            return Ok(await Logic.GetRecentThreads(ObjectId.Parse(subwebbitId), index));
         }
 
         [Route("topRated/{index}")]
         [HttpGet]
         public async Task<IHttpActionResult> GetTopThreadsFromSubscribed(int index)
         {
-            SetUserId();
-
             return Ok(await Logic.GetTopThreadsFromSubscribed(index));
         }
 
-        [Route("{subwebbitId}/{threadId}")]
+        [Route("{threadId}")]
         [HttpGet]
-        public async Task<IHttpActionResult> Get(string subwebbitId, string threadId)
+        public async Task<IHttpActionResult> Get(string threadId)
         {
-            SetUserId();
-            var thread = await Logic.GetViewModel(subwebbitId, threadId);
+            var thread = await Logic.GetById(ObjectId.Parse(threadId));
 
             return Ok(thread);
         }
@@ -51,12 +45,11 @@ namespace Server.WebApi.Threads
             return Ok();
         }
 
-        [Route("{subwebbitId}/{threadId}")]
+        [Route("{threadId}")]
         [HttpDelete]
-        public async Task<IHttpActionResult> Delete(string subwebbitId, string threadId)
+        public async Task<IHttpActionResult> Delete(string threadId)
         {
-            // SetUserId();
-            await Logic.Delete(ObjectId.Parse(subwebbitId), threadId);
+            await Logic.Delete(ObjectId.Parse(threadId));
 
             return Ok();
         }

@@ -1,12 +1,11 @@
 import angular from "angular";
 
-angular.module("webbit.services").service("Subwebbit", function ($http, $resource) {
+angular.module("webbit.services").service("Subwebbit", function ($resource) {
   this.search = name =>
     $resource(`/api/subwebbits/search/${name}`).query().$promise;
 
-  this.create = newSubwebbit =>
-    $http.post("/api/subwebbits", newSubwebbit)
-      .then(({ data }) => data);
+  this.create = name =>
+    $resource(`/api/subwebbits/${name}`).save().$promise;
 
   this.get = id =>
     $resource(`/api/subwebbits/${id}`).get().$promise;

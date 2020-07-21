@@ -5,6 +5,7 @@ using Server.WebApi.Ratings.ViewModels;
 
 namespace Server.WebApi.Ratings
 {
+    // TODO: move the 'vote' func to the other controllers!
     [RoutePrefix("api/ratings")]
     public class RatingController : BaseController<RatingLogic, Thread>
     {
@@ -16,7 +17,6 @@ namespace Server.WebApi.Ratings
         [HttpPost]
         public async Task<IHttpActionResult> Vote(UserVoteViewModel userVoteInfo)
         {
-            SetUserId();
             await Logic.Vote(userVoteInfo);
 
             return Ok();

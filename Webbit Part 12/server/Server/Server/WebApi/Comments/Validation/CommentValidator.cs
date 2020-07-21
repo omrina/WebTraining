@@ -7,8 +7,7 @@ namespace Server.WebApi.Comments.Validation
         public bool IsValid(NewCommentViewModel comment)
         {
             return !string.IsNullOrWhiteSpace(comment.ThreadId) &&
-                   !string.IsNullOrWhiteSpace(comment.Content) &&
-                   !string.IsNullOrWhiteSpace(comment.Author);
+                   !string.IsNullOrWhiteSpace(comment.Content);
         }
     }
 }

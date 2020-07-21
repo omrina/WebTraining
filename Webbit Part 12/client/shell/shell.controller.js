@@ -11,15 +11,15 @@ angular.module('webbit.controllers')
       $state.go('exterior.login');
     };
 
-    $scope.searchSubwebbits = name => Subwebbit.search(name);
+    $scope.searchSubwebbits = () => Subwebbit.search($scope.searchedName);
 
     $scope.clearSearchBar = () => {
       $scope.searchedName = "";
     }
     
-    $scope.createSubwebbit = (name, ownerId) => {
-      Subwebbit.create({name, ownerId})
-        .then(id => $state.go('shell.subwebbit', { id }))
+    $scope.createSubwebbit = () => {
+      Subwebbit.create($scope.searchedName)
+        .then(({ id }) => $state.go('shell.subwebbit', { id }))
         .then($scope.clearSearchBar)
     };
 

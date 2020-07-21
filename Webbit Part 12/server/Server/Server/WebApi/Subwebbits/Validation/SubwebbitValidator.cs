@@ -1,14 +1,13 @@
-﻿using Server.WebApi.Subwebbits.ViewModels;
-using Server.WebApi.Validators;
+﻿using Server.WebApi.Validators;
 
 namespace Server.WebApi.Subwebbits.Validation
 {
     public class SubwebbitValidator
     {
-        public bool IsValid(NewSubwebbitViewModel subwebbit)
+        public bool IsValid(string name)
         {
-            return !string.IsNullOrWhiteSpace(subwebbit.OwnerId) &&
-                   new StringValidator().IsLengthBetween(subwebbit.Name, 1, 30);
+            return !string.IsNullOrWhiteSpace(name) &&
+                    new StringValidator().IsLengthBetween(name, 1, 30);
         }
     }
 }

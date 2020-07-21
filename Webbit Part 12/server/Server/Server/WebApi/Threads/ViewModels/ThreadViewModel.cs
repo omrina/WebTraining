@@ -19,7 +19,7 @@ namespace Server.WebApi.Threads.ViewModels
         public int CommentsCount { get; set; }
         public bool IsOwner { get; set; }
 
-        public ThreadViewModel(Thread thread, SubwebbitViewModel subwebbit, ObjectId userId)
+        public ThreadViewModel(Thread thread, ObjectId userId, string author, SubwebbitViewModel subwebbit)
             : base(thread, userId)
         {
             Id = thread.Id;
@@ -27,9 +27,7 @@ namespace Server.WebApi.Threads.ViewModels
             SubwebbitName = subwebbit.Name;
             Title = thread.Title;
             Content = thread.Content;
-            // TODO: fix author! (get it as ctor param?)
-            Author = "sdf";
-            // Author = thread.Author;
+            Author = author;
             Date = thread.Date;
             CommentsCount = thread.Comments.Sum(x => x.Comments.Count() + 1);
             IsOwner = subwebbit.IsOwner;

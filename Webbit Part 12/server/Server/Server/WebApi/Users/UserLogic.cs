@@ -1,10 +1,12 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using Server.Exceptions;
 using Server.Models;
+using Server.MongoDB.Extensions;
+using Server.WebApi.Authentication;
 using Server.WebApi.Authentication.Validation;
 using Server.WebApi.Authentication.ViewModels;
 using Server.WebApi.Subwebbits;
@@ -28,6 +30,7 @@ namespace Server.WebApi.Users
 
             foreach (var subwebbitId in newUser.SubscribedSubwebbits)
             {
+                // Should add to subscribers ids list
                 await new SubwebbitSubscriptionLogic().IncrementSubscribers(subwebbitId);
             }
         }
@@ -49,6 +52,16 @@ namespace Server.WebApi.Users
             {
                 throw new UsernameAlreadyTakenException();
             }
+        }
+
+        public async Task<IEnumerable<ObjectId>> GetSubscribedIds()
+        {
+            return (await Get(UserSession.UserId)).SubscribedSubwebbits;
+        }
+
+        public async Task<string> GetName(ObjectId id)
+        {
+            return (await Get(id)).Username;
         }
     }
 }

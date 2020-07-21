@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
@@ -13,7 +14,15 @@ namespace Server.WebApi.Authentication
     {
         public async Task<ObjectId> GetUserId(ObjectId token)
         {
-            return (await GetCollection().AsQueryable().FirstAsync(x => x.Token == token)).Id;
+            var onlineUser = await GetCollection().AsQueryable().
+                                        FirstOrDefaultAsync(x => x.Token == token);
+
+            if (onlineUser == null)
+            {
+                throw new UnauthenticatedRequestException();
+            }
+
+            return onlineUser.Id;
         }
 
         public async Task<UserViewModel> Login(UserAuthViewModel loginViewModel)

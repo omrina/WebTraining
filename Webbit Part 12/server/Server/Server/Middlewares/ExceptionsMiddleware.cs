@@ -16,6 +16,7 @@ namespace Server.Middlewares
         {
             ExceptionsToHttpCodes = new Dictionary<Type, HttpStatusCode>
             {
+                {typeof(UnauthenticatedRequestException), HttpStatusCode.BadRequest},
                 {typeof(InvalidModelDetailsException), HttpStatusCode.BadRequest},
                 {typeof(LoginFailedException), HttpStatusCode.Unauthorized},
                 {typeof(UserNotOwnerException), HttpStatusCode.Unauthorized},

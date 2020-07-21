@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using Server.Exceptions;
 using Server.Models;
+using Server.MongoDB.Extensions;
 using Server.WebApi.Authentication;
 using Server.WebApi.Subwebbits;
 using Server.WebApi.Threads.Validation;
 using Server.WebApi.Threads.ViewModels;
+using Server.WebApi.Users;
 
 namespace Server.WebApi.Threads
 {
@@ -17,55 +21,55 @@ namespace Server.WebApi.Threads
     {
         private const int ThreadsPerPage = 4;
 
-        public async Task<ThreadViewModel> GetViewModel(string subwebbitId, string threadId)
+        public async Task<ThreadViewModel> GetById(ObjectId id)
         {
-            var subwebbit = await new SubwebbitLogic().GetViewModel(subwebbitId);
-            var thread = await GetCollection().AsQueryable()
-                            .FirstAsync(x => x.Id == ObjectId.Parse(threadId));
+            var subwebbit = await Database.GetCollection<Subwebbit>().AsQueryable()
+                                .FirstAsync(x => x.Threads.Contains(id));
+            var thread = await Get(id);
+            var author = await new UserLogic().GetName(thread.AuthorId);
 
-            return new ThreadViewModel(thread, subwebbit, UserSession.UserId);
+            // TODO: send user id as param? (used for knowing the user's vote)
+            return new ThreadViewModel(thread,
+                                       UserSession.UserId,
+                                       author,
+                                       await new SubwebbitLogic().GetById(subwebbit.Id));
         }
 
-        public async Task<IEnumerable<ThreadViewModel>> GetRecentThreads(string subwebbitId, int index)
+        // TODO: should be in api/subwebbits???
+        public async Task<IEnumerable<ThreadViewModel>> GetRecentThreads(ObjectId subwebbitId,
+                                                                         int index)
         {
-            // TODO: make this func work!
-            var subwebbit = new Subwebbit("sdf","ds");
-            // var subwebbit = Database.GetCollection<Subwebbit>().;
-            var threadsIds = subwebbit.Threads
-                // .OrderByDescending(x => x.Date).Skip(index).Take(ThreadsPerPage).Select(x => x.Token)
-                ;
+            var subwebbit = await Database.GetCollection<Subwebbit>().Get(subwebbitId);
+            var threadsIds = GetCollection().AsQueryable()
+                                .Where(x => subwebbit.Threads.Contains(x.Id))
+                                .OrderByDescending(x => x.Date).Skip(index).Take(ThreadsPerPage)
+                                .Select(x => x.Id);
 
-            var threads = new List<ThreadViewModel>();
-
-            foreach (var threadId in threadsIds)
-            {
-                threads.Add(await GetViewModel(subwebbitId, threadId.ToString()));
-            }
-
-            return threads;
+            return await GetById(threadsIds);
         }
 
         public async Task<IEnumerable<ThreadViewModel>> GetTopThreadsFromSubscribed(int index)
         {
-            // TODO: make this func work!
-            // var subwebbitsIds = await new UserLogic().GetSubscribedIds(Token.ToString());
-            var subwebbitsIds = new List<ObjectId>();
-            var subwebbits = GetCollection().AsQueryable().Where(x => subwebbitsIds.Contains(x.Id));
+            var subwebbitsIds = await new UserLogic().GetSubscribedIds();
+            var threadsIds = await Database.GetCollection<Subwebbit>().AsQueryable()
+                                .Where(x => subwebbitsIds.Contains(x.Id))
+                                .SelectMany(x => x.Threads).ToListAsync();
 
-            var threadsIds = new List<ObjectId>();
-            // var threadsIds = await subwebbits.SelectMany(x => x.Threads)
-                // .OrderByDescending(x => x.Rating).Skip(index).Take(ThreadsPerPage).Select(x => x.Token)
-                // .ToListAsync();
+            var topThreadsIds = (await GetCollection().AsQueryable()
+                            .Where(x => threadsIds.Contains(x.Id)).ToListAsync())
+                            .OrderByDescending(x => x.Upvoters.Count() - x.Downvoters.Count())
+                            .Skip(index).Take(ThreadsPerPage).Select(x => x.Id);
 
+            return await GetById(topThreadsIds);
+        }
+
+        private async Task<IEnumerable<ThreadViewModel>> GetById(IEnumerable<ObjectId> ids)
+        {
             var threads = new List<ThreadViewModel>();
 
-            foreach (var threadId in threadsIds)
+            foreach (var id in ids)
             {
-                // var subwebbitId = await subwebbits.Where(x => x.Threads.Any(thread => thread.Token == threadId))
-                                    // .Select(x => x.Token).FirstAsync();
-
-                threads.Add(await GetViewModel("Sf", threadId.ToString()));
-                // threads.Add(await GetViewModel(subwebbitId.ToString(), threadId.ToString()));
+                threads.Add(await GetById(id));
             }
 
             return threads;
@@ -76,8 +80,11 @@ namespace Server.WebApi.Threads
             EnsureThreadDetails(thread);
             var newThread = new Thread(thread.Content, UserSession.UserId, DateTime.Now, thread.Title);
 
-            await GetCollection().InsertOneAsync(newThread);
-            // TODO: add also to subwebbit threads list!
+            await Create(newThread);
+
+            await Database.GetCollection<Subwebbit>().UpdateOneAsync(
+                x => x.Id == ObjectId.Parse(thread.SubwebbitId),
+                Builders<Subwebbit>.Update.AddToSet(x => x.Threads, newThread.Id));
         }
 
         private void EnsureThreadDetails(NewThreadViewModel thread)
@@ -88,13 +95,17 @@ namespace Server.WebApi.Threads
             }
         }
 
-        public async Task Delete(ObjectId subwebbitId, string threadId)
+        public async Task Delete(ObjectId id)
         {
-            await new SubwebbitLogic().EnsureOwnership(subwebbitId, UserSession.UserId);
+            var subwebbit = await Database.GetCollection<Subwebbit>().AsQueryable()
+                .FirstAsync(x => x.Threads.Contains(id));
+            await new SubwebbitLogic().EnsureOwnership(subwebbit.Id, UserSession.UserId);
 
-            // TODO: add extension of delete by id?
-            await GetCollection().DeleteOneAsync(x => x.Id == ObjectId.Parse(threadId));
-            // TODO: delete also from subwebbit threads list!
+            await GetCollection().DeleteOneAsync(x => x.Id == id);
+
+            await Database.GetCollection<Subwebbit>().UpdateOneAsync(
+                x => x.Id == subwebbit.Id,
+                Builders<Subwebbit>.Update.Pull(x => x.Threads, id));
         }
     }
 }

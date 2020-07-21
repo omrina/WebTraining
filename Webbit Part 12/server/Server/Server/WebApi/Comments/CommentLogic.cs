@@ -10,6 +10,7 @@ using Server.WebApi.Authentication;
 using Server.WebApi.Comments.Validation;
 using Server.WebApi.Comments.ViewModels;
 using Server.WebApi.Ratings;
+using Server.WebApi.Users;
 
 namespace Server.WebApi.Comments
 {
@@ -19,21 +20,13 @@ namespace Server.WebApi.Comments
         public async Task Post(NewCommentViewModel comment)
         {
             EnsureCommentDetails(comment);
-            var updateInfo = new UpdatingOperation(comment.ThreadId);
-
-            if (!string.IsNullOrWhiteSpace(comment.ParentCommentId))
-            {
-                updateInfo.AddNestedCommentFilter(ObjectId.Parse(comment.ParentCommentId));
-            }
-
             var newComment = new Comment(comment.Content, UserSession.UserId, DateTime.Now);
 
-            // TODO: make it work for nested comment!!
             await GetCollection().UpdateOneAsync(x => x.Id == ObjectId.Parse(comment.ThreadId),
                 Builders<Thread>.Update.AddToSet(x => x.Comments, newComment));
         }
 
-        private void EnsureCommentDetails(NewCommentViewModel comment)
+        protected void EnsureCommentDetails(NewCommentViewModel comment)
         {
             if (!new CommentValidator().IsValid(comment))
             {
@@ -41,12 +34,21 @@ namespace Server.WebApi.Comments
             }
         }
 
-        public async Task<IEnumerable<CommentViewModel>> GetAll(string threadId)
+        public async Task<IEnumerable<CommentViewModel>> GetAll(ObjectId threadId)
         {
-            var comments = (await Get(ObjectId.Parse(threadId))).Comments
+            var comments = (await Get(threadId)).Comments
                 .OrderByDescending(x => x.Upvoters.Count() - x.Downvoters.Count());
 
-            return comments.Select(x => new CommentViewModel(x, threadId, UserSession.UserId));
+            return await Task.WhenAll(comments.Select(async x => await ConvertToViewModel(x, threadId)));
+        }
+
+        private async Task<CommentViewModel> ConvertToViewModel(Comment comment, ObjectId threadId)
+        {
+            var subComments = await Task.WhenAll(
+                comment.Comments.Select(async x => await ConvertToViewModel(x, threadId)));
+            var author = await new UserLogic().GetName(comment.AuthorId);
+
+            return new CommentViewModel(comment, threadId, UserSession.UserId, author, subComments);
         }
     }
 }

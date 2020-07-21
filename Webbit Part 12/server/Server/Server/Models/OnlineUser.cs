@@ -1,12 +1,10 @@
 ﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace Server.Models
 {
-    // TODO: to inherit from baseModel or to not?
+    // TODO: to inherit from baseModel or to not? (rn yes)
     public class OnlineUser : BaseModel
     {
-        // [BsonId]
         public ObjectId Token { get; set; }
 
         public OnlineUser(ObjectId id)
