@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web.UI.WebControls.Expressions;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
@@ -11,7 +9,7 @@ using Server.Exceptions;
 using Server.Models;
 using Server.MongoDB.Extensions;
 using Server.WebApi.Authentication;
-using Server.WebApi.Ratings.Enums;
+using Server.WebApi.Ratings;
 using Server.WebApi.Ratings.ViewModels;
 using Server.WebApi.Subwebbits;
 using Server.WebApi.Threads.Validation;
@@ -24,7 +22,7 @@ namespace Server.WebApi.Threads
     {
         private const int ThreadsPerPage = 4;
 
-        public async Task<ThreadViewModel> GetById(ObjectId id)
+        public async Task<ThreadInfoViewModel> GetById(ObjectId id)
         {
             var subwebbit = await Database.GetCollection<Subwebbit>().AsQueryable()
                 .FirstAsync(x => x.Threads.Contains(id));
@@ -32,14 +30,14 @@ namespace Server.WebApi.Threads
             var author = await new UserLogic().GetName(thread.AuthorId);
 
             // TODO: send user id as param? (used for knowing the user's threadVote)
-            return new ThreadViewModel(thread,
+            return new ThreadInfoViewModel(thread,
                 UserSession.UserId,
                 author,
                 await new SubwebbitLogic().GetById(subwebbit.Id));
         }
 
         // TODO: should be in api/subwebbits???
-        public async Task<IEnumerable<ThreadViewModel>> GetRecentThreads(ObjectId subwebbitId,
+        public async Task<IEnumerable<ThreadInfoViewModel>> GetRecentThreads(ObjectId subwebbitId,
             int index)
         {
             var subwebbit = await Database.GetCollection<Subwebbit>().Get(subwebbitId);
@@ -51,7 +49,7 @@ namespace Server.WebApi.Threads
             return await GetById(threadsIds);
         }
 
-        public async Task<IEnumerable<ThreadViewModel>> GetTopThreadsFromSubscribed(int index)
+        public async Task<IEnumerable<ThreadInfoViewModel>> GetTopThreadsFromSubscribed(int index)
         {
             var subwebbitsIds = await new UserLogic().GetSubscribedIds();
             var threadsIds = await Database.GetCollection<Subwebbit>().AsQueryable()
@@ -60,15 +58,15 @@ namespace Server.WebApi.Threads
 
             var topThreadsIds = (await GetCollection().AsQueryable()
                     .Where(x => threadsIds.Contains(x.Id)).ToListAsync())
-                .OrderByDescending(x => x.Upvoters.Count() - x.Downvoters.Count())
+                .OrderByDescending(x => x.Upvoters.Count - x.Downvoters.Count)
                 .Skip(index).Take(ThreadsPerPage).Select(x => x.Id);
 
             return await GetById(topThreadsIds);
         }
 
-        private async Task<IEnumerable<ThreadViewModel>> GetById(IEnumerable<ObjectId> ids)
+        private async Task<IEnumerable<ThreadInfoViewModel>> GetById(IEnumerable<ObjectId> ids)
         {
-            var threads = new List<ThreadViewModel>();
+            var threads = new List<ThreadInfoViewModel>();
 
             foreach (var id in ids)
             {
@@ -111,33 +109,14 @@ namespace Server.WebApi.Threads
                 Builders<Subwebbit>.Update.Pull(x => x.Threads, id));
         }
 
-        public async Task<VoteViewModel> Vote(ThreadVoteViewModel threadVote)
+        public async Task<ItemVoteInfoViewModel> Vote(ThreadVoteViewModel threadVote)
         {
             var thread = await Get(ObjectId.Parse(threadVote.Id));
-            var previousVote = GetUserVote(thread, UserSession.UserId);
-
-            thread.Upvoters.Remove(UserSession.UserId);
-            thread.Downvoters.Remove(UserSession.UserId);
-
-            if (previousVote != threadVote.Vote)
-            {
-                (threadVote.Vote == VoteStates.Up ? thread.Upvoters : thread.Downvoters)
-                    .Add(UserSession.UserId);
-            }
+            new ItemVoter(thread, UserSession.UserId).Vote(threadVote.Vote);
 
             await GetCollection().ReplaceOneAsync(x => x.Id == thread.Id, thread);
 
-            return new VoteViewModel(thread, UserSession.UserId);
-        }
-
-        // TODO: move to item-voter class?
-        private VoteStates GetUserVote(IVotable item, ObjectId userId)
-        {
-            return item.Upvoters.Contains(userId)
-                ? VoteStates.Up
-                : item.Downvoters.Contains(userId)
-                    ? VoteStates.Down
-                    : VoteStates.Cancel;
+            return new ItemVoteInfoViewModel(thread, UserSession.UserId);
         }
     }
 }

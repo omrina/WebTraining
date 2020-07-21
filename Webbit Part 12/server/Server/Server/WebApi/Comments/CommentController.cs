@@ -28,5 +28,12 @@ namespace Server.WebApi.Comments
         {
             return Ok(await Logic.GetAll(ObjectId.Parse(threadId)));
         }
+
+        [Route("vote")]
+        [HttpPost]
+        public async Task<IHttpActionResult> Vote(CommentVoteViewModel commentVote)
+        {
+            return Ok(await Logic.Vote(commentVote));
+        }
     }
 }

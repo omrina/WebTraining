@@ -1,7 +1,5 @@
-﻿using System.Threading.Tasks;
-using System.Web.Http;
+﻿using System.Web.Http;
 using Server.Models;
-using Server.WebApi.Ratings.ViewModels;
 
 namespace Server.WebApi.Ratings
 {

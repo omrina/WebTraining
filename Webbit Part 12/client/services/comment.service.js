@@ -6,4 +6,7 @@ angular.module("webbit.services").service("Comment", function ($resource) {
 
     this.post = comment =>
         $resource(`/api/comments`).save(comment).$promise;
+
+    this.vote = voteInfo =>
+        $resource(`/api/comments/vote`).save(voteInfo).$promise;
 });

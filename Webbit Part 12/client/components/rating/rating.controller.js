@@ -3,7 +3,7 @@ import angular from 'angular';
 const CONTROLLER = 'rating';
 
 angular.module('webbit.controllers')
-    .controller(CONTROLLER, function (Rating) {
+    .controller(CONTROLLER, function () {
         this.votingStates = Object.freeze({'DOWNVOTED': -1,'NOVOTE': 0, 'UPVOTED': 1})
         
         //TODO: check onInit??? no bindings before it

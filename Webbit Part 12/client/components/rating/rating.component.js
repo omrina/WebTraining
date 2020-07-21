@@ -11,7 +11,6 @@ angular.module('webbit.controllers')
             itemIds: '<',
             rating : '<',
             userVote: '<',
-            // TODO: replace w/ '&'?
             voteMethod : '<'
         },
         template,

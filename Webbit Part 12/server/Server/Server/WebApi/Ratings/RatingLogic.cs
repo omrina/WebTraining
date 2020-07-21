@@ -1,9 +1,5 @@
-﻿using System.Threading.Tasks;
-using MongoDB.Bson;
-using Server.Models;
-using Server.WebApi.Authentication;
+﻿using Server.Models;
 using Server.WebApi.Ratings.Enums;
-using Server.WebApi.Ratings.ViewModels;
 
 namespace Server.WebApi.Ratings
 {
