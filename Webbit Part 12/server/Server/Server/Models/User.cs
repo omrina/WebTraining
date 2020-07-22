@@ -10,10 +10,11 @@ namespace Server.Models
         public string Salt { get; set; }
         public IEnumerable<ObjectId> SubscribedSubwebbits { get; set; }
 
-        public User(string username, string password)
+        public User(string username, string password, string salt)
         {
             Username = username;
             Password = password;
+            Salt = salt;
             SubscribedSubwebbits = new List<ObjectId>();
         }
     }

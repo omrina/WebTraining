@@ -10,7 +10,7 @@ namespace Server.WebApi.SubComments
 {
     public class SubCommentLogic : CommentLogic<NewSubCommentViewModel>
     {
-        protected override async Task AddComment(Comment comment, NewSubCommentViewModel commentInfo)
+        protected override async Task Add(Comment comment, NewSubCommentViewModel commentInfo)
         {
             var commentsFieldHierarchy = $"{nameof(Thread.Comments)}.$.{nameof(Comment.Comments).ToLower()}";
 

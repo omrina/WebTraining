@@ -134,6 +134,7 @@
     <Compile Include="Models\OnlineUser.cs" />
     <Compile Include="MongoDB\Extensions\CollectionExtensions.cs" />
     <Compile Include="WebApi\Authentication\AuthController.cs" />
+    <Compile Include="WebApi\Authentication\Hasher.cs" />
     <Compile Include="WebApi\Authentication\UserSession.cs" />
     <Compile Include="WebApi\BaseController.cs" />
     <Compile Include="WebApi\Comments\CommentController.cs" />
@@ -155,7 +156,6 @@
     <Compile Include="Exceptions\LoginFailedException.cs" />
     <Compile Include="Exceptions\ModelNotFoundException.cs" />
     <Compile Include="Exceptions\SubwebbitNameAlreadyTakenException.cs" />
-    <Compile Include="Exceptions\SubwebbitNotFoundException.cs" />
     <Compile Include="Exceptions\UsernameAlreadyTakenException.cs" />
     <Compile Include="Exceptions\UserNotOwnerException.cs" />
     <Compile Include="Global.asax.cs">

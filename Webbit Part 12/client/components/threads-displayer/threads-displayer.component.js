@@ -10,7 +10,7 @@ const COMPONENT = 'threadsDisplayer';
 angular.module('webbit.controllers')
     .component(COMPONENT, {
         bindings: {
-            subwebbitId: '<'
+            getThreadsMethod: '<'
         },
         template,
         controller

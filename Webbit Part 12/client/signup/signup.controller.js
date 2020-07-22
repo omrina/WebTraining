@@ -14,8 +14,8 @@ angular.module('webbit.controllers')
             }
 
             User.signup($scope.user)
-                .then(() => Alert.success('Thanks for signing up to Webbit!'))
                 .then(() => $state.go('exterior.login'))
+                .then(() => Alert.success('Thanks for signing up to Webbit!'))
                 .catch(({ status }) => {
                     if (status === 409) {
                       Alert.error("This username is already taken :/");

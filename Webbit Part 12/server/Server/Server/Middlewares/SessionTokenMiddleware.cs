@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.CodeDom;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.Owin;
 using MongoDB.Bson;
@@ -22,9 +23,25 @@ namespace Server.Middlewares
                 return;
             }
 
+            await SetSessionToken(context);
+        }
+
+        private bool ShouldIncludeToken(IOwinRequest request)
+        {
+            const string signupActionName = "/signup";
+            const string loginActionName = "/login";
+            var requestUrl = request.Uri.AbsoluteUri;
+
+            return !requestUrl.EndsWith(signupActionName) &&
+                   !requestUrl.EndsWith(loginActionName);
+        }
+
+        private async Task SetSessionToken(IOwinContext context)
+        {
+            const string tokenHeader = "Authorization";
             var token = ObjectId.Empty;
 
-            if (ObjectId.TryParse(context.Request.Headers.Get("Authorization"), out token))
+            if (ObjectId.TryParse(context.Request.Headers.Get(tokenHeader), out token))
             {
                 await new UserSession().SetToken(token);
                 await Next.Invoke(context);
@@ -32,14 +49,7 @@ namespace Server.Middlewares
                 return;
             }
 
-            context.Response.StatusCode = (int) HttpStatusCode.Unauthorized;
-        }
-
-        private bool ShouldIncludeToken(IOwinRequest request)
-        {
-            var requestUrl = request.Uri.AbsoluteUri;
-
-            return !requestUrl.EndsWith("/signup") && !requestUrl.EndsWith("/login");
+            context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
         }
     }
 }

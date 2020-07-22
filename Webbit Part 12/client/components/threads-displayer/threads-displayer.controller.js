@@ -3,62 +3,54 @@ import angular from 'angular';
 const CONTROLLER = 'threadsDisplayer';
 
 angular.module('webbit.controllers')
-    .controller(CONTROLLER, function($scope, Thread) {
+    .controller(CONTROLLER, function($scope) {
         $scope.$on('CreatedNewThread', () => {
             this.threadsFetcher.reloadThreads();
         });
         
-        this.$onInit = () => {
-            const subwebbitId = this.subwebbitId;
+        const self = this;
 
-            this.threadsFetcher = {
-                subwebbitId,
-                threads: [],
-                hasFetchedAllThreads: false,
-                isRequestInProgress: false,
+        this.threadsFetcher = {
+            threads: [],
+            hasFetchedAllThreads: false,
+            isRequestInProgress: false,
 
-                reloadThreads() {
-                    this.threads = [];
-                    this.hasFetchedAllThreads = false;
-                },
+            reloadThreads() {
+            this.threads = [];
+            this.hasFetchedAllThreads = false;
+            },
 
-                hasNoThreadsAtAll() {
-                    return this.hasFetchedAllThreads && this.threads.length === 0;   
-                },
+            hasNoThreadsAtAll() {
+            return this.hasFetchedAllThreads && this.threads.length === 0;
+            },
 
-                getItemAtIndex(index) {
-                    if (this.threads[index]) {
-                        return this.threads[index];
-                    }
+            getItemAtIndex(index) {
+            if (this.threads[index]) {
+                return this.threads[index];
+            }
 
-                    if (!this.isRequestInProgress && !this.hasFetchedAllThreads) {
-                        this.isRequestInProgress = true;
-                        this.getMoreThreads(index);
-                    }
+            if (!this.isRequestInProgress && !this.hasFetchedAllThreads) {
+                this.isRequestInProgress = true;
+                this.getMoreThreads(index);
+            }
 
-                    return null;
-                },
+            return null;
+            },
 
-                getLength() {
-                    return this.threads.length + 1;
-                },
+            getLength() {
+            return this.threads.length + 1;
+            },
 
-                getMoreThreads(index) {
-                    // TODO: get the 'getThreads' method as parmeter
-                    // (send as param Thread.getTop OR Thread.getRecent)
-                    Thread.getThreads({
-                        subwebbitId: this.subwebbitId,
-                        index
-                    })
-                    .then(angular.bind(this, function (threads) {
-                        this.hasFetchedAllThreads = !threads.length;
-                        this.threads = this.threads.concat(threads);
-                        this.isRequestInProgress = false;
-                    })
-                    );
-                },
-            };
-        }
+            getMoreThreads(index) {
+            self.getThreadsMethod(index).then(
+                angular.bind(this, function (threads) {
+                this.hasFetchedAllThreads = !threads.length;
+                this.threads = this.threads.concat(threads);
+                this.isRequestInProgress = false;
+                })
+            );
+            },
+        };
     });
 
 export default CONTROLLER;

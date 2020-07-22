@@ -7,8 +7,10 @@ import TimeAgo from "time-ago";
 const CONTROLLER = "subwebbit";
 
 angular.module("webbit.controllers")
-    .controller(CONTROLLER, ($scope, $state, $mdDialog, Subwebbit, Alert) => {
+    .controller(CONTROLLER, ($scope, $state, $mdDialog, Subwebbit, Thread, Alert) => {
       $scope.toTimeAgo = date => TimeAgo.ago(date);
+
+      $scope.getThreadsMethod = index => Thread.getRecent($scope.subwebbit.id, index);
 
       Subwebbit.get({id: $state.params.id}).$promise
         .then(subwebbit => {

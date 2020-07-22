@@ -17,17 +17,14 @@ namespace Server.WebApi.Users
     {
         private const int SubscriptionsOnSignup = 10;
 
-        public async Task Signup(UserAuthViewModel user)
+        public async Task Signup(UserAuthViewModel userInfo)
         {
-            await EnsureSignupDetails(user);
-            var newUser = new User(user.Username, user.Password)
-            {
-                SubscribedSubwebbits = await GetMostSubscribed(SubscriptionsOnSignup)
-            };
+            await EnsureSignupDetails(userInfo);
+            var user = await CreateModel(userInfo);
 
-            await GetCollection().InsertOneAsync(newUser);
+            await Create(user);
 
-            foreach (var subwebbitId in newUser.SubscribedSubwebbits)
+            foreach (var subwebbitId in user.SubscribedSubwebbits)
             {
                 await new SubwebbitLogic().IncrementSubscribers(subwebbitId);
             }
@@ -50,6 +47,17 @@ namespace Server.WebApi.Users
             {
                 throw new UsernameAlreadyTakenException();
             }
+        }
+
+        private async Task<User> CreateModel(UserAuthViewModel userInfo)
+        {
+            var salt = ObjectId.GenerateNewId().ToString();
+            var hashedPassword = new Hasher().Compute(userInfo.Password + salt);
+
+            return new User(userInfo.Username, hashedPassword, salt)
+            {
+                SubscribedSubwebbits = await GetMostSubscribed(SubscriptionsOnSignup)
+            };
         }
 
         private async Task<IEnumerable<ObjectId>> GetMostSubscribed(int amount)

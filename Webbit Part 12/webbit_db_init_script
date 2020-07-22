@@ -5,15 +5,9 @@ var users = [
 	{
 		_id: ObjectId("5ef9b50ffb356c82d30ddb73"),
 		username: "admin",
-		password: "admin",
-		salt: "",
-		subscribedSubwebbits: [ObjectId("5f02e449c1fb8ccb5c95866a")]
-	},
-	{
-		_id: ObjectId("5ef9b50afb356c85d30ddb73"),
-		username: "omri",
-		password: "omri",
-		salt: "",
+		// password is: asd x3 => asdasdasd
+		password: "e6e4778bc925946def63b6cc52f02f088c0b33bfcdc0dcaa9c962ff127b97834",
+		salt: "5f1829605683173c48101091",
 		subscribedSubwebbits: [ObjectId("5f02e449c1fb8ccb5c95866a")]
 	}
 ];

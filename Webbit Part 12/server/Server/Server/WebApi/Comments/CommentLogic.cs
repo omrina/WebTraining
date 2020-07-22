@@ -23,7 +23,7 @@ namespace Server.WebApi.Comments
             EnsureCommentDetails(commentInfo);
             var comment = new Comment(commentInfo.Content, UserSession.UserId, DateTime.Now);
 
-            await AddComment(comment, commentInfo);
+            await Add(comment, commentInfo);
         }
 
         protected void EnsureCommentDetails(TNewCommentViewModel comment)
@@ -34,7 +34,7 @@ namespace Server.WebApi.Comments
             }
         }
 
-        protected virtual async Task AddComment(Comment comment, TNewCommentViewModel commentInfo)
+        protected virtual async Task Add(Comment comment, TNewCommentViewModel commentInfo)
         {
             await GetCollection().UpdateOneAsync(x => x.Id == ObjectId.Parse(commentInfo.ThreadId),
                 Builders<Thread>.Update.AddToSet(x => x.Comments, comment));

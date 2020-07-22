@@ -24,14 +24,13 @@ namespace Server.WebApi.Authentication
             return onlineUser.Id;
         }
 
-        public async Task<UserViewModel> Login(UserAuthViewModel loginViewModel)
+        public async Task<UserViewModel> Login(UserAuthViewModel loginInfo)
         {
-            // TODO: add hashes to passwords
-            var user =  await Database.GetCollection<User>().AsQueryable()
-                .SingleOrDefaultAsync(x => x.Password == loginViewModel.Password &&
-                                           x.Username == loginViewModel.Username);
+            var user = await Database.GetCollection<User>().AsQueryable()
+                .SingleOrDefaultAsync(x => x.Username == loginInfo.Username);
             
-            if (user == null)
+            if (user == null ||
+                new Hasher().Compute(loginInfo.Password + user.Salt) != user.Password)
             {
                 throw new LoginFailedException();
             }
