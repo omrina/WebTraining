@@ -1,8 +1,8 @@
 ﻿using MongoDB.Bson;
 using Server.Models;
-using Server.WebApi.Ratings.Enums;
+using Server.WebApi.RatingSystem.Enums;
 
-namespace Server.WebApi.Ratings
+namespace Server.WebApi.RatingSystem
 {
     public class ItemVoter
     {

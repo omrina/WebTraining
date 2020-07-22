@@ -139,10 +139,9 @@
     <Compile Include="WebApi\Comments\CommentController.cs" />
     <Compile Include="WebApi\Comments\Validation\CommentValidator.cs" />
     <Compile Include="WebApi\Comments\ViewModels\CommentVoteViewModel.cs" />
-    <Compile Include="WebApi\Ratings\ItemVoter.cs" />
+    <Compile Include="WebApi\RatingSystem\ItemVoter.cs" />
     <Compile Include="WebApi\SubComments\ViewModels\NewSubCommentViewModel.cs" />
-    <Compile Include="WebApi\Ratings\RatingController.cs" />
-    <Compile Include="WebApi\Ratings\ViewModels\ItemVoteInfoViewModel.cs" />
+    <Compile Include="WebApi\RatingSystem\ViewModels\VoteInfoViewModel.cs" />
     <Compile Include="WebApi\SubComments\SubCommentController.cs" />
     <Compile Include="WebApi\SubComments\SubCommentLogic.cs" />
     <Compile Include="WebApi\Subwebbits\SubwebbitController.cs" />
@@ -151,7 +150,7 @@
     <Compile Include="WebApi\Threads\Validation\ThreadValidator.cs" />
     <Compile Include="WebApi\Threads\ViewModels\ThreadVoteViewModel.cs" />
     <Compile Include="WebApi\Users\UserController.cs" />
-    <Compile Include="WebApi\Ratings\Enums\VoteStates.cs" />
+    <Compile Include="WebApi\RatingSystem\Enums\VoteStates.cs" />
     <Compile Include="Exceptions\InvalidModelDetailsException.cs" />
     <Compile Include="Exceptions\LoginFailedException.cs" />
     <Compile Include="Exceptions\ModelNotFoundException.cs" />
@@ -166,11 +165,9 @@
     <Compile Include="WebApi\Comments\CommentLogic.cs" />
     <Compile Include="MongoDB\MongoConnection.cs" />
     <Compile Include="WebApi\Authentication\AuthLogic.cs" />
-    <Compile Include="WebApi\Ratings\RatingLogic.cs" />
     <Compile Include="WebApi\Subwebbits\SubwebbitLogic.cs" />
     <Compile Include="WebApi\Subwebbits\SubwebbitSubscribtionLogic.cs" />
     <Compile Include="WebApi\Threads\ThreadLogic.cs" />
-    <Compile Include="WebApi\Ratings\UpdatingOperation.cs" />
     <Compile Include="WebApi\Users\UserLogic.cs" />
     <Compile Include="WebApi\Authentication\Validation\SignupDetailsValidator.cs" />
     <Compile Include="WebApi\Validators\StringValidator.cs" />
@@ -189,12 +186,11 @@
     <Compile Include="WebApi\Comments\ViewModels\CommentInfoViewModel.cs" />
     <Compile Include="WebApi\Comments\ViewModels\NewCommentViewModel.cs" />
     <Compile Include="WebApi\Threads\ViewModels\NewThreadViewModel.cs" />
-    <Compile Include="WebApi\Subwebbits\ViewModels\SearchedSubwebbitViewModel.cs" />
+    <Compile Include="WebApi\Subwebbits\ViewModels\SubwebbitPreviewViewModel.cs" />
     <Compile Include="WebApi\Subwebbits\ViewModels\SubwebbitViewModel.cs" />
-    <Compile Include="WebApi\Threads\ViewModels\ThreadInfoViewModel.cs" />
+    <Compile Include="WebApi\Threads\ViewModels\ThreadViewModel.cs" />
     <Compile Include="WebApi\Authentication\ViewModels\UserAuthViewModel.cs" />
     <Compile Include="WebApi\Authentication\ViewModels\UserViewModel.cs" />
-    <Compile Include="WebApi\Ratings\ViewModels\UserVoteViewModel.cs" />
     <Compile Include="WebApiConfig\InheritedAttributesRouteProvider.cs" />
     <Compile Include="WebApiConfig\PassThroughExceptionsHandler.cs" />
   </ItemGroup>

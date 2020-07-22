@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using MongoDB.Bson;
 using Server.Models;
-using Server.WebApi.Ratings.ViewModels;
+using Server.WebApi.RatingSystem.ViewModels;
 
 namespace Server.WebApi.Comments.ViewModels
 {
-    public class CommentInfoViewModel : ItemVoteInfoViewModel
+    public class CommentInfoViewModel : VoteInfoViewModel
     {
         public ObjectId Id { get; set; }
         public ObjectId ThreadId { get; set; }

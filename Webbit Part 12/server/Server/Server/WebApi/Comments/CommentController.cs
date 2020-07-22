@@ -7,9 +7,9 @@ using Server.WebApi.Comments.ViewModels;
 namespace Server.WebApi.Comments
 {
     [RoutePrefix("api/comments")]
-    public class CommentController : BaseController<CommentLogic, Thread>
+    public class CommentController : BaseController<CommentLogic<NewCommentViewModel>, Thread>
     {
-        public CommentController() : base(new CommentLogic())
+        public CommentController() : base(new CommentLogic<NewCommentViewModel>())
         {
         }
 

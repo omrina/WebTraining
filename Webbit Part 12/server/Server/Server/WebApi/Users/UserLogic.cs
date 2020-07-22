@@ -5,6 +5,7 @@ using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using Server.Exceptions;
 using Server.Models;
+using Server.MongoDB.Extensions;
 using Server.WebApi.Authentication;
 using Server.WebApi.Authentication.Validation;
 using Server.WebApi.Authentication.ViewModels;
@@ -21,16 +22,14 @@ namespace Server.WebApi.Users
             await EnsureSignupDetails(user);
             var newUser = new User(user.Username, user.Password)
             {
-                SubscribedSubwebbits = await new SubwebbitSubscriptionLogic()
-                                            .GetMostSubscribed(SubscriptionsOnSignup)
+                SubscribedSubwebbits = await GetMostSubscribed(SubscriptionsOnSignup)
             };
 
             await GetCollection().InsertOneAsync(newUser);
 
             foreach (var subwebbitId in newUser.SubscribedSubwebbits)
             {
-                // Should add to subscribers ids list
-                await new SubwebbitSubscriptionLogic().IncrementSubscribers(subwebbitId);
+                await new SubwebbitLogic().IncrementSubscribers(subwebbitId);
             }
         }
 
@@ -51,6 +50,13 @@ namespace Server.WebApi.Users
             {
                 throw new UsernameAlreadyTakenException();
             }
+        }
+
+        private async Task<IEnumerable<ObjectId>> GetMostSubscribed(int amount)
+        {
+            return await Database.GetCollection<Subwebbit>().AsQueryable()
+                        .OrderByDescending(x => x.SubscribersCount)
+                        .Take(amount).Select(x => x.Id).ToListAsync();
         }
 
         public async Task<IEnumerable<ObjectId>> GetSubscribedIds()

@@ -44,7 +44,6 @@ namespace Server.WebApi.Authentication
 
         public async Task Logout()
         {
-            // TODO: add delete by id to base logic or extension method?
             await GetCollection().DeleteOneAsync(x => x.Id == UserSession.UserId);
         }
     }

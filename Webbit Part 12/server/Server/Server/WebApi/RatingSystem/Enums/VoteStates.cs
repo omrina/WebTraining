@@ -1,4 +1,4 @@
-﻿namespace Server.WebApi.Ratings.Enums
+﻿namespace Server.WebApi.RatingSystem.Enums
 {
     public enum VoteStates
     {

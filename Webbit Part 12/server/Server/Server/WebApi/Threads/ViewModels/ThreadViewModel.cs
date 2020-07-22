@@ -2,11 +2,12 @@
 using System.Linq;
 using MongoDB.Bson;
 using Server.Models;
+using Server.WebApi.RatingSystem.ViewModels;
 using Server.WebApi.Subwebbits.ViewModels;
 
 namespace Server.WebApi.Threads.ViewModels
 {
-    public class ThreadInfoViewModel : Ratings.ViewModels.ItemVoteInfoViewModel
+    public class ThreadViewModel : VoteInfoViewModel
     {
         public ObjectId Id { get; set; }
         public ObjectId SubwebbitId { get; set; }
@@ -18,7 +19,7 @@ namespace Server.WebApi.Threads.ViewModels
         public int CommentsCount { get; set; }
         public bool IsOwner { get; set; }
 
-        public ThreadInfoViewModel(Thread thread, ObjectId userId, string author, SubwebbitViewModel subwebbit)
+        public ThreadViewModel(Thread thread, ObjectId userId, string author, SubwebbitViewModel subwebbit)
             : base(thread, userId)
         {
             Id = thread.Id;

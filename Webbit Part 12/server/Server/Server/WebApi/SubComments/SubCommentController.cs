@@ -20,7 +20,7 @@ namespace Server.WebApi.SubComments
 
             return Ok();
         }
-
-        // TODO: add vote method
+        
+        // vote method
     }
 }

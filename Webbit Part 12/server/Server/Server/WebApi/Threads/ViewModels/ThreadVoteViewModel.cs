@@ -1,4 +1,4 @@
-﻿using Server.WebApi.Ratings.Enums;
+﻿using Server.WebApi.RatingSystem.Enums;
 
 namespace Server.WebApi.Threads.ViewModels
 {

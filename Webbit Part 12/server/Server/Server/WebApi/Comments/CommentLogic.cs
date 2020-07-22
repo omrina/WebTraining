@@ -9,30 +9,35 @@ using Server.Models;
 using Server.WebApi.Authentication;
 using Server.WebApi.Comments.Validation;
 using Server.WebApi.Comments.ViewModels;
-using Server.WebApi.Ratings;
-using Server.WebApi.Ratings.ViewModels;
+using Server.WebApi.RatingSystem;
+using Server.WebApi.RatingSystem.ViewModels;
 using Server.WebApi.Users;
 
 namespace Server.WebApi.Comments
 {
-    // TODO: inherit from thread logic???
-    public class CommentLogic : BaseLogic<Thread>
+    public class CommentLogic<TNewCommentViewModel> : BaseLogic<Thread>
+        where TNewCommentViewModel : NewCommentViewModel
     {
-        public async Task Post(NewCommentViewModel comment)
+        public async Task Post(TNewCommentViewModel commentInfo)
         {
-            EnsureCommentDetails(comment);
-            var newComment = new Comment(comment.Content, UserSession.UserId, DateTime.Now);
+            EnsureCommentDetails(commentInfo);
+            var comment = new Comment(commentInfo.Content, UserSession.UserId, DateTime.Now);
 
-            await GetCollection().UpdateOneAsync(x => x.Id == ObjectId.Parse(comment.ThreadId),
-                Builders<Thread>.Update.AddToSet(x => x.Comments, newComment));
+            await AddComment(comment, commentInfo);
         }
 
-        protected void EnsureCommentDetails(NewCommentViewModel comment)
+        protected void EnsureCommentDetails(TNewCommentViewModel comment)
         {
             if (!new CommentValidator().IsValid(comment))
             {
                 throw new InvalidModelDetailsException();
             }
+        }
+
+        protected virtual async Task AddComment(Comment comment, TNewCommentViewModel commentInfo)
+        {
+            await GetCollection().UpdateOneAsync(x => x.Id == ObjectId.Parse(commentInfo.ThreadId),
+                Builders<Thread>.Update.AddToSet(x => x.Comments, comment));
         }
 
         public async Task<IEnumerable<CommentInfoViewModel>> GetAll(ObjectId threadId)
@@ -52,7 +57,7 @@ namespace Server.WebApi.Comments
             return new CommentInfoViewModel(comment, threadId, UserSession.UserId, author, subComments);
         }
 
-        public async Task<ItemVoteInfoViewModel> Vote(CommentVoteViewModel commentVote)
+        public async Task<VoteInfoViewModel> Vote(CommentVoteViewModel commentVote)
         {
             var thread = await Get(ObjectId.Parse(commentVote.Id));
             var comment = thread.Comments.First(x => x.Id == ObjectId.Parse(commentVote.CommentId));
@@ -60,7 +65,7 @@ namespace Server.WebApi.Comments
 
             await GetCollection().ReplaceOneAsync(x => x.Id == thread.Id, thread);
 
-            return new ItemVoteInfoViewModel(comment, UserSession.UserId);
+            return new VoteInfoViewModel(comment, UserSession.UserId);
         }
     }
 }

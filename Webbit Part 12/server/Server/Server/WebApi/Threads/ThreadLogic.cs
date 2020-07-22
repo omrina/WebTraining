@@ -9,8 +9,8 @@ using Server.Exceptions;
 using Server.Models;
 using Server.MongoDB.Extensions;
 using Server.WebApi.Authentication;
-using Server.WebApi.Ratings;
-using Server.WebApi.Ratings.ViewModels;
+using Server.WebApi.RatingSystem;
+using Server.WebApi.RatingSystem.ViewModels;
 using Server.WebApi.Subwebbits;
 using Server.WebApi.Threads.Validation;
 using Server.WebApi.Threads.ViewModels;
@@ -22,22 +22,20 @@ namespace Server.WebApi.Threads
     {
         private const int ThreadsPerPage = 4;
 
-        public async Task<ThreadInfoViewModel> GetById(ObjectId id)
+        public async Task<ThreadViewModel> GetById(ObjectId id)
         {
             var subwebbit = await Database.GetCollection<Subwebbit>().AsQueryable()
                 .FirstAsync(x => x.Threads.Contains(id));
             var thread = await Get(id);
             var author = await new UserLogic().GetName(thread.AuthorId);
 
-            // TODO: send user id as param? (used for knowing the user's threadVote)
-            return new ThreadInfoViewModel(thread,
+            return new ThreadViewModel(thread,
                 UserSession.UserId,
                 author,
                 await new SubwebbitLogic().GetById(subwebbit.Id));
         }
 
-        // TODO: should be in api/subwebbits???
-        public async Task<IEnumerable<ThreadInfoViewModel>> GetRecentThreads(ObjectId subwebbitId,
+        public async Task<IEnumerable<ThreadViewModel>> GetRecentThreads(ObjectId subwebbitId,
             int index)
         {
             var subwebbit = await Database.GetCollection<Subwebbit>().Get(subwebbitId);
@@ -49,7 +47,7 @@ namespace Server.WebApi.Threads
             return await GetById(threadsIds);
         }
 
-        public async Task<IEnumerable<ThreadInfoViewModel>> GetTopThreadsFromSubscribed(int index)
+        public async Task<IEnumerable<ThreadViewModel>> GetTopThreadsFromSubscribed(int index)
         {
             var subwebbitsIds = await new UserLogic().GetSubscribedIds();
             var threadsIds = await Database.GetCollection<Subwebbit>().AsQueryable()
@@ -64,9 +62,9 @@ namespace Server.WebApi.Threads
             return await GetById(topThreadsIds);
         }
 
-        private async Task<IEnumerable<ThreadInfoViewModel>> GetById(IEnumerable<ObjectId> ids)
+        private async Task<IEnumerable<ThreadViewModel>> GetById(IEnumerable<ObjectId> ids)
         {
-            var threads = new List<ThreadInfoViewModel>();
+            var threads = new List<ThreadViewModel>();
 
             foreach (var id in ids)
             {
@@ -109,14 +107,14 @@ namespace Server.WebApi.Threads
                 Builders<Subwebbit>.Update.Pull(x => x.Threads, id));
         }
 
-        public async Task<ItemVoteInfoViewModel> Vote(ThreadVoteViewModel threadVote)
+        public async Task<VoteInfoViewModel> Vote(ThreadVoteViewModel threadVote)
         {
             var thread = await Get(ObjectId.Parse(threadVote.Id));
             new ItemVoter(thread, UserSession.UserId).Vote(threadVote.Vote);
 
             await GetCollection().ReplaceOneAsync(x => x.Id == thread.Id, thread);
 
-            return new ItemVoteInfoViewModel(thread, UserSession.UserId);
+            return new VoteInfoViewModel(thread, UserSession.UserId);
         }
     }
 }

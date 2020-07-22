@@ -1,15 +1,15 @@
 ﻿using MongoDB.Bson;
 using Server.Models;
-using Server.WebApi.Ratings.Enums;
+using Server.WebApi.RatingSystem.Enums;
 
-namespace Server.WebApi.Ratings.ViewModels
+namespace Server.WebApi.RatingSystem.ViewModels
 {
-    public class ItemVoteInfoViewModel
+    public class VoteInfoViewModel
     {
         public int Rating { get; set; }
         public VoteStates UserVote { get; set; }
 
-        public ItemVoteInfoViewModel(IVotable item, ObjectId userId)
+        public VoteInfoViewModel(IVotable item, ObjectId userId)
         {
             Rating = item.Upvoters.Count - item.Downvoters.Count;
             UserVote = new ItemVoter(item, userId).GetUserVote();

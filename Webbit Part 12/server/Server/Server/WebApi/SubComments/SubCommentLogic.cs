@@ -1,25 +1,25 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Server.Models;
-using Server.WebApi.Authentication;
 using Server.WebApi.Comments;
 using Server.WebApi.SubComments.ViewModels;
 
 namespace Server.WebApi.SubComments
 {
-    public class SubCommentLogic : CommentLogic
+    public class SubCommentLogic : CommentLogic<NewSubCommentViewModel>
     {
-        public async Task Post(NewSubCommentViewModel comment)
+        protected override async Task AddComment(Comment comment, NewSubCommentViewModel commentInfo)
         {
-            EnsureCommentDetails(comment);
-            var newComment = new Comment(comment.Content, UserSession.UserId, DateTime.Now);
+            var commentsFieldHierarchy = $"{nameof(Thread.Comments)}.$.{nameof(Comment.Comments).ToLower()}";
 
             await GetCollection().UpdateOneAsync(
-                thread => thread.Comments.Any(x => x.Id == ObjectId.Parse(comment.ParentCommentId)),
-                Builders<Thread>.Update.AddToSet("Comments.$.comments", newComment));
+                Builders<Thread>.Filter.And(
+                    Builders<Thread>.Filter.Eq(x => x.Id, ObjectId.Parse(commentInfo.ThreadId)),
+                    Builders<Thread>.Filter.ElemMatch(x => x.Comments,
+                                                      x => x.Id == ObjectId.Parse(commentInfo.ParentCommentId))),
+                Builders<Thread>.Update.AddToSet(commentsFieldHierarchy, comment));
         }
     }
 }

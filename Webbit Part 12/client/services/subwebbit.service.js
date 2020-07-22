@@ -1,21 +1,38 @@
-import angular from "angular";
+import angular from 'angular';
 
-angular.module("webbit.services").service("Subwebbit", function ($resource) {
-  this.search = name =>
-    $resource(`/api/subwebbits/search/${name}`).query().$promise;
-
-  this.create = name =>
-    $resource(`/api/subwebbits/${name}`).save().$promise;
-
-  this.get = id =>
-    $resource(`/api/subwebbits/${id}`).get().$promise;
-
-  this.delete = id => 
-    $resource(`/api/subwebbits/${id}`).delete().$promise;
-
-  this.subscribe = subwebbitId =>
-    $resource(`api/subwebbits/${subwebbitId}/subscribe`).save().$promise;
-
-  this.unsubscribe = subwebbitId =>
-    $resource(`api/subwebbits/${subwebbitId}/unsubscribe`).save().$promise;
+angular.module('webbit.services').factory('Subwebbit', $resource => {
+  return $resource(
+    '/api/subwebbits/:id',
+    {
+      id: '@id',
+    },
+    {
+      get: {
+        method: 'GET',
+      },
+      create: {
+        method: 'POST',
+        url: '/api/subwebbits/:name',
+        params: {
+          name: '@name',
+        },
+      },
+      delete: {
+        method: 'DELETE',
+      },
+      search: {
+        method: 'GET',
+        isArray: true,
+        url: '/api/subwebbits/search/:name',
+      },
+      subscribe: {
+        method: 'POST',
+        url: 'api/subwebbits/:id/subscribe',
+      },
+      unsubscribe: {
+        method: 'POST',
+        url: 'api/subwebbits/:id/unsubscribe',
+      },
+    }
+  );
 });

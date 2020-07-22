@@ -16,12 +16,12 @@ namespace Server.WebApi.Subwebbits
 {
     public class SubwebbitLogic : BaseLogic<Subwebbit>
     {
-        public async Task<IEnumerable<SearchedSubwebbitViewModel>> Search(string name)
+        public async Task<IEnumerable<SubwebbitPreviewViewModel>> Search(string name)
         {
             var subwebbits = await GetCollection().AsQueryable()
                 .Where(x => x.Name.Contains(name)).ToListAsync();
 
-            return subwebbits.Select(x => new SearchedSubwebbitViewModel(x));
+            return subwebbits.Select(x => new SubwebbitPreviewViewModel(x));
         }
 
         public async Task<SubwebbitViewModel> Create(string name)
@@ -101,7 +101,7 @@ namespace Server.WebApi.Subwebbits
 
             await usersCollection.UpdateOneAsync(x => x.Id == UserSession.UserId,
                 Builders<User>.Update.AddToSet(x => x.SubscribedSubwebbits, id));
-            await new SubwebbitSubscriptionLogic().IncrementSubscribers(id);
+            await IncrementSubscribers(id);
         }
 
         public async Task Unsubscribe(ObjectId id)
@@ -110,7 +110,29 @@ namespace Server.WebApi.Subwebbits
 
             await usersCollection.UpdateOneAsync(x => x.Id == UserSession.UserId,
                 Builders<User>.Update.Pull(x => x.SubscribedSubwebbits, id));
-            await new SubwebbitSubscriptionLogic().DecrementSubscribers(id);
+            await DecrementSubscribers(id);
+        }
+
+        public async Task<IEnumerable<ObjectId>> GetMostSubscribed(int amount)
+        {
+            return await GetCollection().AsQueryable().OrderByDescending(x => x.SubscribersCount)
+                .Take(amount).Select(x => x.Id).ToListAsync();
+        }
+
+        public async Task IncrementSubscribers(ObjectId id)
+        {
+            await AddToSubscribersCount(id, 1);
+        }
+
+        public async Task DecrementSubscribers(ObjectId id)
+        {
+            await AddToSubscribersCount(id, -1);
+        }
+
+        private async Task AddToSubscribersCount(ObjectId id, int value)
+        {
+            await GetCollection().UpdateOneAsync(x => x.Id == id,
+                UpdateBuilder.Inc(x => x.SubscribersCount, value));
         }
     }
 }
