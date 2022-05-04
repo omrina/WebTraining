@@ -19,7 +19,7 @@ namespace Server.WebApi.Subwebbits
         public async Task<IEnumerable<SubwebbitPreviewViewModel>> Search(string name)
         {
             var subwebbits = await GetCollection().AsQueryable()
-                .Where(x => x.Name.Contains(name)).ToListAsync();
+                .Where(x => x.Name.ToLower().Contains(name.ToLower())).ToListAsync();
 
             return subwebbits.Select(x => new SubwebbitPreviewViewModel(x));
         }
