@@ -23,6 +23,9 @@ namespace SelfHost
             catch (Exception exception)
             {
                 Console.WriteLine(ServerConsoleMessages.ServerHasCrashed);
+                Console.WriteLine(exception.StackTrace);
+                Console.WriteLine(exception.Message);
+                Console.WriteLine(exception.InnerException);
                 // LOG HERE
             }
         }

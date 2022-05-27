@@ -2,6 +2,7 @@
 using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
+using Microsoft.Owin.Cors;
 using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.StaticFiles;
 using Newtonsoft.Json.Serialization;
@@ -23,9 +24,6 @@ namespace Server
             config.MapHttpAttributeRoutes(new InheritedAttributesRouteProvider());
             config.Services.Replace(typeof(IExceptionHandler), new PassThroughExceptionsHandler());
 
-            appBuilder.Use<SessionTokenMiddleware>();
-            appBuilder.UseWebApi(config);
-
             var physicalFileSystem = new PhysicalFileSystem(ConfigurationManager.AppSettings["ClientPath"]);
 
             var options = new FileServerOptions
@@ -38,6 +36,9 @@ namespace Server
             };
 
             appBuilder.UseFileServer(options);
+
+            appBuilder.Use<SessionTokenMiddleware>();
+            appBuilder.UseWebApi(config);
         }
     }
 }
